@@ -1,0 +1,32 @@
+<!-- Toastr -->
+<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+<script src="/plugins/toastr/toastr.min.js"></script>
+<script>
+    <% if(typeof errors != 'undefined'){ %> <% errors.forEach(function(error) { %>
+    toastr.error("<%= error.msg %>");
+    <% }); %> <% } %>
+    <% if (messages) { %>
+    <% if (messages.success) { %>
+    toastr.success("<%= messages.success %>");
+    <% }if (messages.error) { %>
+    toastr.error("<%= messages.error %>");
+    <% }if (messages.info) { %>
+    toastr.info("<%= messages.info %>");
+    <% }if (messages.warning) { %>
+    toastr.info("<%= messages.warning %>");
+    <% } %>
+    <% } %>
+    <% if (flashMessages) { %>
+    <% if (flashMessages.success) { %>
+    toastr.success("<%= flashMessages.success %>");
+    <% }if (flashMessages.error) { %>
+    toastr.error("<%= flashMessages.error %>");
+    <% }if (flashMessages.info) { %>
+    toastr.info("<%= flashMessages.info %>");
+    <% }if (flashMessages.warning) { %>
+    toastr.info("<%= flashMessages.warning %>");
+    <% } %>
+    <% } %>
+
+
+</script>
