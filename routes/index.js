@@ -8,5 +8,11 @@ router.get('/', isAuth, function (req, res, next) {
         user: req.user
     });
 });
+router.get('/test', function (req, res, next) {
 
+    res.render('test', {
+        title: 'Home - Extra Cool CMMS',
+        user: req.user
+    });
+});
 module.exports = router;
