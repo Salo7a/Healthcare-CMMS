@@ -7,8 +7,6 @@ const {check, validationResult, body} = require('express-validator');
 const {Op} = require('sequelize');
 const Chance = require('chance');
 require('dotenv').config();
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 let chance = new Chance();
 
 function issueToken(user, done) {
@@ -49,7 +47,26 @@ router.post('/login', NotAuth, passport.authenticate('local', {
         res.redirect('/');
     });
 
-
+router.get('/addtest', function (req, res, next) {
+    User.create({
+        Name: "John Doe",
+        Email: "admin@clinical.com",
+        Phone: "01123456789",
+        Title: "Head of Engineering",
+        Password: "password",
+        isAdmin: true
+    });
+    User.create({
+        Name: "Jane Doe",
+        Email: "technician@clinical.com",
+        Phone: "01123456789",
+        Title: "MRI Technician",
+        Password: "password",
+        isAdmin: false
+    });
+    req.flash("success", "Test Accounts Were Added Successfully");
+    res.redirect('/auth/login');
+});
 // router.post('/register', [
 //     check('email').isEmail().withMessage('Invalid Email').normalizeEmail(),
 //     check('password').isLength({min: 6}).withMessage('Password Must Be At Least 6 Chars Long'),
@@ -161,17 +178,6 @@ router.post('/login', NotAuth, passport.authenticate('local', {
 //                         ActiveHash: hash
 //                     })
 //                         .then(function () {
-//                                 const msg = {
-//                                     to: email,
-//                                     from: 'no-reply@ieeecusb.org',
-//                                     subject: 'Verify Your DCareMax Account',
-//                                     templateId: 'd-b94fbfd3648a4a60b14eee5d6b6e147c',
-//                                     dynamic_template_data: {
-//                                         hash: hash,
-//                                     }
-//                                 };
-//                                 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//                                 sgMail.send(msg);
 //                                 // set the flash message to indicate that user was
 //                                 // registered successfully
 //                             req.flash('success', 'The user was registered successfully');

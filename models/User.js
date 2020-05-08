@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         Password: DataTypes.STRING,
         isActive: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: true
         },
         isAdmin: {
             type: DataTypes.BOOLEAN,
