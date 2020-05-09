@@ -4,24 +4,20 @@
         <div class="card-body">
             <div class="card-header">
                 <h3 class="card-title">
-                    <%= title %>
+                    <h1><%= title %></h1>
                 </h3>
             </div>
             <div class="row">
                 <!--            Enter Your Content Here-->
 
                 <!-- Add New Device Button -->
-                <button type="button" class="btn btn-block btn-primary">Add Device</button>
+                <a type="button" class="btn btn-block btn-primary" href="/devices/add">Add Device</a>
 
                 <!-- Check length of devices list -->
                 <!-- In case we found devices -->
                 <% if (devices.length > 0) { %>
                     <!-- Devices Table -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">DataTable with default features</h3>
-                        </div>
-                        <!-- /.card-header -->
 
                         <div class="card-body">
                             <table id="devicesTable" class="table table-bordered table-striped">
