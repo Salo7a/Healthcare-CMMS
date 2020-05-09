@@ -9,5 +9,10 @@ router.get('/', isAuth, (req, res) => {
         user: req.user
     });
 });
-
+router.get('/show', isAuth, (req, res) =>{
+    res.render('show', {
+        title: "Show All Personnel",
+        user : req.user
+    })
+})
 module.exports = router;
