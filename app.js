@@ -16,7 +16,7 @@ let passportConfig = require('./config/passport');
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const devicesRouter = require('./routes/devices');
-const workqueueRouter = require('./routes/workqueue')
+const workqueueRouter = require('./routes/workqueue');
 const app = express();
 
 
