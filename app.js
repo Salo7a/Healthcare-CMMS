@@ -17,6 +17,8 @@ const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const devicesRouter = require('./routes/devices');
 const workqueueRouter = require('./routes/workqueue');
+const indoorRouter = require('./routes/indoor');
+
 const app = express();
 
 
@@ -69,6 +71,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/devices', devicesRouter);
 app.use('/portal/workqueue', workqueueRouter);
+app.use('/indoor', indoorRouter);
 
 
 // catch 404 and forward to error handler
