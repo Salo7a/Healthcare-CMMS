@@ -1,20 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const {isAdmin} = require('../utils/filters');
-const Device = require('../models').devices;
+const Device = require('../models').Device;
 
-router.get('/', isAdmin, (req, res, next) =>
-{
+router.get('/', isAdmin, (req, res, next) => {
     // Get all the devices from database
-    const devicesList = Device.findAll()
-        .then(Device => res.status(200).send(Device))
+    Device.findAll()
+        .then(Devices => {
+            res.render('devices', {
+                title: 'Devices List',
+                devices: Devices,
+                user: req.user
+            });
+        })
         .catch((error) => {
             console.log(error.toString());
             res.status(400).send(error)
         });
-    
-    console.log(devicesList);
-    
+
+
     // res.render('devices', {
     //     title: 'Devices List',
     //     devices: devicesList,
@@ -38,13 +42,8 @@ router.post('/add', isAdmin, (req, res) => {
         Department: req.body.department,
         InstallationDate: req.body.installationDate
     };
-    
     Device.create(newDevice);
-    res.render('devices', {
-        title: 'Devices List',
-        devices: newDevice,
-        user: req.user
-    });
+    res.redirect("/");
 });
 
 module.exports = router;

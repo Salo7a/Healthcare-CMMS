@@ -4,7 +4,10 @@ const uuid = require("uuid");
 const isAuth = require("../utils/filters").isAuth;
 
 router.get('/', isAuth, (req, res) => {
-    res.render("../views/indoor.ejs")
+    res.render('indoor', {
+        title: 'Indoor View',
+        user: req.user
+    });
 });
 
 module.exports = router;
