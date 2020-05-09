@@ -1,0 +1,84 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <%= title %>
+                </h3>
+            </div>
+            <div class="row">
+                <!--            Enter Your Content Here-->
+
+                <!-- Add New Device Button -->
+                <button type="button" class="btn btn-block btn-primary">Add Device</button>
+
+                <!-- Check length of devices list -->
+                <!-- In case we found devices -->
+                <%if (devices.length > 0) {%>
+                    <!-- Devices Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">DataTable with default features</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="card-body">
+                            <table id="devicesTable" class="table table-bordered table-striped">
+                                <!-- Headers -->
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Model Number</th>
+                                    <th>Serial Number</th>
+                                    <th>Department</th>
+                                    <th>Installation Date</th>
+                                </tr>
+                                </thead>
+                                <!-- /Headers -->
+
+                                <!-- Table Rows -->
+                                <tbody>
+                                <% for(var i=0; i<devices.length; i++) {%>
+                                    <tr>
+                                        <td><%= devices[i].Name %></td>
+                                        <td><%= devices[i].ModelNumber %></td>
+                                        <td><%= devices[i].SerialNumber %></td>
+                                        <td><%= devices[i].Department %></td>
+                                        <td><%= devices[i].InstallationDate %></td>
+                                    </tr>
+                                <% } %>
+
+                                </tbody>
+                                <!-- /Table Rows -->
+
+                                <!-- Table Footer -->
+                                <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Model Number</th>
+                                    <th>Serial Number</th>
+                                    <th>Department</th>
+                                    <th>Installation Date</th>
+                                </tr>
+                                </tfoot>
+                                <!-- /Table Footer -->
+
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                    <!-- /.card -->
+                <% } %>
+
+                <% else{ %>
+                    <h1>No Devices Found</h1>
+                <% } %>
+
+                <!--            Enter Your Content Here-->
+            </div>
+        </div>
+    </div>
+</div>
