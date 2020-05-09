@@ -17,13 +17,6 @@ router.get('/', isAdmin, (req, res, next) => {
             console.log(error.toString());
             res.status(400).send(error)
         });
-
-
-    // res.render('devices', {
-    //     title: 'Devices List',
-    //     devices: devicesList,
-    //     user: req.user
-    // });
 });
 
 router.get('/add', isAdmin, (req, res) => {
@@ -32,6 +25,7 @@ router.get('/add', isAdmin, (req, res) => {
         user: req.user
     });
 });
+
 
 router.post('/add', isAdmin, (req, res) => {
     // Create the new Device
@@ -47,6 +41,17 @@ router.post('/add', isAdmin, (req, res) => {
         res.redirect("/devices");
     });
 
+});
+
+// Delete a device
+
+router.post('/delete', isAdmin, (req, res) => {
+    Device.destroy({
+        where: {
+            id: req.body.deviceID
+        }
+    });
+    res.redirect("/devices");
 });
 
 module.exports = router;

@@ -29,6 +29,7 @@
                                     <th>Serial Number</th>
                                     <th>Department</th>
                                     <th>Installation Date</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <!-- /Headers -->
@@ -42,23 +43,18 @@
                                         <td><%= devices[i].SerialNumber %></td>
                                         <td><%= devices[i].Department %></td>
                                         <td><%= devices[i].InstallationDate %></td>
+                                        <td><form action="/devices/delete" method="post">
+                                                <input type="text" name="deviceID" value="<%= devices[i].id%>" hidden>
+                                                <button type="submit" class="btn btn-block btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 <% } %>
 
                                 </tbody>
                                 <!-- /Table Rows -->
-
-                                <!-- Table Footer -->
-                                <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Model Number</th>
-                                    <th>Serial Number</th>
-                                    <th>Department</th>
-                                    <th>Installation Date</th>
-                                </tr>
-                                </tfoot>
-                                <!-- /Table Footer -->
 
                             </table>
 
