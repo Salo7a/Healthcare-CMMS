@@ -31,9 +31,8 @@ router.post('/add', isAdmin, (req, res) => {
     // Create the new Device
     const newDevice = {
         Name: req.body.name,
-        ModelNumber: req.body.modelNumber,
-        SerialNumber: req.body.serialNumber,
-        Department: req.body.department,
+        Model: req.body.model,
+        Serial: req.body.serial,
         InstallationDate: req.body.installationDate
     };
     Device.create(newDevice).then(result => {

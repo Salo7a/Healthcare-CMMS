@@ -5,8 +5,10 @@ module.exports = (sequelize, DataTypes) =>
     const Device = sequelize.define('Device', {
         // attributes
         Name: DataTypes.STRING,
-        ModelNumber: DataTypes.STRING,
-        SerialNumber: DataTypes.STRING,
+        Model: DataTypes.STRING,
+        Serial: DataTypes.STRING,
+        ImportDate: DataTypes.STRING,
+        OperationDate: DataTypes.STRING,
         InstallationDate: DataTypes.STRING
     }, {});
     
@@ -14,8 +16,7 @@ module.exports = (sequelize, DataTypes) =>
         // associations can be defined here
         Device.hasMany(models.WorkOrder);
         Device.belongsTo(models.Department, {
-            foreignKey: 'Department',
-            targetKey: 'id'
+            foreignKey: 'department',
         });
     };
     
