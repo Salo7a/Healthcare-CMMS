@@ -8,9 +8,7 @@ module.exports = (sequelize, DataTypes) =>
         SerialNumber: DataTypes.STRING,
         Department: DataTypes.STRING,
         InstallationDate: DataTypes.STRING
-    }, {
-        tableName: 'Device'
-    });
+    }, {});
     
     Device.associate = function (models) {
         // associations can be defined here
