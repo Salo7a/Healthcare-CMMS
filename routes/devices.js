@@ -42,8 +42,11 @@ router.post('/add', isAdmin, (req, res) => {
         Department: req.body.department,
         InstallationDate: req.body.installationDate
     };
-    Device.create(newDevice);
-    res.redirect("/");
+    Device.create(newDevice).then(result => {
+        req.flash("success", "Added Device Successfully");
+        res.redirect("/devices");
+    });
+
 });
 
 module.exports = router;
