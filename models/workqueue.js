@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         });
         WorkQueue.hasMany(models.Device,{
             as: 'devices'
-
         });
     };
     return WorkQueue;
