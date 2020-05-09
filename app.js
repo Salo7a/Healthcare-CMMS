@@ -68,6 +68,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/devices', devicesRouter);
+app.use('/portal/workqueue', devicesRouter);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,54 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <%= title %>
+                </h3>
+            </div>
+            <div class="row">
+                <!--            Enter Your Content Here-->
+                <!-- Main content -->
+                <section class="content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">jsGrid</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div id="jsGrid1"></div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </section>
+                <!--            Enter Your Content Here-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content -->
+<script>
+    $(function () {
+        $("#jsGrid1").jsGrid({
+            height: "100%",
+            width: "100%",
+
+            sorting: true,
+            paging: true,
+
+            data: db.clients,
+
+            fields: [
+                { name: "Engineer Name", type: "text", width: 150 },
+                { name: "Priority", type: "number", width: 50 },
+                { name: "Task Name", type: "text", width: 200 },
+                { name: "Date", type: "select", items: db.countries, valueField: "Id", textField: "Name" },
+                { name: "Done", type: "checkbox", title: "Is finished" }
+            ]
+        });
+    });
+</script>
+</body>
+</html>
