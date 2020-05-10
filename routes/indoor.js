@@ -37,7 +37,8 @@ router.get('/', isAuth, (req, res) => {
 
 router.get('/show', isAuth, (req, res) => {
     personnel.findAll({include :[ {models : departments }]}).then(
-        personnel =>{
+        personnel => {
+            console.log("MESSAGE", personnel);
             res.render('show', {
                 title: "Show All Personnel",
                 user : req.user,
