@@ -6,7 +6,7 @@ const personnel = require("../models").Indoor;
 
 
 
-router.post('/', isAuth, (res, req)=>{
+router.post('/', isAuth, (req, res)=>{
     console.log(req.body);
     const newPerson = {
         firstName : req.body.fname,
@@ -17,7 +17,7 @@ router.post('/', isAuth, (res, req)=>{
     personnel.create(newPerson).then( result => {
         req.flash("Success", "Added new Person");
         console.log(newPerson);
-        req.redirect("/indoor");
+        res.redirect("/indoor");
     })
 })
 
