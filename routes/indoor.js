@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const uuid = require("uuid");
 const isAuth = require("../utils/filters").isAuth;
 const personnel = require("../models").Indoor;
 
-
-
-router.post('/', isAuth, (res, req)=>{
+router.post('/', isAuth, (req, res) => {
     console.log(req.body);
     const newPerson = {
         firstName : req.body.fname,
@@ -17,7 +14,7 @@ router.post('/', isAuth, (res, req)=>{
     personnel.create(newPerson).then( result => {
         req.flash("Success", "Added new Person");
         console.log(newPerson);
-        req.redirect("/indoor");
+        res.redirect("/indoor");
     })
 })
 
@@ -35,7 +32,7 @@ router.get('/show', isAuth, (req, res) => {
             res.render('show', {
                 title: "Show All Personnel",
                 user : req.user,
-                personnel
+                personnel: personnel
             });
         }
     ).catch((error) => {
