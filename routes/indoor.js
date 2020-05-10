@@ -9,7 +9,8 @@ router.post('/', isAuth, (req, res) => {
         firstName : req.body.fname,
         lastName : req.body.lname,
         birthday : req.body.bdate,
-        Role : req.body.role
+        Role : req.body.role,
+        email: req.body.email
     };
     personnel.create(newPerson).then( result => {
         req.flash("Success", "Added new Person");
