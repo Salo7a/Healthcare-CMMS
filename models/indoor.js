@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         Indoor.hasMany(models.WorkOrder);
         Indoor.hasMany(models.Device);
         Indoor.hasOne(models.Department);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     };
 
     return Indoor;

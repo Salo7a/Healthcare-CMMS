@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const {isAdmin} = require('../utils/filters');
 const Device = require('../models').Device;
+const Department = require('../models').Department;
+const models = require('../models');
 
 // GET Route Handler for main devices page
 router.get('/', isAdmin, (req, res, next) => {
     // Get all the devices from database
-    Device.findAll()
+    Device.findAll({include :[ Department ]})
         .then(Devices => {
             res.render('devices', {
                 title: 'Devices List',
