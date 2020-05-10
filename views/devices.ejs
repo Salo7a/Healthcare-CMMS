@@ -4,14 +4,14 @@
         <div class="card-body">
             <div class="card-header">
                 <h3 class="card-title">
-                    <h1><%= title %></h1>
+                    <div>
+                        <!-- Add New Device Button -->
+                        <a type="button" class="btn btn-block btn-primary" href="/devices/add">Add New Device</a>
+                    </div>
                 </h3>
             </div>
             <div class="row">
                 <!--            Enter Your Content Here-->
-
-                <!-- Add New Device Button -->
-                <a type="button" class="btn btn-block btn-primary" href="/devices/add">Add Device</a>
 
                 <!-- Check length of devices list -->
                 <!-- In case we found devices -->
@@ -23,14 +23,16 @@
                             <table id="devicesTable" class="table table-bordered table-striped">
                                 <!-- Headers -->
                                 <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Model Number</th>
-                                    <th>Serial Number</th>
-                                    <th>Department</th>
-                                    <th>Installation Date</th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Model</th>
+                                        <th>Serial</th>
+                                        <th>Import Date</th>
+                                        <th>Installation Date</th>
+                                        <th>Supplying Company</th>
+                                        <th>Department</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <!-- /Headers -->
 
@@ -39,10 +41,12 @@
                                 <% for(var i=0; i<devices.length; i++) {%>
                                     <tr>
                                         <td><%= devices[i].Name %></td>
-                                        <td><%= devices[i].ModelNumber %></td>
-                                        <td><%= devices[i].SerialNumber %></td>
-                                        <td><%= devices[i].Department %></td>
+                                        <td><%= devices[i].Model %></td>
+                                        <td><%= devices[i].Serial %></td>
+                                        <td><%= devices[i].ImportDate %></td>
                                         <td><%= devices[i].InstallationDate %></td>
+                                        <td><%= devices[i].SupplyingCompany %></td>
+                                        <td><%= devices[i].Department %></td>
                                         <td><form action="/devices/delete" method="post">
                                                 <input type="text" name="deviceID" value="<%= devices[i].id%>" hidden>
                                                 <button type="submit" class="btn btn-block btn-danger">

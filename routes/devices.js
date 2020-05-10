@@ -3,6 +3,7 @@ const router = express.Router();
 const {isAdmin} = require('../utils/filters');
 const Device = require('../models').Device;
 
+// GET Route Handler for main devices page
 router.get('/', isAdmin, (req, res, next) => {
     // Get all the devices from database
     Device.findAll()
@@ -19,6 +20,7 @@ router.get('/', isAdmin, (req, res, next) => {
         });
 });
 
+// GET Route Handler for adding a new Device
 router.get('/add', isAdmin, (req, res) => {
     res.render('addDevice', {
         title: 'Add a new device',
@@ -26,14 +28,16 @@ router.get('/add', isAdmin, (req, res) => {
     });
 });
 
-
+// POST Route Handler for adding a new Device
 router.post('/add', isAdmin, (req, res) => {
     // Create the new Device
     const newDevice = {
         Name: req.body.name,
         Model: req.body.model,
         Serial: req.body.serial,
-        InstallationDate: req.body.installationDate
+        ImportDate: DataTypes.STRING,
+        InstallationDate: req.body.installationDate,
+        SupplyingCompany: DataTypes.STRING
     };
     Device.create(newDevice).then(result => {
         req.flash("success", "Added Device Successfully");
@@ -42,8 +46,7 @@ router.post('/add', isAdmin, (req, res) => {
 
 });
 
-// Delete a device
-
+// POST Route Handler for Deleting a Device
 router.post('/delete', isAdmin, (req, res) => {
     Device.destroy({
         where: {
