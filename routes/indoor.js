@@ -3,7 +3,6 @@ const router = express.Router();
 const isAuth = require("../utils/filters").isAuth;
 const personnel = require("../models").Indoor;
 const departments = require("../models").Department;
-const models = require("../models")
 
 
 router.post('/', isAuth, (req, res) => {
@@ -21,7 +20,7 @@ router.post('/', isAuth, (req, res) => {
         console.log(newPerson);
         res.redirect("/indoor");
     })
-})
+});
 
 router.get('/', isAuth, (req, res) => {
     departments.findAll().then(
@@ -36,7 +35,7 @@ router.get('/', isAuth, (req, res) => {
 })
 
 router.get('/show', isAuth, (req, res) => {
-    personnel.findAll({include :[ {models : departments }]}).then(
+    personnel.findAll({include :[  departments ]}).then(
         personnel => {
             console.log("MESSAGE", personnel);
             res.render('show', {
