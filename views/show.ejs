@@ -21,23 +21,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (var i = 0; i <personnel.length; i++) { %>
+                                <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
-                                        <th> <% personnel[i].firstName; console.log(personnel[i].firstName)%> </th>
-                                        <th> <% personnel[i].lastName%> </th>
-                                        <th> <% personnel[i].birthday%> </th>
-                                        <th> <% personnel[i].Role%>  </th>
+                                        <td> <%= personnel[i].firstName %> </td>
+                                        <td> <%= personnel[i].lastName  %> </td>
+                                        <td> <%= personnel[i].birthday  %> </td>
+                                        <td> <%= personnel[i].Role      %>  </td>
                                     </tr>
                                 <% } %>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name </th>
-                                    <th>Birthday Date</th>
-                                    <th>Role</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 <% } else { %>

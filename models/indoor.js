@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Indoor.associate = function (models) {
         // associations can be defined here
-        Indoor.belongsTo(models.Device)
+        // Indoor.belongsTo(models.Device)
     };
     return Indoor;
 };

@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const uuid = require("uuid");
 const isAuth = require("../utils/filters").isAuth;
 const personnel = require("../models").Indoor;
 
-
-
-router.post('/', isAuth, (req, res)=>{
+router.post('/', isAuth, (req, res) => {
     console.log(req.body);
     const newPerson = {
         firstName : req.body.fname,
@@ -35,7 +32,7 @@ router.get('/show', isAuth, (req, res) => {
             res.render('show', {
                 title: "Show All Personnel",
                 user : req.user,
-                personnel
+                personnel: personnel
             });
         }
     ).catch((error) => {
