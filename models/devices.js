@@ -1,17 +1,24 @@
 'use strict';
+const models = require('../models');
 module.exports = (sequelize, DataTypes) =>
 {
     const Device = sequelize.define('Device', {
         // attributes
         Name: DataTypes.STRING,
-        ModelNumber: DataTypes.STRING,
-        SerialNumber: DataTypes.STRING,
-        Department: DataTypes.STRING,
-        InstallationDate: DataTypes.STRING
+        Model: DataTypes.STRING,
+        Serial: DataTypes.STRING,
+        ImportDate: DataTypes.STRING,
+        InstallationDate: DataTypes.STRING,
+        SupplyingCompany: DataTypes.STRING
     }, {});
     
     Device.associate = function (models) {
         // associations can be defined here
+        Device.hasMany(models.WorkOrder);
+        Device.belongsTo(models.Department, {
+            foreignKey: 'department',
+            targetKey: 'id'
+        });
     };
     
     return Device;

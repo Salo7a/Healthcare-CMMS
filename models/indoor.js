@@ -6,9 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         firstName: DataTypes.STRING,
         lastName: DataTypes.STRING,
         birthday: DataTypes.DATEONLY,
-        SSN: DataTypes.INTEGER,
         Role: DataTypes.BOOLEAN,
-        WorkHours: DataTypes.INTEGER
     }, {});
 
     Indoor.associate = function (models) {

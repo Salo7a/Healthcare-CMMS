@@ -7,10 +7,55 @@
                     <%= title %>
                 </h3>
             </div>
-            <div class="row">
+            <div >
                 <!--            Enter Your Content Here-->
-                <h1> HI </h1>
-                <!--            Enter Your Content Here-->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Person</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/indoor">
+                            <div class="form-group">
+                                <label >First Name </label>
+                                <input type="text" name="fname" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label >Last Name</label>
+                                <input type="text" name="lname" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label >Birthday date </label>
+                                <input type="date" name="bdate" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label  >Role</label>
+                                <select name="role"  class="form-control custom-select">
+                                    <option selected disabled>Select one</option>
+                                    <option>Technician</option>
+                                    <option>Engineer</option>
+                                    <option>Admin</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn-app btn btn-success float-right">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        </form>
+                    </div>  <!-- /.card -->
+                </div>
+                <div class="col-md-6">
+                    <a type="button" class="btn btn-success float-right" href="/indoor/show">
+                        <i class="fas fa-users" ></i> Show All Personnel
+                    </a>
+                </div>
             </div>
         </div>
     </div>
