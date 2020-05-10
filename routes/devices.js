@@ -56,4 +56,15 @@ router.post('/delete', isAdmin, (req, res) => {
     res.redirect("/devices");
 });
 
+// POST Route Handler for Deleting All the Devices
+router.get('/deleteAll', isAdmin, (req, res) => {
+    Device.destroy({
+        where: {}
+    })
+        .then(() => {
+            req.flash("success", "Deleted All Devices");
+            res.redirect("/devices");
+        });
+});
+
 module.exports = router;
