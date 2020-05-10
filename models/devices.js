@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) =>
         Model: DataTypes.STRING,
         Serial: DataTypes.STRING,
         ImportDate: DataTypes.STRING,
-        OperationDate: DataTypes.STRING,
-        InstallationDate: DataTypes.STRING
+        InstallationDate: DataTypes.STRING,
+        SupplyingCompany: DataTypes.STRING
     }, {});
     
     Device.associate = function (models) {
@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) =>
         Device.hasMany(models.WorkOrder);
         Device.belongsTo(models.Department, {
             foreignKey: 'department',
+            targetKey: 'id'
         });
     };
     

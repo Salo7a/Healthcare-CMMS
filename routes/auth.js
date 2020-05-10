@@ -2,10 +2,16 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models').User;
+const Device = require('../models').Device;
 const {NotAuth, isAuth} = require('../utils/filters');
 const {check, validationResult, body} = require('express-validator');
 const {Op} = require('sequelize');
 const Chance = require('chance');
+// const loadCSVData = require('../utils/loadCSV');
+const fs = require('fs')
+const neatCsv = require('neat-csv');
+const csv = require('csv-parser');
+const d3 = require('d3-fetch');
 require('dotenv').config();
 let chance = new Chance();
 
@@ -26,6 +32,7 @@ router.get('/login', NotAuth, function (req, res, next) {
         title: 'Login'
     });
 });
+
 router.post('/login', NotAuth, passport.authenticate('local', {
         failureRedirect: '/auth/login',
         failureFlash: true
@@ -64,9 +71,36 @@ router.get('/addtest', function (req, res, next) {
         Password: "password",
         isAdmin: false
     });
-    req.flash("success", "Test Accounts Were Added Successfully");
+    
+    fs.readFile('routes/DevicesData.csv',   async (err, data) => {
+        if (err)
+        {
+            console.log('errorrrr')
+            console.error(err)
+            return
+        }
+        let devicesList;
+        devicesList = await neatCsv(data);
+        console.log(devicesList[0]);
+        for (let i=0; i < devicesList.length; i++)
+        {
+            Device.create({
+                // Name: devicesList[i].Name,
+                Model: devicesList[i].Model,
+                Serial: devicesList[i].Serial,
+                ImportDate: devicesList[i].ImportDate,
+                InstallationDate: devicesList[i].InstallationDate,
+                SupplyingCompany: devicesList[i].SupplyingCompany,
+                // Department: devicesList[i].Department
+            });
+        }
+        console.log('Created!')
+    });
+    
+    req.flash("success", "Test Accounts And Devices Were Added Successfully");
     res.redirect('/auth/login');
 });
+
 // router.post('/register', [
 //     check('email').isEmail().withMessage('Invalid Email').normalizeEmail(),
 //     check('password').isLength({min: 6}).withMessage('Password Must Be At Least 6 Chars Long'),
@@ -214,5 +248,25 @@ router.get('/logout', isAuth, function (req, res, next) {
     res.redirect('/auth/login');
 });
 
+// fs.readFile('routes/DevicesData.csv',   async (err, data) => {
+//     if (err) {
+//         console.log('errorrrr')
+//         console.error(err)
+//         return
+//     }
+//     let devicesList;
+//     devicesList = await neatCsv(data);
+//     console.log(devicesList[1]);
+//     }
+// );
+
+// const results = [];
+//
+// fs.createReadStream('routes/DevicesData.csv')
+//     .pipe(csv())
+//     .on('data', (data) => results.push(data))
+//     .on('end', () => {
+//         console.log(results[0]);
+//     });
 
 module.exports = router;
