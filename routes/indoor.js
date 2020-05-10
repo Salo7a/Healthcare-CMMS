@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const isAuth = require("../utils/filters").isAuth;
 const personnel = require("../models").Indoor;
+const departments = require("../models").Department;
+const models = require("../models")
+
 
 router.post('/', isAuth, (req, res) => {
     console.log(req.body);
@@ -10,7 +13,8 @@ router.post('/', isAuth, (req, res) => {
         lastName : req.body.lname,
         birthday : req.body.bdate,
         Role : req.body.role,
-        email: req.body.email
+        email: req.body.email,
+        department: req.body.department
     };
     personnel.create(newPerson).then( result => {
         req.flash("Success", "Added new Person");
@@ -20,20 +24,24 @@ router.post('/', isAuth, (req, res) => {
 })
 
 router.get('/', isAuth, (req, res) => {
-    res.render('indoor', {
-        title: 'Indoor View',
-        user: req.user
-    });
-    console.log("This ", personnel);
+    departments.findAll().then(
+        departments =>{
+            res.render('indoor', {
+                title: 'Indoor View',
+                user: req.user,
+                departments
+            });
+        }
+    )
 })
 
 router.get('/show', isAuth, (req, res) => {
-    personnel.findAll().then(
+    personnel.findAll({include :[ {models : departments }]}).then(
         personnel =>{
             res.render('show', {
                 title: "Show All Personnel",
                 user : req.user,
-                personnel: personnel
+                personnel: personnel,
             });
         }
     ).catch((error) => {

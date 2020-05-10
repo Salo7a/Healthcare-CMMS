@@ -7,16 +7,14 @@ module.exports = (sequelize, DataTypes) => {
         lastName: DataTypes.STRING,
         birthday: DataTypes.DATEONLY,
         Role: DataTypes.BOOLEAN,
-        email: DataTypes.STRING
+        email: DataTypes.STRING,
     }, {});
 
     Indoor.associate = function (models) {
         // associations can be defined here
         Indoor.hasMany(models.WorkOrder);
         Indoor.hasMany(models.Device);
-        Indoor.hasOne(models.Department, {
-            foreignKey: "Department",
-        });
+        Indoor.hasOne(models.Department);
     };
 
     return Indoor;
