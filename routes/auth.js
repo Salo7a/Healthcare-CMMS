@@ -75,8 +75,8 @@ router.get('/addtest', function (req, res, next) {
     fs.readFile('routes/DevicesData.csv',   async (err, data) => {
         if (err)
         {
-            console.log('errorrrr')
-            console.error(err)
+            console.log('errorrrr');
+            console.error(err);
             return
         }
         let devicesList;
@@ -85,7 +85,7 @@ router.get('/addtest', function (req, res, next) {
         for (let i=0; i < devicesList.length; i++)
         {
             Device.create({
-                // Name: devicesList[i].Name,
+                Name: devicesList[i].Name,
                 Model: devicesList[i].Model,
                 Serial: devicesList[i].Serial,
                 ImportDate: devicesList[i].ImportDate,
