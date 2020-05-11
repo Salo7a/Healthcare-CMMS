@@ -6,19 +6,19 @@ const departments = require("../models").Department;
 
 
 router.post('/', isAuth, (req, res) => {
-    console.log(req.body);
-    console.log(req.body.department);
+    console.log(" aaaa ", req.body.department);
     const newPerson = {
         firstName : req.body.fname,
         lastName : req.body.lname,
         birthday : req.body.bdate,
         Role : req.body.role,
         email: req.body.email,
-        department: req.body.department
+        DepartmentId : req.body.department
     };
+    console.log("AAAAAAA", newPerson);
+    console.log(("AAAAAA", req.body));
     personnel.create(newPerson).then( result => {
         req.flash("Success", "Added new Person");
-        console.log(newPerson);
         res.redirect("/indoor");
     })
 });
