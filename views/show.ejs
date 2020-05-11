@@ -4,7 +4,9 @@
         <div class="card-body">
             <div > <!--            Enter Your Content Here-->
                 <% if (personnel.length > 0) { %>
-
+                    <a type="button" class="btn btn-block btn-primary" href="/indoor">
+                        <i class="fas fa-users" ></i> Add Personnel
+                    </a>
                     <div class="card-body">
                         <table id="pT" class="table table-bordered table-hover">
                             <thead>
@@ -26,11 +28,20 @@
                                         <td><%= personnel[i].birthday  %></td>
                                         <td><%= personnel[i].Role      %></td>
                                         <td><%= personnel[i].Department.Name %></td>
+                                        <td>
+                                            <form action="/indoor/delete" method="post">
+                                                <input type="text" name="personID" value="<%= personnel[i].id %>" hidden>
+                                                <button type="submit" class="btn btn-block btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 <% } %>
                             </tbody>
                         </table>
                     </div>
+
                 <% } else { %>
                     <h1> 0 Personnel Found </h1>
                 <% } %>

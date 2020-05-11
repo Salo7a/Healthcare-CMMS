@@ -23,6 +23,15 @@ router.post('/', isAuth, (req, res) => {
     })
 });
 
+router.post('/delete', isAuth, (req, res)=>{
+    personnel.destroy({
+        where: {
+            id: req.body.personID
+        }
+    })
+    res.redirect('/indoor');
+});
+
 router.get('/', isAuth, (req, res) => {
     departments.findAll().then(
         departments =>{
