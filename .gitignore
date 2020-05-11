@@ -108,3 +108,6 @@ dist
 
 #VS Code
 /.vs/
+
+# db
+.sqlite
