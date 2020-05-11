@@ -14,11 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
         Indoor.hasMany(models.WorkOrder);
         Indoor.hasMany(models.Device);
-        Indoor.hasOne(models.Department);
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
+        // Indoor.hasOne(models.Department);
     };
 
     return Indoor;
