@@ -49,7 +49,7 @@
                                 <select name="department"  class="form-control custom-select">
                                     <option selected disabled>Select one</option>
                                     <% for (var i = 0; i<departments.length; i++) { %>
-                                        <option value="<% departments[i].id %>"><%= departments[i].Name %></option>
+                                        <option value="<% departments[i].id; console.log("AAA", departments[i].id) %>"><%= departments[i].Name %></option>
                                     <% } %>
                                 </select>
                             </div>

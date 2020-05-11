@@ -7,6 +7,7 @@ const departments = require("../models").Department;
 
 router.post('/', isAuth, (req, res) => {
     console.log(req.body);
+    console.log(req.body.department);
     const newPerson = {
         firstName : req.body.fname,
         lastName : req.body.lname,
@@ -25,6 +26,7 @@ router.post('/', isAuth, (req, res) => {
 router.get('/', isAuth, (req, res) => {
     departments.findAll().then(
         departments =>{
+            console.log(departments);
             res.render('indoor', {
                 title: 'Indoor View',
                 user: req.user,
@@ -37,6 +39,7 @@ router.get('/', isAuth, (req, res) => {
 router.get('/show', isAuth, (req, res) => {
     personnel.findAll({include :[  departments ]}).then(
         personnel => {
+            console.log(personnel);
             console.log("MESSAGE", personnel);
             res.render('show', {
                 title: "Show All Personnel",
