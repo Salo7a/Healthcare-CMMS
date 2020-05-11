@@ -16,6 +16,7 @@
                                     <th>Email</th>
                                     <th>Birthday Date</th>
                                     <th>Role</th>
+                                    <th>Phone Number</th>
                                     <th>Department</th>
                                 </tr>
                             </thead>
@@ -27,6 +28,7 @@
                                         <td><%= personnel[i].email      %></td>
                                         <td><%= personnel[i].birthday  %></td>
                                         <td><%= personnel[i].Role      %></td>
+                                        <td><%= personnel[i].phone      %></td>
                                         <td><%= personnel[i].Department.Name %></td>
                                         <td>
                                             <form action="/indoor/delete" method="post">

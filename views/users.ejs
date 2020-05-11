@@ -1,0 +1,47 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div > <!--            Enter Your Content Here-->
+                <% if (users.length > 0) { %>
+                    <div class="card-body">
+                        <table id="pT" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Title </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% for (var i = 0; i < users.length; i++) { %>
+                                <tr>
+                                    <td><%= users[i].Name   %></td>
+                                    <td><%= users[i].Email  %></td>
+                                    <td><%= users[i].Phone  %></td>
+                                    <td><%= users[i].Title  %></td>
+                                    <td>
+                                        <form action="/auth/delete" method="post">
+                                            <input type="text" name="usersID" value="<%= users[i].id %>" hidden>
+                                            <button type="submit" class="btn btn-block btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                <% } else { %>
+                    <h1> 0 Personnel Found </h1>
+                <% } %>
+            </div>                 <!--            Enter Your Content Here-->
+        </div>
+    </div>
+</div>
+<% block('js').append('<script src="/plugins/datatables/jquery.dataTables.js"></script>') %>
+<% block('js').append('<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>') %>
+<% block('js').append('<script> $(function () {$("#pT").DataTable();})</script>') %>

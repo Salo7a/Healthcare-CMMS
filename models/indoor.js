@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         birthday: DataTypes.DATEONLY,
         Role: DataTypes.BOOLEAN,
         email: DataTypes.STRING,
+        phone: DataTypes.STRING
     }, {});
 
     Indoor.associate = function (models) {

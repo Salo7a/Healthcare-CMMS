@@ -124,8 +124,17 @@ router.get('/addtest', function (req, res, next) {
                 birthday : person.birthday,
                 email    : person.email,
                 Role     : person.Role,
+                phone    : person.phone,
                 DepartmentId : person.DepartmentId
             });
+            User.create({
+                Name: person.firstName + person.lastName,
+                Email : person.email,
+                Phone : person.phone,
+                Title : person.Role,
+                Password : "password",
+                isAdmin : false
+            })
         });
     });
     console.log("Created Persons");
@@ -133,6 +142,30 @@ router.get('/addtest', function (req, res, next) {
 
     req.flash("success", "Test Accounts And Devices Were Added Successfully");
     res.redirect('/auth/login');
+});
+
+router.get("/userlist", isAuth,(req, res)=>{
+    User.findAll().then(
+        users =>{
+            res.render("users", {
+                title: "Users List",
+                user : req.user,
+                users
+            });
+        }
+    )
+});
+router.get("/add", isAuth, (req, res)=>{
+
+});
+
+router.post('/delete', isAuth, (req, res)=>{
+    User.destroy({
+        where: {
+            id: req.body.usersID
+        }
+    });
+    res.redirect('/indoor');
 });
 
 // router.post('/register', [
