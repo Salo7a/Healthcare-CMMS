@@ -4,6 +4,8 @@ const passport = require('passport');
 const User = require('../models').User;
 const Device = require('../models').Device;
 const Department = require('../models').Department;
+const Persons = require("../models").Indoor;
+
 const {NotAuth, isAuth} = require('../utils/filters');
 const {check, validationResult, body} = require('express-validator');
 const {Op} = require('sequelize');
@@ -107,7 +109,28 @@ router.get('/addtest', function (req, res, next) {
         }
         console.log('Created!')
     });
-    
+
+    fs.readFile("routes/indoor.csv", async (err, data)=>{
+        if(err){
+            console.log(err);
+        }
+        let indoor;
+        indoor = await neatCsv(data);
+        console.log(indoor);
+        indoor.forEach(person => {
+            Persons.create({
+                firstName: person.firstName,
+                lastName : person.lastName,
+                birthday : person.birthday,
+                email    : person.email,
+                Role     : person.Role,
+                DepartmentId : person.DepartmentId
+            });
+        });
+    });
+    console.log("Created Persons");
+
+
     req.flash("success", "Test Accounts And Devices Were Added Successfully");
     res.redirect('/auth/login');
 });
