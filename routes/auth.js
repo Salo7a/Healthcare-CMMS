@@ -102,7 +102,7 @@ router.get('/addtest', function (req, res, next) {
                 ImportDate: devicesList[i].ImportDate,
                 InstallationDate: devicesList[i].InstallationDate,
                 SupplyingCompany: devicesList[i].SupplyingCompany,
-                DepartmentID: currentDepID
+                // DepartmentID: currentDepID
             });
         }
         console.log('Created!')
