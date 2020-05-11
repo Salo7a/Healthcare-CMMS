@@ -41,7 +41,7 @@
 
                                 <!-- Table Rows -->
                                 <tbody>
-                                <% for(var i=0; i<devices.length; i++) {%>
+                                <% for(var i = 0; i < devices.length; i++) { %>
                                     <tr>
                                         <td><%= devices[i].Name %></td>
                                         <td><%= devices[i].Model %></td>
@@ -49,9 +49,10 @@
                                         <td><%= devices[i].ImportDate %></td>
                                         <td><%= devices[i].InstallationDate %></td>
                                         <td><%= devices[i].SupplyingCompany %></td>
-                                        <td>mfesh</td>
-                                        <td><form action="/devices/delete" method="post">
-                                                <input type="text" name="deviceID" value="<%= devices[i].id%>" hidden>
+                                        <td><%= devices[i].Department.Name %></td>
+                                        <td>
+                                            <form action="/devices/delete" method="post">
+                                                <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
                                                 <button type="submit" class="btn btn-block btn-danger">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>

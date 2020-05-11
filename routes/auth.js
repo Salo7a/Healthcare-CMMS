@@ -94,7 +94,7 @@ router.get('/addtest', function (req, res, next) {
         {
             // Return the id of the department
             const currentDepartment = departmentsList.filter(dep => dep[devicesList[i].Department]);
-            const currentDepID = currentDepartment[0][devicesList[i].Department]
+            const currentDepID = currentDepartment[0][devicesList[i].Department];
             Device.create({
                 Name: devicesList[i].Name,
                 Model: devicesList[i].Model,
@@ -102,7 +102,7 @@ router.get('/addtest', function (req, res, next) {
                 ImportDate: devicesList[i].ImportDate,
                 InstallationDate: devicesList[i].InstallationDate,
                 SupplyingCompany: devicesList[i].SupplyingCompany,
-                // DepartmentID: currentDepID
+                DepartmentId: currentDepID
             });
         }
         console.log('Created!')
