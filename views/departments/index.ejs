@@ -1,0 +1,72 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <div>
+                        <!-- Add New Department Button -->
+                        <a type="button" class="btn btn-block btn-primary" href="/departments/add">Add New Department</a>
+
+                        <!-- Delete All The Department Button -->
+                        <a type="button" class="btn btn-block btn-danger" href="/departments/deleteAll">Erase Database</a>
+                    </div>
+                </h3>
+            </div>
+            <div class="row">
+                <!--            Enter Your Content Here-->
+
+                <!-- Check length of departments list -->
+                <!-- In case we found departments -->
+                <% if (departments.length > 0) { %>
+                    <!-- Departments Table -->
+                    <div class="card">
+
+                        <div class="card-body">
+                            <table id="departmentsTable" class="table table-bordered table-striped">
+                                <!-- Headers -->
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <!-- /Headers -->
+
+                                <!-- Table Rows -->
+                                <tbody>
+                                <% for(var i=0; i<departments.length; i++) {%>
+                                    <tr>
+                                        <td><%= departments[i].id %></td>
+                                        <td><%= departments[i].Name %></td>
+                                        <td><form action="/departments/delete" method="post">
+                                                <input type="text" name="departmentID" value="<%= departments[i].id%>" hidden>
+                                                <button type="submit" class="btn btn-block btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% } %>
+
+                                </tbody>
+                                <!-- /Table Rows -->
+
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                    <!-- /.card -->
+
+                <% }else{ %>
+                    <h1>No Departments Found</h1>
+                <% } %>
+
+                <!--            Enter Your Content Here-->
+            </div>
+        </div>
+    </div>
+</div>

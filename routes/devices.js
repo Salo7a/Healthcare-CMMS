@@ -10,7 +10,7 @@ router.get('/', isAdmin, (req, res, next) => {
     // Get all the devices from database
     Device.findAll({include :[ Department ]})
         .then(Devices => {
-            res.render('devices', {
+            res.render('devices/index', {
                 title: 'Devices List',
                 devices: Devices,
                 user: req.user
@@ -24,7 +24,7 @@ router.get('/', isAdmin, (req, res, next) => {
 
 // GET Route Handler for adding a new Device
 router.get('/add', isAdmin, (req, res) => {
-    res.render('addDevice', {
+    res.render('devices/add', {
         title: 'Add a new device',
         user: req.user
     });

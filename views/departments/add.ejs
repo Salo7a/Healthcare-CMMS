@@ -1,0 +1,33 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <!--            Enter Your Content Here-->
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- /.card-header -->
+
+                    <!-- form start -->
+                    <form role="form" action="/departments/add" method="post">
+                        <div class="card-body">
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter name">
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+
+                <!--            Enter Your Content Here-->
+            </div>
+        </div>
+    </div>
+</div>
