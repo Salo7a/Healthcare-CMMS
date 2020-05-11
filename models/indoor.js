@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         Indoor.hasMany(models.WorkOrder);
         Indoor.hasMany(models.Device);
         // Indoor.hasOne(models.Department);
+
     };
 
     return Indoor;
