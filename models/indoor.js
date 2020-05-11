@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
         Indoor.hasMany(models.WorkOrder);
         Indoor.hasMany(models.Device);
-        // Indoor.hasOne(models.Department);
+        Indoor.hasOne(models.Department);
 
     };
 
