@@ -2,11 +2,6 @@
 <div class="col-md-12">
     <div class="card card-default">
         <div class="card-body">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <%= title %>
-                </h3>
-            </div>
             <div > <!--            Enter Your Content Here-->
                 <% if (personnel.length > 0) { %>
 
@@ -16,28 +11,24 @@
                                 <tr>
                                     <th>First Name</th>
                                     <th>Last Name </th>
+                                    <th>Email</th>
                                     <th>Birthday Date</th>
                                     <th>Role</th>
+                                    <th>Department</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (var i = 0; i <personnel.length; i++) { %>
+                                <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
-                                        <th> <% personnel[i].firstName%> </th>
-                                        <th> <% personnel[i].lastName%> </th>
-                                        <th> <% personnel[i].birthday%> </th>
-                                        <th> <% personnel[i].Role%>  </th>
+                                        <td><%= personnel[i].firstName %></td>
+                                        <td><%= personnel[i].lastName  %></td>
+                                        <td><%= personnel[i].email      %></td>
+                                        <td><%= personnel[i].birthday  %></td>
+                                        <td><%= personnel[i].Role      %></td>
+                                        <td><%= personnel[i].Department.Name %></td>
                                     </tr>
                                 <% } %>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name </th>
-                                    <th>Birthday Date</th>
-                                    <th>Role</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 <% } else { %>

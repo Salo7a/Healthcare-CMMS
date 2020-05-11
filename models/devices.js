@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) =>
         ImportDate: DataTypes.STRING,
         InstallationDate: DataTypes.STRING,
         SupplyingCompany: DataTypes.STRING
-    }, {});
+    });
     
     Device.associate = function (models) {
         // associations can be defined here
         Device.hasMany(models.WorkOrder);
-        Device.belongsTo(models.Department, {
-            foreignKey: 'department',
-            targetKey: 'id'
-        });
+        Device.belongsTo(models.Department);
     };
     
     return Device;

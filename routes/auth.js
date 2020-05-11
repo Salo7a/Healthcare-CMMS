@@ -3,6 +3,9 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models').User;
 const Device = require('../models').Device;
+const Department = require('../models').Department;
+const Persons = require("../models").Indoor;
+
 const {NotAuth, isAuth} = require('../utils/filters');
 const {check, validationResult, body} = require('express-validator');
 const {Op} = require('sequelize');
@@ -10,8 +13,6 @@ const Chance = require('chance');
 // const loadCSVData = require('../utils/loadCSV');
 const fs = require('fs')
 const neatCsv = require('neat-csv');
-const csv = require('csv-parser');
-const d3 = require('d3-fetch');
 require('dotenv').config();
 let chance = new Chance();
 
@@ -72,31 +73,64 @@ router.get('/addtest', function (req, res, next) {
         isAdmin: false
     });
     
+    const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}]
+    for (let i = 0; i < departmentsList.length; i++)
+    {
+        Department.create({
+            Name: Object.keys(departmentsList[i])[0]
+        });
+    }
+    
     fs.readFile('routes/DevicesData.csv',   async (err, data) => {
         if (err)
         {
-            console.log('errorrrr')
-            console.error(err)
+            console.log('errorrrr');
+            console.error(err);
             return
         }
+        
         let devicesList;
         devicesList = await neatCsv(data);
         console.log(devicesList[0]);
         for (let i=0; i < devicesList.length; i++)
         {
+            // Return the id of the department
+            const currentDepartment = departmentsList.filter(dep => dep[devicesList[i].Department]);
+            const currentDepID = currentDepartment[0][devicesList[i].Department];
             Device.create({
-                // Name: devicesList[i].Name,
+                Name: devicesList[i].Name,
                 Model: devicesList[i].Model,
                 Serial: devicesList[i].Serial,
                 ImportDate: devicesList[i].ImportDate,
                 InstallationDate: devicesList[i].InstallationDate,
                 SupplyingCompany: devicesList[i].SupplyingCompany,
-                // Department: devicesList[i].Department
+                DepartmentId: currentDepID
             });
         }
         console.log('Created!')
     });
-    
+
+    fs.readFile("routes/indoor.csv", async (err, data)=>{
+        if(err){
+            console.log(err);
+        }
+        let indoor;
+        indoor = await neatCsv(data);
+        console.log(indoor);
+        indoor.forEach(person => {
+            Persons.create({
+                firstName: person.firstName,
+                lastName : person.lastName,
+                birthday : person.birthday,
+                email    : person.email,
+                Role     : person.Role,
+                DepartmentId : person.DepartmentId
+            });
+        });
+    });
+    console.log("Created Persons");
+
+
     req.flash("success", "Test Accounts And Devices Were Added Successfully");
     res.redirect('/auth/login');
 });
@@ -268,5 +302,6 @@ router.get('/logout', isAuth, function (req, res, next) {
 //     .on('end', () => {
 //         console.log(results[0]);
 //     });
+
 
 module.exports = router;

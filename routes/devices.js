@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const {isAdmin} = require('../utils/filters');
 const Device = require('../models').Device;
+const Department = require('../models').Department;
+const models = require('../models');
 
 // GET Route Handler for main devices page
 router.get('/', isAdmin, (req, res, next) => {
     // Get all the devices from database
-    Device.findAll()
+    Device.findAll({include :[ Department ]})
         .then(Devices => {
-            res.render('devices', {
+            res.render('devices/index', {
                 title: 'Devices List',
                 devices: Devices,
                 user: req.user
@@ -22,7 +24,7 @@ router.get('/', isAdmin, (req, res, next) => {
 
 // GET Route Handler for adding a new Device
 router.get('/add', isAdmin, (req, res) => {
-    res.render('addDevice', {
+    res.render('devices/add', {
         title: 'Add a new device',
         user: req.user
     });
@@ -54,6 +56,17 @@ router.post('/delete', isAdmin, (req, res) => {
         }
     });
     res.redirect("/devices");
+});
+
+// POST Route Handler for Deleting All the Devices
+router.get('/deleteAll', isAdmin, (req, res) => {
+    Device.destroy({
+        where: {}
+    })
+        .then(() => {
+            req.flash("success", "Deleted All Devices");
+            res.redirect("/devices");
+        });
 });
 
 module.exports = router;

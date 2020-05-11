@@ -1,41 +1,50 @@
 const express = require("express");
 const router = express.Router();
-const uuid = require("uuid");
 const isAuth = require("../utils/filters").isAuth;
 const personnel = require("../models").Indoor;
+const departments = require("../models").Department;
 
 
-
-router.post('/', isAuth, (res, req)=>{
-    console.log(req.body);
+router.post('/', isAuth, (req, res) => {
+    console.log(" aaaa ", req.body.department);
     const newPerson = {
         firstName : req.body.fname,
         lastName : req.body.lname,
         birthday : req.body.bdate,
-        Role : req.body.role
+        Role : req.body.role,
+        email: req.body.email,
+        DepartmentId : req.body.department
     };
+    console.log("AAAAAAA", newPerson);
+    console.log(("AAAAAA", req.body));
     personnel.create(newPerson).then( result => {
         req.flash("Success", "Added new Person");
-        console.log(newPerson);
-        req.redirect("/indoor");
+        res.redirect("/indoor");
     })
-})
+});
 
 router.get('/', isAuth, (req, res) => {
-    res.render('indoor', {
-        title: 'Indoor View',
-        user: req.user
-    });
-    console.log("This ", personnel);
+    departments.findAll().then(
+        departments =>{
+            console.log(departments);
+            res.render('indoor', {
+                title: 'Indoor View',
+                user: req.user,
+                departments
+            });
+        }
+    )
 })
 
 router.get('/show', isAuth, (req, res) => {
-    personnel.findAll().then(
-        personnel =>{
+    personnel.findAll({include :[  departments ]}).then(
+        personnel => {
+            console.log(personnel);
+            console.log("MESSAGE", personnel);
             res.render('show', {
                 title: "Show All Personnel",
                 user : req.user,
-                personnel
+                personnel: personnel,
             });
         }
     ).catch((error) => {
