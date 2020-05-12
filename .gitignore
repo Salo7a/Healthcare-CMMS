@@ -110,8 +110,5 @@ dist
 /.vs/
 
 # db
-.sqlite
-
 *.sqlite
-
 *.sqlite-journal
