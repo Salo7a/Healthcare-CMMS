@@ -3,14 +3,15 @@ const router = express.Router();
 const isAuth = require("../utils/filters").isAuth;
 const isAdmin = require("../utils/filters").isAdmin;
 const devices = require('../models').Device;
+const Department = require('../models').Department;
 const parts = require("../models").Parts;
 const user = require("../models").User;
 
 // GET Route Handler for main parts page 
 router.get('/', isAuth, (req, res) => {
-    parts.findAll({ include: [Device] }).then(
+    parts.findAll({ include: [devices] }).then(
         parts => {
-            res.render('part/index', {
+            res.render('parts/index', {
                 title: 'Parts List',
                 user: req.user,
                 parts
@@ -22,7 +23,7 @@ router.get('/', isAuth, (req, res) => {
 });
 // GET Route Handler for adding a part
 router.get('/add', isAdmin, (req, res) => {
-    devices.findAll().then(
+    devices.findAll({ include: [Department] }).then(
         devices => {
             console.log(devices);
             res.render('parts/add', {
