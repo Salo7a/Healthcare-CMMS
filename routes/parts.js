@@ -8,7 +8,7 @@ const user = require("../models").User;
 
 // GET Route Handler for main parts page 
 router.get('/', isAuth, (req, res) => {
-    parts.findAll({include :[ Device ]}).then(
+    parts.findAll({ include: [Device] }).then(
         parts => {
             res.render('part/index', {
                 title: 'Parts List',
@@ -48,5 +48,22 @@ router.post('/add', isAdmin, (req, res) => {
         // req.redirect("/parts");
     });
 });
+//POST Route Handler for deleting a part
+router.post('/delete', isAdmin, (req, res) => {
+    parts.destroy({
+        where: { id: req.body.partID }
+    });
+    res.redirect('/parts');
+});
 
-//POST Route Handler for Deleting a part
+//POST Route Handler for Deleting all part
+router.get('deleteAll', isAdmin, (req, res) => {
+    parts.destroy({
+        where: {}
+    }).then(() => {
+        req.flash("Success", "Deleted All Parts");
+        res.redirect('/parts');
+    });
+});
+
+module.exports = router;
