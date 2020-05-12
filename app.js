@@ -19,7 +19,7 @@ const devicesRouter = require('./routes/devices');
 const workqueueRouter = require('./routes/workqueue');
 const indoorRouter = require('./routes/indoor');
 const departmentsRouter = require('./routes/departments');
-// const partsRouter = require('./routes/parts');
+const partsRouter = require('./routes/parts');
 const app = express();
 
 
@@ -74,7 +74,7 @@ app.use('/devices', devicesRouter);
 app.use('/portal/workqueue', workqueueRouter);
 app.use('/indoor', indoorRouter);
 app.use('/departments', departmentsRouter);
-// app.use('/parts', partsRouter);
+app.use('/parts', partsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

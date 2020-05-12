@@ -1,0 +1,70 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="row">
+                <!--            Enter Your Content Here-->
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- /.card-header -->
+
+                    <!-- form start -->
+                    <form role="form" action="/parts/add" method="post">
+                        <div class="card-body">
+                            <!-- Type -->
+                            <div class="form-group">
+                                <label for="type">Type</label>
+                                <input type="text" class="form-control" name="type" placeholder="Enter Type">
+                            </div>
+
+                            <!-- Model Number -->
+                            <div class="form-group">
+                                <label for="modelNumber">Model</label>
+                                <input type="text" class="form-control" name="model" placeholder="Model Number">
+                            </div>
+
+                            <!-- Quantity  -->
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" name="quantity" placeholder="Quantity">
+                            </div>
+
+                            <!-- Price -->
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="text" class="form-control" name="price" placeholder="Price">
+                            </div>
+
+                            <!-- Installation Date -->
+                            <div class="form-group">
+                                <label for="installationDate">Installation Date</label>
+                                <input type="date" class="form-control" name="installationDate"
+                                    placeholder="Installation Date">
+                            </div>
+
+                            <!-- Device -->
+                            <div class="form-group">
+                                <select name ="device" class="select2" multiple="multiple" data-placeholder="Select a Device"
+                                    style="width: 100%;">
+                                    <% for (let i = 0; i <devices.length; i++) { %>
+                                    <option value="<%= devices[i].id %>">
+                                        <%= devices[i].Name , devices[i].Model , devices[i].Serial , devices[i].DepartmentId.Name %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+
+                <!--            Enter Your Content Here-->
+            </div>
+        </div>
+    </div>
+</div>
