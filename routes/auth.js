@@ -155,9 +155,7 @@ router.get("/userlist", isAuth,(req, res)=>{
         }
     )
 });
-router.get("/add", isAuth, (req, res)=>{
 
-});
 
 router.post('/delete', isAuth, (req, res)=>{
     User.destroy({

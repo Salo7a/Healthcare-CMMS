@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         lastName: DataTypes.STRING,
         birthday: DataTypes.DATEONLY,
         Role: DataTypes.BOOLEAN,
-        email: DataTypes.STRING,
+        email: {
+            type : DataTypes.STRING,
+            isEmail : true
+        },
         phone: DataTypes.STRING
     }, {});
 
