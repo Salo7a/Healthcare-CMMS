@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) =>
         // associations can be defined here
         Device.hasMany(models.WorkOrder);
         Device.belongsTo(models.Department);
+        Device.hasMany(models.Parts)
     };
     
     return Device;

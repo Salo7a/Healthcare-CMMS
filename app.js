@@ -19,7 +19,7 @@ const devicesRouter = require('./routes/devices');
 const workqueueRouter = require('./routes/workqueue');
 const indoorRouter = require('./routes/indoor');
 const departmentsRouter = require('./routes/departments');
-
+const partsRouter = require('./routes/parts');
 const app = express();
 
 
@@ -40,7 +40,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('keyboard'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/dist', express.static(path.join(__dirname, 'node_modules/admin-lte/dist')));
@@ -51,7 +51,7 @@ app.use(helmet());
 //Express Session
 app.use(session({
     secret: "keyboard",
-    cookie: {maxAge: 60000},
+    cookie: { maxAge: 60000 },
     resave: false,
     saveUninitialized: false
 }));
@@ -74,7 +74,7 @@ app.use('/devices', devicesRouter);
 app.use('/portal/workqueue', workqueueRouter);
 app.use('/indoor', indoorRouter);
 app.use('/departments', departmentsRouter);
-
+app.use('/parts', partsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
