@@ -113,3 +113,5 @@ dist
 .sqlite
 
 *.sqlite
+
+*.sqlite-journal
