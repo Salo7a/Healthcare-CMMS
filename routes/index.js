@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 const {isAuth} = require('../utils/filters');
 const Device = require('../models').Device;
+const isAdmin = require('../utils/filters').isAdmin;
 
 router.get('/', isAuth, function (req, res, next) {
     res.render('index', {

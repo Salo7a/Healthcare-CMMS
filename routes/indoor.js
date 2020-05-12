@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const isAuth = require("../utils/filters").isAuth;
+const isAdmin = require("../utils/filters").isAdmin;
 const personnel = require("../models").Indoor;
 const departments = require("../models").Department;
 const user = require("../models").User;
 
-router.post('/', isAuth, (req, res) => {
+router.post('/', isAdmin, (req, res) => {
     console.log(" aaaa ", req.body.department);
     const newPerson = {
         firstName : req.body.fname,
@@ -31,7 +32,7 @@ router.post('/', isAuth, (req, res) => {
     });
 });
 
-router.post('/delete', isAuth, (req, res)=>{
+router.post('/delete', isAdmin, (req, res)=>{
     personnel.destroy({
         where: {
             id: req.body.personID
@@ -40,7 +41,7 @@ router.post('/delete', isAuth, (req, res)=>{
     res.redirect('/indoor');
 });
 
-router.get('/', isAuth, (req, res) => {
+router.get('/', isAdmin, (req, res) => {
     departments.findAll().then(
         departments =>{
             console.log(departments);
@@ -50,18 +51,16 @@ router.get('/', isAuth, (req, res) => {
                 departments
             });
         }
-    )
-})
+    );
+});
 
 router.get('/show', isAuth, (req, res) => {
     personnel.findAll({include :[  departments ]}).then(
         personnel => {
-            console.log(personnel);
-            console.log("MESSAGE", personnel);
             res.render('show', {
                 title: "Show All Personnel",
                 user : req.user,
-                personnel: personnel,
+                personnel
             });
         }
     ).catch((error) => {

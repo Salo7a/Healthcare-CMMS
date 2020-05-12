@@ -23,6 +23,7 @@
                             <tbody>
                                 <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
+                                        <% if ( user.isAdmin) { %>
                                         <td><%= personnel[i].firstName %></td>
                                         <td><%= personnel[i].lastName  %></td>
                                         <td><%= personnel[i].email      %></td>
@@ -30,6 +31,13 @@
                                         <td><%= personnel[i].Role      %></td>
                                         <td><%= personnel[i].phone      %></td>
                                         <td><%= personnel[i].Department.Name %></td>
+                                        <% } else { %>
+
+
+
+                                        <%}%>
+
+                                        <% if (user.isAdmin) { %>
                                         <td>
                                             <form action="/indoor/delete" method="post">
                                                 <input type="text" name="personID" value="<%= personnel[i].id %>" hidden>
@@ -38,6 +46,7 @@
                                                 </button>
                                             </form>
                                         </td>
+                                        <% } %>
                                     </tr>
                                 <% } %>
                             </tbody>
