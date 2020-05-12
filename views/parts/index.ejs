@@ -13,71 +13,69 @@
                     </div>
                 </h3>
             </div>
-            <div class="row">
-                <!--            Enter Your Content Here-->
+            <!--            Enter Your Content Here-->
 
-                <!-- Check length of parts list -->
-                <!-- In case we found Parts -->
-                <% if (parts.length > 0) { %>
-                    <!-- Parts Table -->
-                    <div class="card">
+            <!-- Check length of parts list -->
+            <!-- In case we found Parts -->
+            <% if (parts.length > 0) { %>
+            <!-- Parts Table -->
+            <div class="card">
 
-                        <div class="card-body">
-                            <table id="partsTable" class="table table-bordered table-striped">
-                                <!-- Headers -->
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Model</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Installation Date</th>
-                                    <th>Device Name</th>
-                                    <th>Device Serial</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <!-- /Headers -->
+                <div class="card-body">
+                    <table id="partsTable" class="table table-bordered table-striped">
+                        <!-- Headers -->
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Installation Date</th>
+                                <th>Device Name</th>
+                                <th>Device Serial</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <!-- /Headers -->
 
-                                <!-- Table Rows -->
-                                <tbody>
-                                <% for(var i = 0; i < parts.length; i++) { %>
-                                    <tr>
-                                        <td><%= parts[i].Type %></td>
-                                        <td><%= parts[i].Model %></td>
-                                        <td><%= parts[i].Quantity %></td>
-                                        <td><%= parts[i].Price %></td>
-                                        <td><%= parts[i].InstallationDate %></td>
-                                        <td><%= parts[i].Device.Name %></td>
-                                        <td><%= parts[i].Device.Serial %></td>
-                                        <td>
-                                            <form action="/parts/delete" method="post">
-                                                <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
-                                                <button type="submit" class="btn btn-block btn-danger">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                <% } %>
+                        <!-- Table Rows -->
+                        <tbody>
+                            <% for(var i = 0; i < parts.length; i++) { %>
+                            <tr>
+                                <td><%= parts[i].Type %></td>
+                                <td><%= parts[i].Model %></td>
+                                <td><%= parts[i].Quantity %></td>
+                                <td><%= parts[i].Price %></td>
+                                <td><%= parts[i].InstallationDate %></td>
+                                <td><%= parts[i].Device.Name %></td>
+                                <td><%= parts[i].Device.Serial %></td>
+                                <td>
+                                    <form action="/parts/delete" method="post">
+                                        <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
+                                        <button type="submit" class="btn btn-block btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } %>
 
-                                </tbody>
-                                <!-- /Table Rows -->
+                        </tbody>
+                        <!-- /Table Rows -->
 
-                            </table>
+                    </table>
 
-                        </div>
-                        <!-- /.card-body -->
+                </div>
+                <!-- /.card-body -->
 
-                    </div>
-                    <!-- /.card -->
-
-                <% }else{ %>
-                    <h1>No Parts Found</h1>
-                <% } %>
-
-                <!--            Enter Your Content Here-->
             </div>
+            <!-- /.card -->
+
+            <% }else{ %>
+            <h1>No Parts Found</h1>
+            <% } %>
+
+            <!--            Enter Your Content Here-->
         </div>
     </div>
 </div>

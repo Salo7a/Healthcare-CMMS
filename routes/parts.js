@@ -46,7 +46,7 @@ router.post('/add', isAdmin, (req, res) => {
     };
     parts.create(newPart).then(result => {
         req.flash("success", "Added Part Successfully");
-        // req.redirect("/parts");
+        res.redirect("/parts");
     });
 });
 //POST Route Handler for deleting a part
