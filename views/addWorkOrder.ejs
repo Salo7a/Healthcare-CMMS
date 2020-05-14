@@ -9,16 +9,36 @@
                     <!-- /.card-header -->
 
                     <!-- form start -->
-                    <form role="form" action="/portal/workqueueY/add" method="post">
+                    <form role="form" action="/workorder/add" method="post">
                         <div class="card-body">
                             <!-- Name -->
                             <div class="form-group">
                                 <label for="name">Engineer Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter name">
+                                <select name="engineer" class="form-control">
+                                    <% for(var i=0; i<personnel.length; i++) {%>
+                                        <option value="<%=personnel[i].id%>"> <%= personnel[i].firstName%>  <%= personnel[i].lastName%> </option>
+                                        <%}%>
+
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="deviceData">Device Name/ID</label>
-                                <input type="text" class="form-control" name="deviceData">
+                                <label for="department">Department</label>
+                                <select name="department" class="form-control">
+                                    <% for(var i=0; i<departments.length; i++) {%>
+                                    <option value="<%=departments[i].id%>" ><%= departments[i].Name %></option>
+                                    <%}%>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="device">Device</label>
+                                <select name="device" class="form-control">
+                                    <% for(var i=0; i<device.length; i++) {%>
+                                        <option value="<%= device[i].id %>"><%= device[i].Name %> <%=device[i].Model%></option>
+                                    <%}%>
+                                </select>
+
                             </div>
                             <div class="form-group">
                                 <label for="task">Task Needed</label>

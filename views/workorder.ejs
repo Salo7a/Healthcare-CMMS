@@ -1,0 +1,55 @@
+<% layout('panel') -%>
+
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+
+            <div class="row-cols-4">
+                                <a type="button" class="btn btn-block btn-primary" href="/workorder/add">Add New Work</a>
+                <div class="input-group input-group-sm" >
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Main content -->
+            <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" >
+                    <table id="work" class="table table-head-fixed text-nowrap"  >
+                        <thead>
+                        <tr>
+                            <th>Engineer Name</th>
+                            <th>Date</th>
+                            <th>Device</th>
+                            <th>Task</th>
+                            <th>Done</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(var i=0; i<workOrders[i].length; i++) {%>
+                        <tr>
+                            <th>woow</th>
+                            <th><%=workOrders[i].date%></th>
+                            <th><%=workOrders[i].Device.Name%></th>
+                            <th><%=workOrders[i].name%></th>
+                            <%}%>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!--            Enter Your Content Here-->
+        </div>
+    </div>
+</div>
+<!-- /.content -->
+

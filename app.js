@@ -12,7 +12,7 @@ const helmet = require('helmet');
 
 let passportConfig = require('./config/passport');
 
-
+const workorderRouter = require('./routes/workorder');
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const devicesRouter = require('./routes/devices');
@@ -71,11 +71,11 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/devices', devicesRouter);
-app.use('/portal/workqueue', workqueueRouter);
+app.use('/workqueue', workqueueRouter);
 app.use('/indoor', indoorRouter);
 app.use('/departments', departmentsRouter);
 app.use('/parts', partsRouter);
-
+app.use('/workorder', workorderRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
