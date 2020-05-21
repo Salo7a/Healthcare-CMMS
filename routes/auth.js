@@ -72,7 +72,7 @@ router.get('/addtest', function (req, res, next) {
         Password: "password",
         isAdmin: false
     });
-    
+
     const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}]
     for (let i = 0; i < departmentsList.length; i++)
     {

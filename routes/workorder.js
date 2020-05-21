@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
         res.render('workorder', {
             title: 'Work list',
             user: req.user,
-            workOrders:WorkOrder,
+            workOrders: WorkOrder
         });
     })
     .catch((error) => {
