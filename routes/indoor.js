@@ -45,7 +45,7 @@ router.get('/', isAdmin, (req, res) => {
     departments.findAll().then(
         departments =>{
             console.log(departments);
-            res.render('indoor', {
+            res.render('indoor/indoor', {
                 title: 'Indoor View',
                 user: req.user,
                 departments
@@ -57,7 +57,7 @@ router.get('/', isAdmin, (req, res) => {
 router.get('/show', isAuth, (req, res) => {
     personnel.findAll({include :[  departments ]}).then(
         personnel => {
-            res.render('show', {
+            res.render('indoor/show', {
                 title: "Show All Personnel",
                 user : req.user,
                 personnel
