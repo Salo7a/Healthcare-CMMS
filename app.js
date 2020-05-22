@@ -93,13 +93,13 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-app.use(function (req, res, next) {
-    Notification.findAll({include :[ Device, Department ]})
-        .then(notifications => {
-            res.locals.notifications = notifications;
-            next();
-        });
-});
+// app.use(function (req, res, next) {
+//     Notification.findAll({include :[ Device, Department ]})
+//         .then(notifications => {
+//             res.locals.notifications = notifications;
+//             next();
+//         });
+// });
 
 module.exports = app;
 require('./routes');
