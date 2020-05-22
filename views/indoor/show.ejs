@@ -24,7 +24,9 @@
                             <tbody>
                                 <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
-                                        <% if ( user.isAdmin) { %>
+                                        <% if (user.isAdmin) { %>
+                                        <% console.log("User is Admin ", user.isAdmin) %>
+
                                         <td><%= personnel[i].Name %></td>
                                         <td><%= personnel[i].Email      %></td>
                                         <td><%= personnel[i].birthday  %></td>

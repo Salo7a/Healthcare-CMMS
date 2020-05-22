@@ -62,7 +62,8 @@ router.get('/addtest', function (req, res, next) {
         Phone: "01123456789",
         Title: "Head of Engineering",
         Password: "password",
-        isAdmin: true
+        isAdmin: true,
+        DepartmentId : 1
     });
     User.create({
         Name: "Jane Doe",
@@ -70,7 +71,8 @@ router.get('/addtest', function (req, res, next) {
         Phone: "01123456789",
         Title: "MRI Technician",
         Password: "password",
-        isAdmin: false
+        isAdmin: false,
+        DepartmentId :1
     });
 
     const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}]
