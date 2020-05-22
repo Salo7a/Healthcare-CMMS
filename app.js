@@ -9,6 +9,7 @@ const flash = require('express-flash');
 const passport = require('passport');
 const engine = require('ejs-mate');
 const helmet = require('helmet');
+const Notification = require('./models').Notification;
 
 let passportConfig = require('./config/passport');
 
@@ -90,6 +91,12 @@ app.use(function (err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render('error');
+});
+
+app.use(function (req, res, next) {
+    Notification.findAll({include :[ Device, Department ]})
+        .then(notifications => res.locals.notifications = notifications);
+    next();
 });
 
 module.exports = app;
