@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const {isAdmin} = require('../utils/filters');
+const {isAdmin, isAuth} = require('../utils/filters');
 const Device = require('../models').Device;
 const Department = require('../models').Department;
 const models = require('../models');
 
 // GET Route Handler for main devices page
-router.get('/', isAdmin, (req, res, next) => {
+router.get('/', isAuth, (req, res, next) => {
     // Get all the devices from database
     Device.findAll({include :[ Department ]})
         .then(Devices => {
             res.render('devices/index', {
                 title: 'Devices List',
-                devices: Devices,
-                user: req.user
+                user: req.user,
+                devices: Devices
             });
         })
         .catch((error) => {
@@ -23,7 +23,7 @@ router.get('/', isAdmin, (req, res, next) => {
 });
 
 // GET Route Handler for adding a new Device
-router.get('/add', isAdmin, (req, res) => {
+router.get('/add', isAuth, (req, res) => {
     res.render('devices/add', {
         title: 'Add a new device',
         user: req.user
@@ -31,7 +31,7 @@ router.get('/add', isAdmin, (req, res) => {
 });
 
 // POST Route Handler for adding a new Device
-router.post('/add', isAdmin, (req, res) => {
+router.post('/add', isAuth, (req, res) => {
     // Create the new Device
     const newDevice = {
         Name: req.body.name,
@@ -70,7 +70,7 @@ router.get('/deleteAll', isAdmin, (req, res) => {
 });
 
 // POST Route Handler for alerting a Device
-router.post('/alert', isAdmin, (req, res) => {
+router.post('/alert', isAuth, (req, res) => {
     Device.findOne({
         where: {
             id: req.body.deviceID
