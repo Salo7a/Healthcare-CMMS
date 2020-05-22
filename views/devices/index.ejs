@@ -32,9 +32,11 @@
                                     <th>Serial</th>
                                     <th>Import Date</th>
                                     <th>Installation Date</th>
+                                    <th>Scrapping Date</th>
                                     <th>Supplying Company</th>
                                     <th>Department</th>
-                                    <th></th>
+                                    <th>Delete</th>
+                                    <th>Alert</th>
                                 </tr>
                                 </thead>
                                 <!-- /Headers -->
@@ -48,6 +50,7 @@
                                         <td><%= devices[i].Serial %></td>
                                         <td><%= devices[i].ImportDate %></td>
                                         <td><%= devices[i].InstallationDate %></td>
+                                        <td><%= devices[i].ScrappingDate %></td>
                                         <td><%= devices[i].SupplyingCompany %></td>
                                         <td><%= devices[i].Department.Name %></td>
                                         <td>
@@ -55,6 +58,14 @@
                                                 <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
                                                 <button type="submit" class="btn btn-block btn-danger">
                                                     <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="/devices/alert" method="post">
+                                                <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
+                                                <button type="submit" class="btn btn-block btn-warning">
+                                                    <i class="fas fa-exclamation-triangle"></i>
                                                 </button>
                                             </form>
                                         </td>
