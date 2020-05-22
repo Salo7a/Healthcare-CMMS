@@ -95,8 +95,10 @@ app.use(function (err, req, res, next) {
 
 app.use(function (req, res, next) {
     Notification.findAll({include :[ Device, Department ]})
-        .then(notifications => res.locals.notifications = notifications);
-    next();
+        .then(notifications => {
+            res.locals.notifications = notifications;
+            next();
+        });
 });
 
 module.exports = app;
