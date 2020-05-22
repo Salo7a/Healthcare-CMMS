@@ -69,4 +69,18 @@ router.get('/deleteAll', isAdmin, (req, res) => {
         });
 });
 
+// POST Route Handler for alerting a Device
+router.post('/alert', isAdmin, (req, res) => {
+    Device.findOne({
+        where: {
+            id: req.body.deviceID
+        }
+    })
+        .then((device) => {
+            req.flash("success", "Alert reported");
+            res.redirect("/devices");
+        });
+});
+
+
 module.exports = router;
