@@ -4,15 +4,16 @@
         <div class="card-body">
             <div > <!--            Enter Your Content Here-->
                 <% if (personnel.length > 0) { %>
-                    <a type="button" class="btn btn-block btn-primary" href="/indoor">
-                        <i class="fas fa-users" ></i> Add Personnel
-                    </a>
+                    <% if (user.isAdmin) {%>
+                        <a type="button" class="btn btn-block btn-primary" href="/indoor">
+                            <i class="fas fa-users" ></i> Add Personnel
+                        </a>
+                    <% } %>
                     <div class="card-body">
                         <table id="pT" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name </th>
+                                    <th>Name</th>
                                     <th>Email</th>
                                     <th>Birthday Date</th>
                                     <th>Role</th>
@@ -24,20 +25,12 @@
                                 <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
                                         <% if ( user.isAdmin) { %>
-                                        <td><%= personnel[i].firstName %></td>
-                                        <td><%= personnel[i].lastName  %></td>
-                                        <td><%= personnel[i].email      %></td>
+                                        <td><%= personnel[i].Name %></td>
+                                        <td><%= personnel[i].Email      %></td>
                                         <td><%= personnel[i].birthday  %></td>
-                                        <td><%= personnel[i].Role      %></td>
-                                        <td><%= personnel[i].phone      %></td>
+                                        <td><%= personnel[i].Title      %></td>
+                                        <td><%= personnel[i].Phone      %></td>
                                         <td><%= personnel[i].Department.Name %></td>
-                                        <% } else { %>
-
-
-
-                                        <%}%>
-
-                                        <% if (user.isAdmin) { %>
                                         <td>
                                             <form action="/indoor/delete" method="post">
                                                 <input type="text" name="personID" value="<%= personnel[i].id %>" hidden>
@@ -46,7 +39,18 @@
                                                 </button>
                                             </form>
                                         </td>
-                                        <% } %>
+                                        <% } else  { %>
+                                            <% if (user.DepartmentId === personnel[i].DepartmentId) { %>
+                                                <% console.log("PER", personnel[i])%>
+                                                    <td><%= personnel[i].Name %></td>
+                                                    <td><%= personnel[i].Email      %></td>
+                                                    <td><%= personnel[i].birthday  %></td>
+                                                    <td><%= personnel[i].Title      %></td>
+                                                    <td><%= personnel[i].Phone      %></td>
+                                                    <td><%= personnel[i].Department.Name %></td>
+                                            <%} %>
+
+                                        <%}%>
                                     </tr>
                                 <% } %>
                             </tbody>

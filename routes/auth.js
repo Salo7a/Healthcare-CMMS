@@ -128,12 +128,14 @@ router.get('/addtest', function (req, res, next) {
                 DepartmentId : person.DepartmentId
             });
             User.create({
-                Name: person.firstName + person.lastName,
+                Name: person.firstName + " " + person.lastName,
                 Email : person.email,
+                birthday : person.birthday,
                 Phone : person.phone,
                 Title : person.Role,
                 Password : "password",
-                isAdmin : false
+                isAdmin : false,
+                DepartmentId : person.DepartmentId
             })
         });
     });

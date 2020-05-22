@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: "default.png"
         },
-        Title: DataTypes.STRING
+        Title: DataTypes.STRING,
+        birthday: DataTypes.DATEONLY,
     }, {
         classMethods: {
             comparePassword: async function (Password, hash) {
@@ -43,7 +44,13 @@ module.exports = (sequelize, DataTypes) => {
     // This hook is called when an entry is being added to the back end.
     // This method is used to hash the password before storing it
     // in our database.
+    User.associate = function (models) {
+        // associations can be defined here
+        User.hasMany(models.WorkOrder);
+        User.hasMany(models.Device);
+        User.belongsTo(models.Department);
 
+    };
     User.beforeCreate((User, options) => {
         return bcrypt.genSalt(10).then(async salt => {
             await bcrypt.hash(User.Password, salt).then(async hash => {

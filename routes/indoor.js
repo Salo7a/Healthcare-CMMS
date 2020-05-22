@@ -2,31 +2,31 @@ const express = require("express");
 const router = express.Router();
 const isAuth = require("../utils/filters").isAuth;
 const isAdmin = require("../utils/filters").isAdmin;
-const personnel = require("../models").Indoor;
+const personnel = require("../models").User;
 const departments = require("../models").Department;
 const user = require("../models").User;
 
 router.post('/', isAdmin, (req, res) => {
     console.log(" aaaa ", req.body.department);
-    const newPerson = {
-        firstName : req.body.fname,
-        lastName : req.body.lname,
-        birthday : req.body.bdate,
-        Role : req.body.role,
-        email: req.body.email,
-        phone : req.body.phone,
-        DepartmentId : req.body.department
-    };
+    // const newPerson = {
+    //     firstName : req.body.fname,
+    //     lastName : req.body.lname,
+    //     birthday : req.body.bdate,
+    //     Role : req.body.role,
+    //     email: req.body.email,
+    //     phone : req.body.phone,
+    //     DepartmentId : req.body.department
+    // };
     user.create({
-        Name: newPerson.firstName + newPerson.lastName,
-        Email : newPerson.email,
-        Phone : newPerson.phone,
-        Title : newPerson.Role,
+        Name: req.firstName + " " + req.lastName,
+        Email : req.email,
+        Phone : req.phone,
+        Title : req.Role,
         Password : "password",
-        isAdmin : false
-    });
-
-    personnel.create(newPerson).then( result => {
+        birthday : req.body.bdate,
+        isAdmin : false,
+        DepartmentId : req.body.department
+    }).then( result => {
         req.flash("Success", "Added new Person");
         res.redirect("/indoor");
     });
@@ -60,7 +60,7 @@ router.get('/show', isAuth, (req, res) => {
             res.render('indoor/show', {
                 title: "Show All Personnel",
                 user : req.user,
-                personnel
+                personnel,
             });
         }
     ).catch((error) => {
