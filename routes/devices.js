@@ -3,6 +3,7 @@ const router = express.Router();
 const {isAdmin, isAuth} = require('../utils/filters');
 const Device = require('../models').Device;
 const Department = require('../models').Department;
+const Notification = require('../models').Notification;
 const models = require('../models');
 
 // GET Route Handler for main devices page
@@ -72,15 +73,21 @@ router.get('/deleteAll', isAdmin, (req, res) => {
 // POST Route Handler for alerting a Device
 router.post('/alert', isAuth, (req, res) => {
     Device.findOne({
-        where: {
-            id: req.body.deviceID
-        }
+        where: {id: req.body.deviceID},
+        include: [ Department ]
     })
         .then((device) => {
             req.flash("success", "Alert reported");
-            res.redirect("/devices");
+            const newNotification = {
+                Name: "Repair Required",
+                DepartmentId: device.DepartmentId,
+                DeviceId: device.id
+            };
+            Notification.create(newNotification)
+                .then(() => {
+                    res.redirect("/");
+                });
         });
 });
-
 
 module.exports = router;
