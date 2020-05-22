@@ -70,6 +70,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// Middleware for notifications
 app.use(function (req, res, next) {
     Notification.findAll({include :[ Device, Department ]})
         .then(notifications => {
