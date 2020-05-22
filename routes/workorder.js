@@ -9,7 +9,7 @@ const device = require('../models').Device;
 
 router.get('/', function (req, res, next) {
     workOrders.findAll().then(WorkOrder=> {
-        res.render('workorder', {
+        res.render('workorder/workorder', {
             title: 'Work list',
             user: req.user,
             workOrders: WorkOrder
@@ -29,7 +29,7 @@ router.get('/add', isAdmin, (req, res) => {
                 personnel=> {
                     device.findAll().then(
                         device=>{
-                            res.render('addWorkOrder', {
+                            res.render('workorder/addWorkOrder', {
                                 title: 'Add',
                                 user: req.user,
                                 departments, personnel, device
