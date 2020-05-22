@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) =>
         Serial: DataTypes.STRING,
         ImportDate: DataTypes.STRING,
         InstallationDate: DataTypes.STRING,
-        SupplyingCompany: DataTypes.STRING
+        SupplyingCompany: DataTypes.STRING,
+        ScrappingDate: DataTypes.STRING
     });
     
     Device.associate = function (models) {
