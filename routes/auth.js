@@ -105,6 +105,7 @@ router.get('/addtest', function (req, res, next) {
                 Serial: devicesList[i].Serial,
                 ImportDate: devicesList[i].ImportDate,
                 InstallationDate: devicesList[i].InstallationDate,
+                ScrappingDate: devicesList[i].ScrappingDate,
                 SupplyingCompany: devicesList[i].SupplyingCompany,
                 DepartmentId: currentDepID
             });
