@@ -23,6 +23,7 @@ const workqueueRouter = require('./routes/workqueue');
 const indoorRouter = require('./routes/indoor');
 const departmentsRouter = require('./routes/departments');
 const partsRouter = require('./routes/parts');
+const reportsRouter = require('./routes/reports');
 const app = express();
 
 
@@ -87,6 +88,7 @@ app.use('/indoor', indoorRouter);
 app.use('/departments', departmentsRouter);
 app.use('/parts', partsRouter);
 app.use('/workorder', workorderRouter);
+app.use('/reports', reportsRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
