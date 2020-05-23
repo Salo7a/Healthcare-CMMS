@@ -111,13 +111,22 @@
                                 <div class="dropdown-divider"></div>
                                     <a href="#" class="dropdown-item">
                                         <i class="fas fa-file mr-2"></i> <%= notifications[i].Name %>
-                                        <span class="float-right text-muted text-sm">now</span><br>
-                                        <span class="float-right text-muted text-sm"><br>
-                                            <%= notifications[i].Department.Name %>
-                                        </span>
+                                        <%
+                                            const currentTime = new Date(notifications[i].createdAt);
+                                            const date = currentTime.getFullYear()+'-'+(currentTime.getMonth()+1)+'-'+currentTime.getDate();
+                                            const time = currentTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', seconds: 'numeric', hour12: true });
+                                            const dateTime = date + ' ' + time;
+                                        %>
+                                        <span class="float-right text-muted text-sm"><%= dateTime %></span><br>
                                         <span class="float-left text-muted text-sm">
-                                            <%= notifications[i].Device.Name %>
-                                        </span>
+                                            Department: <%= notifications[i].Department.Name %>
+                                        </span><br>
+                                        <span class="float-left text-muted text-sm">
+                                            Device: <%= notifications[i].Device.Name %>
+                                        </span><br>
+                                        <span class="float-left text-muted text-sm">
+                                            Serial: <%= notifications[i].Device.Serial %>
+                                        </span><br>
                                     </a>
                                 <div class="dropdown-divider"></div>
                             <%} %>
