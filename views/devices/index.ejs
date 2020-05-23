@@ -75,7 +75,10 @@
                                                     </form>
                                                 </td>
                                             <% } else { %>
+                                                <% console.log('userId ', user.DepartmentId) %>
+                                                <% console.log('depId ', devices[i].DepartmentId) %>
                                                 <% if (user.DepartmentId === devices[i].DepartmentId) { %>
+                                                    <% console.log('Technician ', user.Name) %>
                                                     <td><%= devices[i].Name %></td>
                                                     <td><%= devices[i].Model %></td>
                                                     <td><%= devices[i].Serial %></td>
