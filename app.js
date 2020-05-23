@@ -52,6 +52,7 @@ app.use('/plugins', express.static(path.join(__dirname, 'node_modules/admin-lte/
 //app.use(csrfMiddleware);
 app.use(helmet());
 
+
 //Express Session
 app.use(session({
     secret: "keyboard",
@@ -64,6 +65,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('remember-me'));
 
+app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
 //Flash
 app.use(flash());
 app.use((req, res, next) => {
@@ -99,7 +104,6 @@ app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-
     // render the error page
     res.status(err.status || 500);
     res.render('error');
