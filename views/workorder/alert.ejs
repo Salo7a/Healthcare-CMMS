@@ -6,20 +6,20 @@
     <!-- /.card-header -->
     <% console.log("NOTI", notification )%>
     <div class="card-body">
-        <form role="form" method="POST" action="/add">
+        <form role="form" method="POST" action="/workorder/add">
             <div class="row">
                 <div class="col-sm-6">
                     <!-- text input -->
                     <div class="form-group">
                         <label>Department</label>
-                        <input type="text" name="dep" class="form-control" placeholder="Department ...">
+                        <input type="text" name="dep" value="<%= notification.Department.Name%>" class="form-control" placeholder="Department ...">
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label> Device </label>
-                        <input type="text" name="device" class="form-control" placeholder="Device ...">
+                        <input type="text" name="device" class="form-control" placeholder="Device ..." value="<%= notification.Device.Name%>">
                     </div>
                 </div>
 
@@ -32,21 +32,18 @@
             </div>
 
 
-            <div class="row">
+            <!-- checkbox -->
+            <div class="form-group">
                 <label><i class="far fa-bell"></i> Action Taken :</label>
-                <!-- checkbox -->
-                <div class="form-group">
-                    <div class="form-group">
-                        <textarea class="form-control" name="action" rows="3" placeholder="Describe the Actions taken ..."></textarea>
-                    </div>
-
-                </div>
+                <textarea class="form-control" name="action" rows="3" placeholder="Describe the Actions taken ..."></textarea>
             </div>
 
             <div class="form-group">
                 <label> Engineer/Technician </label>
-                <input type="text" name="name" class="form-control" placeholder="Department ...">
+                <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
             </div>
+            <input type="text" name="type" value="<%= notification.Type %>" hidden>
+            <input type="text" name="deviceId" value="<%= notification.Device.id %>" hidden>
 
             <!-- /.card-body -->
             <div class="card-footer">
