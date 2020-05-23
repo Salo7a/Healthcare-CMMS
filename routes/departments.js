@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {isAdmin} = require('../utils/filters');
+const {isAdmin, isAuth} = require('../utils/filters');
 const Department = require('../models').Department;
 
 // GET Route Handler for main devices page
-router.get('/', isAdmin, (req, res, next) => {
+router.get('/', isAuth, (req, res, next) => {
     // Get all the devices from database
     Department.findAll()
         .then(Departments => {
