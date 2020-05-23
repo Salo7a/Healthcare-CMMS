@@ -81,11 +81,49 @@
                 <% if (!user.isAdmin) { %>
                     <li class="nav-item">
                         <a href="/workqueue/view" class="nav-link">
-                            <i class="fas fa-copy nav-icon"></i>
+                            <i class="fas fa-file-medical nav-icon"></i>
                             <p>Add Work Order</p>
                         </a>
                     </li>
                 <% } %>
+
+                <!--  Reports Links  -->
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Reports
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/reports/repair" class="nav-link">
+                                <i class="nav-icon"></i>
+                                <p>
+                                    Repair
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/reports/ppm" class="nav-link">
+                                <i class="nav-icon"></i>
+                                <p>
+                                    PPM
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/reports/daily" class="nav-link">
+                                <i class="nav-icon"></i>
+                                <p>
+                                    Daily Inspection
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
 
             </ul>
         </nav>
