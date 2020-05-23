@@ -7,6 +7,7 @@ const personnel = require("../models").Indoor;
 const departments = require("../models").Department;
 const user = require("../models").User;
 const device = require('../models').Device;
+const notification = require('../models').Notification;
 
 router.get('/', function (req, res, next) {
     workOrders.findAll().then(WorkOrder=> {
@@ -40,6 +41,25 @@ router.get('/add', isAdmin, (req, res) => {
                 })
     });
 });
+
+router.post('/order', isAuth, (req, res) =>{
+    notification.findOne({
+        include: [device, departments],
+        where: {id : req.body.notificationID}
+    }).then(
+        notification => {
+            console.log("NOT", notification);
+            res.render("workorder/order",{
+                title: "Show All Personnel",
+                user : req.user,
+                notification
+            })
+        }
+    ).catch((error) => {
+        console.log(error.toString());
+        res.status(400).send(error)
+    });
+})
 
 router.post('/add', isAuth, (req, res) => {
     const newWork = {
