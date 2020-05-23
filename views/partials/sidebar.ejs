@@ -64,25 +64,28 @@
                         <p>Departments</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/indoor/show" class="nav-link">
-                        <i class="fas fa-users nav-icon "></i>
-                        <p>Individuals</p>
-                    </a>
-                </li>
+                <%= if (!user.isAdmin) { %>
+                    <li class="nav-item">
+                        <a href="/indoor/show" class="nav-link">
+                            <i class="fas fa-users nav-icon "></i>
+                            <p>Individuals</p>
+                        </a>
+                    </li>
+                <% } %>
                 <li class="nav-item">
                     <a href="/parts" class="nav-link">
                         <i class="fas fa-microchip nav-icon"></i>
                         <p>Parts</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/workqueue/view" class="nav-link">
-                        <i class="fas fa-copy nav-icon"></i>
-                        <p>Work Queue</p>
-                    </a>
-                </li>
-
+                <% if (!user.isAdmin) { %>
+                    <li class="nav-item">
+                        <a href="/workqueue/view" class="nav-link">
+                            <i class="fas fa-copy nav-icon"></i>
+                            <p>Add Work Order</p>
+                        </a>
+                    </li>
+                <% }%>
 
             </ul>
         </nav>
