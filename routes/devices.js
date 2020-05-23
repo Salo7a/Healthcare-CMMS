@@ -79,9 +79,9 @@ router.post('/alert', isAuth, (req, res) => {
         .then((device) => {
             req.flash("success", "Alert reported");
             const newNotification = {
-                Name: "Repair Required",
+                Type: 'Repair',
                 DepartmentId: device.DepartmentId,
-                DeviceId: device.id
+                DeviceId: device.id,
             };
             Notification.create(newNotification)
                 .then(() => {

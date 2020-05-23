@@ -4,32 +4,30 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form role="form">
+        <form role="form" method="POST" action="/add">
             <div class="row">
-
                 <div class="col-sm-6">
                     <!-- text input -->
                     <div class="form-group">
                         <label>Department</label>
-                        <input type="text" name="dep" class="form-control" placeholder="Department ...">
+                        <input type="text" name="dep" value="<%= notification.Department.Name%>" class="form-control" placeholder="Department ...">
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label> Device </label>
-                        <input type="text" class="form-control" placeholder="Device ...">
+                        <input type="text" name="device" class="form-control" placeholder="Device ..." value="<%= notification.Device.Name%>">
                     </div>
                 </div>
 
             </div>
-            <label> Read The Following And Check The Applied Tests</label>
-            <div class="row">
-                <label> Cleaning </label>
-            </div>
+
+            <label> Read The Following And Check The Applied Procedures</label>
+
             <div class="row">
                 <div class="col-sm-6">
-                    <!-- checkbox -->
+
                     <div class="form-group">
                         <div class="form-group">
                             <label class="form-check-label"> Dust Removal </label>
@@ -38,38 +36,18 @@
                         <div class="form-check">
                             <label class="form-check-label"> Surface Cleaning </label>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-sm-6">
-                    <!-- checkbox -->
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" name="clean_dust" type="checkbox">
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" name="clean_surface" type="checkbox" >
-                        </div>
-                    </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <!-- checkbox -->
-                    <div class="form-group">
                         <div class="form-group">
-                            <label class="form-check-label"> Dust Removal </label>
+                            <label class="form-check-label"> Lubrication (if Any) </label>
                         </div>
-
-                        <div class="form-check">
-                            <label class="form-check-label"> Surface Cleaning </label>
+                        <div class="form-group">
+                            <label class="form-check-label"> Calibration </label>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-sm-6">
-                    <!-- checkbox -->
+
                     <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" name="clean_dust" type="checkbox">
@@ -78,66 +56,44 @@
                         <div class="form-check">
                             <input class="form-check-input" name="clean_surface" type="checkbox" >
                         </div>
-                    </div>
-            </div>
 
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <!-- select -->
-                    <div class="form-group">
-                        <label>Select</label>
-                        <select class="form-control">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Select Disabled</label>
-                        <select class="form-control" disabled>
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                        </select>
+                        <div class="form-check">
+                            <input class="form-check-input" name="lubricated" type="checkbox">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="calibrated" type="checkbox">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <!-- Select multiple-->
-                    <div class="form-group">
-                        <label>Select Multiple</label>
-                        <select multiple class="form-control">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Select Multiple Disabled</label>
-                        <select multiple class="form-control" disabled>
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                        </select>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label><i class="far fa-times-circle"></i> State Replaced Parts </label>
+                <textarea class="form-control" name="desc_replaced" rows="3" placeholder="Parts ..."></textarea>
             </div>
+
+            <div class="form-group">
+                <label><i class="far fa-times-circle"></i> State Applied Adjustments </label>
+                <textarea class="form-control" name="desc_adjustments" rows="3" placeholder="Parts ..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label><i class="far fa-times-circle"></i> Comments </label>
+                <textarea class="form-control" name="comments" rows="2" placeholder="Parts ..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label> Engineer/Technician </label>
+                <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
+            </div>
+            <input type="text" name="type" value="<%= notification.Type %>" hidden>
+            <input type="text" name="device" value="<%= notification.Device.id %>" hidden>
+
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
         </form>
     </div>
-    <!-- /.card-body -->
 </div>

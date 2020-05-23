@@ -2,9 +2,8 @@
 const models = require('../models');
 module.exports = (sequelize, DataTypes) => {
     const WorkOrder = sequelize.define('WorkOrder', {
-        name: DataTypes.STRING,
-        date: DataTypes.STRING,
         type: DataTypes.STRING,
+
         // for Alert Type
         alert : DataTypes.JSON,
         // for Daily type
@@ -14,13 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     WorkOrder.associate = function (models) {
         // associations can be defined here
-        WorkOrder.belongsTo(models.Indoor,{
-            as: 'engineer',
-            foreignKey: 'EngineerId',
-            targetKey: 'id'
-        });
+        // WorkOrder.belongsTo(models.Indoor,{
+        //     as: 'engineer',
+        //     foreignKey: 'EngineerId',
+        //     targetKey: 'id'
+        // });
         WorkOrder.belongsTo(models.Device);
         WorkOrder.belongsTo(models.Department);
+        WorkOrder.belongsTo(models.User);
     };
 
     return WorkOrder;

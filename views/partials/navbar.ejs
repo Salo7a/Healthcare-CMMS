@@ -92,10 +92,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge"><%= nLength%></span>
+                        <span class="badge badge-warning navbar-badge"><%= nLength %></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-header"><%= nLength%> Notifications</span>
+                        <span class="dropdown-header"><%= nLength %> Notifications</span>
 <!--                        <div class="dropdown-divider"></div>-->
 <!--                        <a href="#" class="dropdown-item">-->
 <!--                            <i class="fas fa-envelope mr-2"></i> 4 new messages-->
@@ -109,25 +109,37 @@
                         <% for (var i = 0; i < nLength; i++) { %>
                             <% if (user.DepartmentId === notifications[i].DepartmentId) { %>
                                 <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item">
-                                        <i class="fas fa-file mr-2"></i> <%= notifications[i].Name %>
-                                        <span class="float-right text-muted text-sm">now</span><br>
-                                        <span class="float-right text-muted text-sm"><br>
-                                            <%= notifications[i].Department.Name %>
-                                        </span>
-                                        <span class="float-left text-muted text-sm">
-                                            <%= notifications[i].Device.Name %>
-                                        </span>
-                                    </a>
+                                    <form action="/workorder/order" method="post">
+                                        <input type="text" name="notificationID" value="<%= notifications[i].id %>" hidden>
+                                        <button type="submit" class="btn dropdown-item">
+                                            <i class="fas fa-file mr-2"></i> <%= notifications[i].Type %>
+                                            <%
+                                                const currentTime = new Date(notifications[i].createdAt);
+                                                const date = currentTime.getFullYear()+'-'+(currentTime.getMonth()+1)+'-'+currentTime.getDate();
+                                                const time = currentTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', seconds: 'numeric', hour12: true });
+                                                const dateTime = date + ' ' + time;
+                                            %>
+                                            <span class="float-right text-muted text-sm"><%= dateTime %></span><br>
+                                            <span class="float-left text-muted text-sm">
+                                                Department: <%= notifications[i].Department.Name %>
+                                            </span><br>
+                                            <span class="float-left text-muted text-sm">
+                                                Device: <%= notifications[i].Device.Name %>
+                                            </span><br>
+                                            <span class="float-left text-muted text-sm">
+                                                Serial: <%= notifications[i].Device.Serial %>
+                                            </span><br>
+                                        </button>
+                                    </form>
                                 <div class="dropdown-divider"></div>
-                            <%} %>
+                            <% } %>
                         <% } %>
 <!--                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>-->
                     </div>
                 </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-                <i class="fas fa-th-large"></i></a>
-        </li>
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">-->
+<!--                <i class="fas fa-th-large"></i></a>-->
+<!--        </li>-->
     </ul>
 </nav>

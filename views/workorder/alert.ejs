@@ -1,0 +1,55 @@
+<div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title">Alert/Repair</h3>
+    </div>
+    <!-- TODO : Add User, Department and Device Values -->
+    <!-- /.card-header -->
+    <% console.log("NOTI", notification )%>
+    <div class="card-body">
+        <form role="form" method="POST" action="/workorder/add">
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input type="text" name="dep" value="<%= notification.Department.Name%>" class="form-control" placeholder="Department ...">
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label> Device </label>
+                        <input type="text" name="device" class="form-control" placeholder="Device ..." value="<%= notification.Device.Name%>">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- textarea -->
+            <div class="form-group">
+                <label><i class="far fa-times-circle"></i> Description </label>
+                <textarea class="form-control" name="description" rows="3" placeholder="Describe the Alert Cause ..."></textarea>
+            </div>
+
+
+            <!-- checkbox -->
+            <div class="form-group">
+                <label><i class="far fa-bell"></i> Action Taken :</label>
+                <textarea class="form-control" name="action" rows="3" placeholder="Describe the Actions taken ..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label> Engineer/Technician </label>
+                <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
+            </div>
+            <input type="text" name="type" value="<%= notification.Type %>" hidden>
+            <input type="text" name="deviceId" value="<%= notification.Device.id %>" hidden>
+
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.card-body -->
+</div>

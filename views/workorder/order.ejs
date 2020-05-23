@@ -1,0 +1,21 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+                <% console.log( notification )%>
+                <!--    Alert        -->
+                <% if (notification.Type === "Repair") { %>
+                    <% include alert.ejs%>
+                <% } %>
+                <!--    Daily        -->
+                <% if (notification.Type === "Daily") { %>
+                    <% include daily.ejs%>
+                <% } %>
+                <!--    PPM        -->
+                <% if (notification.Type === "PPM") { %>
+                    <% include ppm.ejs%>
+                <% } %>
+
+        </div>
+    </div>
+</div>
