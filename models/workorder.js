@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         name: DataTypes.STRING,
         date: DataTypes.STRING,
         type: DataTypes.STRING,
+
         // for Alert Type
         alert : DataTypes.JSON,
         // for Daily type

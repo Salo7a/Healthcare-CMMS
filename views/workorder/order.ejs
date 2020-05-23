@@ -1,0 +1,28 @@
+<% layout('panel') -%>
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <%= title %>
+                </h3>
+            </div>
+            <div class="row">
+
+                <!--    Alert        -->
+                <% if (Notification.Type === "Alert") { %>
+                    <% include alert.ejs%>
+                <% } %>
+                <!--    Daily        -->
+                <% if (Notification.Type === "Daily") { %>
+                    <% include daily.ejs%>
+                <% } %>
+                <!--    PPM        -->
+                <% if (Notification.Type === "PPM") { %>
+                    <% include ppm.ejs%>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+</div>

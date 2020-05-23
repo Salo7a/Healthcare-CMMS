@@ -1,0 +1,57 @@
+<div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title">Alert/Repair</h3>
+    </div>
+    <!-- TODO : Add User, Department and Device Values -->
+    <!-- /.card-header -->
+    <div class="card-body">
+        <form role="form" method="POST" action="/add">
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input type="text" name="dep" class="form-control" placeholder="Department ...">
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label> Device </label>
+                        <input type="text" name="device" class="form-control" placeholder="Device ...">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- textarea -->
+            <div class="form-group">
+                <label><i class="far fa-times-circle"></i> Description </label>
+                <textarea class="form-control" name="description" rows="3" placeholder="Describe the Alert Cause ..."></textarea>
+            </div>
+
+
+            <div class="row">
+                <label><i class="far fa-bell"></i> Action Taken :</label>
+                <!-- checkbox -->
+                <div class="form-group">
+                    <div class="form-group">
+                        <textarea class="form-control" name="action" rows="3" placeholder="Describe the Actions taken ..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label> Engineer/Technician </label>
+                <input type="text" name="name" class="form-control" placeholder="Department ...">
+            </div>
+
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.card-body -->
+</div>
