@@ -59,11 +59,13 @@ router.post('/order', isAuth, (req, res) =>{
 })
 
 router.post('/add', isAuth, (req, res) => {
+
     const newWork = {
         // name: req.body.task,
         // date: req.body.Date,
 
         // DeviceId: req.body.device,
+
         DepartmentId: req.user.DepartmentId,
         UserId: req.user.id,
         type: req.body.type,
