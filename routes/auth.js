@@ -107,6 +107,7 @@ router.get('/addtest', function (req, res, next) {
                 InstallationDate: devicesList[i].InstallationDate,
                 ScrappingDate: devicesList[i].ScrappingDate,
                 SupplyingCompany: devicesList[i].SupplyingCompany,
+                PPMInterval: devicesList[i].PPMInterval,
                 DepartmentId: currentDepID
             });
         }

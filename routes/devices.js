@@ -38,7 +38,8 @@ router.post('/add', isAuth, (req, res) => {
         Serial: req.body.serial,
         ImportDate: DataTypes.STRING,
         InstallationDate: req.body.installationDate,
-        SupplyingCompany: DataTypes.STRING
+        SupplyingCompany: DataTypes.STRING,
+        PPMInterval: req.body.ppmInterval
     };
     Device.create(newDevice).then(result => {
         req.flash("success", "Added Device Successfully");

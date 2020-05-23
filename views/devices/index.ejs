@@ -37,6 +37,7 @@
                                         <th>Scrapping Date</th>
                                         <th>Supplying Company</th>
                                         <th>Department</th>
+                                        <th>PPM Interval</th>
                                         <% if (user.isAdmin) { %>
                                             <th>Delete</th>
                                         <% } %>
@@ -58,6 +59,7 @@
                                                 <td><%= devices[i].ScrappingDate %></td>
                                                 <td><%= devices[i].SupplyingCompany %></td>
                                                 <td><%= devices[i].Department.Name %></td>
+                                                <td><%= devices[i].PPMInterval %></td>
                                                 <td>
                                                     <form action="/devices/delete" method="post">
                                                         <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
