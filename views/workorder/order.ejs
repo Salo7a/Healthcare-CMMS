@@ -8,17 +8,17 @@
                 </h3>
             </div>
             <div class="row">
-
+                <% console.log( notification )%>
                 <!--    Alert        -->
-                <% if (Notification.Type === "Alert") { %>
+                <% if (notification.Type === "Repair") { %>
                     <% include alert.ejs%>
                 <% } %>
                 <!--    Daily        -->
-                <% if (Notification.Type === "Daily") { %>
+                <% if (notification.Type === "Daily") { %>
                     <% include daily.ejs%>
                 <% } %>
                 <!--    PPM        -->
-                <% if (Notification.Type === "PPM") { %>
+                <% if (notification.Type === "PPM") { %>
                     <% include ppm.ejs%>
                 <% } %>
 
