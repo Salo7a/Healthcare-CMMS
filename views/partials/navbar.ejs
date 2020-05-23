@@ -112,8 +112,8 @@
                                     <form action="/workorder/order" method="post">
                                         <input type="text" name="notificationID" value="<%= notifications[i].id %>" hidden>
                                         <button type="submit" class="btn dropdown-item">
-                                            <i class="fas fa-file mr-2"></i> <%= notifications[i].Name %>
-                                            <%
+                                            <i class="fas fa-file mr-2"></i> <%= notifications[i].Type %>
+                                            <%=
                                                 const currentTime = new Date(notifications[i].createdAt);
                                                 const date = currentTime.getFullYear()+'-'+(currentTime.getMonth()+1)+'-'+currentTime.getDate();
                                                 const time = currentTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', seconds: 'numeric', hour12: true });
