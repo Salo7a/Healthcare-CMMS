@@ -64,7 +64,7 @@
                         <p>Departments</p>
                     </a>
                 </li>
-                <%= if (!user.isAdmin) { %>
+                <% if (!user.isAdmin) { %>
                     <li class="nav-item">
                         <a href="/indoor/show" class="nav-link">
                             <i class="fas fa-users nav-icon "></i>
