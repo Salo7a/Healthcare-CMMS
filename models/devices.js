@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) =>
         ImportDate: DataTypes.STRING,
         InstallationDate: DataTypes.STRING,
         SupplyingCompany: DataTypes.STRING,
-        ScrappingDate: DataTypes.STRING
+        ScrappingDate: DataTypes.STRING,
+        LastDaily: DataTypes.DATE,
+        LastPPM: DataTypes.DATE,
+        PPMInterval: DataTypes.NUMBER
     });
     
     Device.associate = function (models) {
