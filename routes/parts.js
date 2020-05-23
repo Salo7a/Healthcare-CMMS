@@ -13,7 +13,6 @@ router.get('/', isAuth, (req, res) => {
         parts => {
             res.render('parts/index', {
                 title: 'Parts List',
-                user: req.user,
                 parts
             }).catch((error) => {
                 console.log(error.toString());
@@ -28,7 +27,6 @@ router.get('/add', isAdmin, (req, res) => {
             console.log(devices);
             res.render('parts/add', {
                 title: 'Add a new part',
-                user: req.user,
                 devices
             });
         });

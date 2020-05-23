@@ -13,7 +13,6 @@ router.get('/', function (req, res, next) {
     workOrders.findAll().then(WorkOrder=> {
         res.render('workorder/workorder', {
             title: 'Work list',
-            user: req.user,
             workOrders: WorkOrder
         });
     })
@@ -33,7 +32,6 @@ router.get('/add', isAdmin, (req, res) => {
                         device=>{
                             res.render('workorder/order', {
                                 title: 'Add',
-                                user: req.user,
                                 departments, personnel, device
                             }
                         )
@@ -51,7 +49,6 @@ router.post('/order', isAuth, (req, res) =>{
             console.log("NOT", notification);
             res.render("workorder/order",{
                 title: "Show All Personnel",
-                user : req.user,
                 notification
             })
         }

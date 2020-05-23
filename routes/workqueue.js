@@ -4,8 +4,7 @@ const {isAdmin} = require('../utils/filters');
 const workqueue = require('../models').WorkQueue;
 router.get('/view', function (req, res, next) {
     res.render('workQueue', {
-        title: 'list of work queue',
-        user: req.user
+        title: 'list of work queue'
     });
 });
 // GET Route to manage any new work queue

@@ -13,7 +13,6 @@ router.get('/', isAuth, (req, res, next) => {
         .then(Devices => {
             res.render('devices/index', {
                 title: 'Devices List',
-                user: req.user,
                 devices: Devices
             });
         })
@@ -26,8 +25,7 @@ router.get('/', isAuth, (req, res, next) => {
 // GET Route Handler for adding a new Device
 router.get('/add', isAuth, (req, res) => {
     res.render('devices/add', {
-        title: 'Add a new device',
-        user: req.user
+        title: 'Add a new device'
     });
 });
 

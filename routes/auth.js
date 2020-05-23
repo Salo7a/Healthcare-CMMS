@@ -154,7 +154,6 @@ router.get("/userlist", isAuth,(req, res)=>{
         users =>{
             res.render("users", {
                 title: "Users List",
-                user : req.user,
                 users
             });
         }

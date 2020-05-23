@@ -47,7 +47,6 @@ router.get('/', isAdmin, (req, res) => {
             console.log(departments);
             res.render('indoor/indoor', {
                 title: 'Indoor View',
-                user: req.user,
                 departments
             });
         }
@@ -59,7 +58,6 @@ router.get('/show', isAuth, (req, res) => {
         personnel => {
             res.render('indoor/show', {
                 title: "Show All Personnel",
-                user : req.user,
                 personnel,
             });
         }

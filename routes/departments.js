@@ -10,8 +10,7 @@ router.get('/', isAuth, (req, res, next) => {
         .then(Departments => {
             res.render('departments/index', {
                 title: 'Departments List',
-                departments: Departments,
-                user: req.user
+                departments: Departments
             });
         })
         .catch((error) => {
@@ -23,8 +22,7 @@ router.get('/', isAuth, (req, res, next) => {
 // GET Route Handler for adding a new Department
 router.get('/add', isAdmin, (req, res) => {
     res.render('departments/add', {
-        title: 'Add a new department',
-        user: req.user
+        title: 'Add a new department'
     });
 });
 

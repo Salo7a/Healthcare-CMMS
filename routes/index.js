@@ -7,8 +7,7 @@ const isAdmin = require('../utils/filters').isAdmin;
 
 router.get('/', isAuth, function (req, res, next) {
     res.render('index', {
-        title: 'Home - Extra Cool CMMS',
-        user: req.user,
+        title: 'Home - Extra Cool CMMS'
     });
 });
 

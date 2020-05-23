@@ -9,40 +9,35 @@ const models = require('../models');
 // GET Route Handler for main reports page
 router.get('/', isAuth, (req, res, next) => {
     res.render('reports/index', {
-        title: 'Reports',
-        user: req.user
+        title: 'Reports'
     });
 });
 
 // GET Route Handler for repair report page
 router.get('/repair', isAuth, (req, res, next) => {
     res.render('reports/repair', {
-        title: 'Repair Report',
-        user: req.user
+        title: 'Repair Report'
     });
 });
 
 // GET Route Handler for ppm report page
 router.get('/ppm', isAuth, (req, res, next) => {
     res.render('reports/ppm', {
-        title: 'PPM Report',
-        user: req.user
+        title: 'PPM Report'
     });
 });
 
 // GET Route Handler for daily inspection report page
 router.get('/daily', isAuth, (req, res, next) => {
     res.render('reports/daily', {
-        title: 'Daily Inspection Report',
-        user: req.user
+        title: 'Daily Inspection Report'
     })
 });
 
 // GET Route Handler for adding a new Device
 router.post('/add', isAuth, (req, res) => {
     res.render('reports/add', {
-        title: 'Get The Report',
-        user: req.user
+        title: 'Get The Report'
     });
 });
 
