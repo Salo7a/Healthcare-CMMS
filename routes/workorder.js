@@ -63,13 +63,14 @@ router.post('/order', isAuth, (req, res) =>{
 
 router.post('/add', isAuth, (req, res) => {
     const newWork = {
-        name: req.body.task,
-        date: req.body.Date,
+        // name: req.body.task,
+        // date: req.body.Date,
 
         // DeviceId: req.body.device,
         DepartmentId: req.user.DepartmentId,
-        IndoorId: req.user.id,
-        type: req.notification.Type,
+        UserId: req.user.id,
+        type: req.body.type,
+        DeviceId : req.body.deviceId,
 
         alert: JSON.stringify({
             description : req.body.description,
