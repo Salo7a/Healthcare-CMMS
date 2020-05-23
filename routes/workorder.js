@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {isAdmin} = require('../utils/filters');
+const isAuth = require('../utils/filters').isAuth;
 const workOrders = require('../models').WorkOrder;
 const personnel = require("../models").Indoor;
 const departments = require("../models").Department;
@@ -29,7 +30,7 @@ router.get('/add', isAdmin, (req, res) => {
                 personnel=> {
                     device.findAll().then(
                         device=>{
-                            res.render('workorder/addWorkOrder', {
+                            res.render('workorder/order', {
                                 title: 'Add',
                                 user: req.user,
                                 departments, personnel, device
@@ -40,17 +41,44 @@ router.get('/add', isAdmin, (req, res) => {
     });
 });
 
-router.post('/add', isAdmin, (req, res) => {
+router.post('/add', isAuth, (req, res) => {
     const newWork = {
-        // engineername: req.body.name,
         name: req.body.task,
         date: req.body.Date,
-        DeviceId: req.body.device,
-        DepartmentId: req.body.department,
-        IndoorId: req.body.engineer
 
-        // task_priority: req.body.priority
+        // DeviceId: req.body.device,
+        DepartmentId: req.user.DepartmentId,
+        IndoorId: req.user.id,
+        type: req.notification.Type,
+
+        alert: JSON.stringify({
+            description : req.body.description,
+            action : req.body.action
+        }),
+
+        ppm :  JSON.stringify({
+            clean_dust : req.body.clean_dust,
+            clean_surface : req.body.clean_surface,
+            lubricated: req.body.lubricated,
+            calibrated : req.body.calibrated,
+            desc_replaced : req.body.desc_replaced,
+            desc_adjustments : req.body.desc_adjustments,
+            comments : req.body.comments
+        }),
+
+        daily : JSON.stringify({
+            foreign : req.body.removed,
+            cracks : req.body.cracks,
+            broken_bat : req.body.broken,
+            damage_bat: req.body.damage,
+            spare_bat : req.body.spare,
+            broken_cable :req.body.broken_cable,
+            damage_cable : req.body.damage_cable,
+            spare_cable : req.body.spare_cable,
+            other : req.body.other
+        })
     };
+
     workOrders.create(newWork).then(result => {
         req.flash("success", "Added New Work Order Successfully");
         res.redirect("/");
