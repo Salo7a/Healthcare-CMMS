@@ -52,18 +52,24 @@
                         </ul>
                     </li>
                 <% } %>
+
+                <!--  Devices Link  -->
                 <li class="nav-item">
                     <a href="/devices" class="nav-link">
                         <i class="fas fa-stethoscope nav-icon "></i>
                         <p>Devices</p>
                     </a>
                 </li>
+
+                <!--  Departments Link  -->
                 <li class="nav-item">
                     <a href="/departments" class="nav-link">
                         <i class="fas fa-building nav-icon "></i>
                         <p>Departments</p>
                     </a>
                 </li>
+
+                <!--  Individuals Link  -->
                 <% if (!user.isAdmin) { %>
                     <li class="nav-item">
                         <a href="/indoor/show" class="nav-link">
@@ -72,12 +78,16 @@
                         </a>
                     </li>
                 <% } %>
+
+                <!--  Parts Link  -->
                 <li class="nav-item">
                     <a href="/parts" class="nav-link">
                         <i class="fas fa-microchip nav-icon"></i>
                         <p>Parts</p>
                     </a>
                 </li>
+
+                <!--  Add WorkOrder  -->
                 <% if (!user.isAdmin) { %>
                     <li class="nav-item">
                         <a href="/workorder/add" class="nav-link">
@@ -87,44 +97,13 @@
                     </li>
                 <% } %>
 
-                <!--  Reports Links  -->
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>
-                            Reports
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                <!--  Reports Link  -->
+                <li class="nav-item">
+                    <a href="/reports/createReport" class="nav-link">
+                        <i class="fas fa-file nav-icon"></i>
+                        <p>Reports</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/reports/repair" class="nav-link">
-                                <i class="nav-icon"></i>
-                                <p>
-                                    Repair
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/reports/ppm" class="nav-link">
-                                <i class="nav-icon"></i>
-                                <p>
-                                    PPM
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/reports/daily" class="nav-link">
-                                <i class="nav-icon"></i>
-                                <p>
-                                    Daily Inspection
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-
-
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
