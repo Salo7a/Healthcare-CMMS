@@ -10,7 +10,7 @@
                             <label for="reportsMenu">Select Report Type</label>
                             <select id="reportsMenu" name="reportsMenu" class="form-control" required>
                                 <option value="" selected disabled>Report Type</option>
-                                <option value="Repair">Repairing</option>
+                                <option value="Repair">Repair</option>
                                 <option value="PPM">PPM</option>
                                 <option value="Daily">Daily Inspection</option>
                             </select>
@@ -37,6 +37,7 @@
                             <label for="devicesMenu">Select Device</label>
                             <select id="devicesMenu" name="devicesMenu" class="form-control" required>
                                 <option value="" selected disabled>Device Name</option>
+                                <option value="all">All Devices</option>
                             </select>
                         </div>
                     </div>
@@ -86,6 +87,7 @@
     const departsMenu = document.querySelector('#departmentsMenu');
     const devicesMenu = document.querySelector('#devicesMenu');
     const serialsMenu = document.querySelector('#serialsMenu');
+    const reportsMenu = document.querySelector('#reportsMenu');
     let departDevicesList;
 
     departsMenu.addEventListener('change', () => {
@@ -97,9 +99,16 @@
         departDevicesList = allDevices.filter((device) => device.DepartmentId === depID);
 
         // Delete Old Options of Devices
-        for (let j = 1; j < devicesLength; j++) {
+        for (let j = 2; j < devicesLength; j++) {
             devicesLength = devicesMenu.options.length;
             devicesMenu.removeChild(devicesMenu.options[devicesLength-1])
+            devicesMenu.selectedIndex = 0;
+        }
+
+        // Delete Old Option for Serial
+        if (serialsMenu.options.length === 2) {
+            serialsMenu.removeChild(serialsMenu.options[1]);
+            serialsMenu.selectedIndex = 0;
         }
 
         // Create options with the devices of that department
@@ -116,25 +125,59 @@
         const devID = devicesMenu.value;
         let serialsLength = serialsMenu.options.length;
         console.log(`defID ${devID}`);
-        const selectedDevice = departDevicesList.filter((device) => device.id === devID)[0];
-        console.log(`selectedDevice ${selectedDevice}`);
-        console.log(`selectedDevice Name ${selectedDevice.Name}`);
+        if (devID !== 'all')
+        {
+            const selectedDevice = departDevicesList.filter((device) => device.id === devID)[0];
+            console.log(`selectedDevice ${selectedDevice}`);
+            console.log(`selectedDevice Name ${selectedDevice.Name}`);
 
-        console.log(`serialsLength ${serialsLength}`);
-        // Delete Old Options of Serial
-        for (let j = 1; j < serialsLength; j++) {
-            serialsLength = serialsMenu.options.length;
-            serialsMenu.removeChild(serialsMenu.options[serialsLength-1]);
-            console.log('Deleted ', selectedDevice.Serial);
+            console.log(`serialsLength ${serialsLength}`);
+            // Delete Old Options of Serial
+            for (let j = 1; j < serialsLength; j++) {
+                serialsLength = serialsMenu.options.length;
+                serialsMenu.removeChild(serialsMenu.options[serialsLength-1]);
+                console.log('Deleted ', selectedDevice.Serial);
+            }
+
+            // Create option with the serial of that device
+            serialsMenu.disabled = false;
+            let opt = document.createElement('option');                           // create new option element
+            opt.appendChild( document.createTextNode(selectedDevice.Serial) );    // create text node to add to option element (opt)
+            opt.value = selectedDevice.Serial;                                    // set value property of opt
+            serialsMenu.appendChild(opt);                                         // add opt to end of select box (sel)
+            serialsMenu.selectedIndex = 1;
+        }
+        else
+        {
+            // Delete Old Option for Serial
+            if (serialsMenu.options.length === 2) {
+                serialsMenu.removeChild(serialsMenu.options[1]);
+                serialsMenu.selectedIndex = 0;
+                serialsMenu.disabled = true;
+            }
         }
 
-        // Create option with the serial of that device
-        let opt = document.createElement('option');                           // create new option element
-        opt.appendChild( document.createTextNode(selectedDevice.Serial) );    // create text node to add to option element (opt)
-        opt.value = selectedDevice.Serial;                                    // set value property of opt
-        serialsMenu.appendChild(opt);                                         // add opt to end of select box (sel)
-        serialsMenu.selectedIndex = 1;
     });
 
+    // Event for clicking on reports menu
+    reportsMenu.addEventListener('change', () => {
+        // Reset Options of Department
+        departsMenu.selectedIndex = 0;
+        devicesMenu.selectedIndex = 0;
+        serialsMenu.selectedIndex = 0;
+        serialsMenu.disabled = false;
 
+        let devicesLength = devicesMenu.options.length;
+        // Delete Old Options of Devices
+        for (let j = 2; j < devicesLength; j++) {
+            devicesLength = devicesMenu.options.length;
+            devicesMenu.removeChild(devicesMenu.options[devicesLength-1])
+        }
+
+        // Delete Old Option for Serial
+        if (serialsMenu.options.length === 2) {
+            serialsMenu.removeChild(serialsMenu.options[1]);
+            serialsMenu.selectedIndex = 0;
+        }
+    });
 </script>
