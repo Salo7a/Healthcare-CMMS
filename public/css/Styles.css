@@ -19,8 +19,19 @@
 }
 
 .table-buttons {
+    position: relative;
+    left: 0;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     width: fit-content;
+    height: fit-content;
+    margin-bottom: 10px;
+}
+
+.table-buttons .btn {
+    float: right;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 5px;
 }
