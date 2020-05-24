@@ -23,14 +23,14 @@ router.get('/', isAuth, (req, res, next) => {
 });
 
 // GET Route Handler for adding a new Device
-router.get('/add', isAuth, (req, res) => {
+router.get('/add', isAdmin, (req, res) => {
     res.render('devices/add', {
         title: 'Add a new device'
     });
 });
 
 // POST Route Handler for adding a new Device
-router.post('/add', isAuth, (req, res) => {
+router.post('/add', isAdmin, (req, res) => {
     // Create the new Device
     const newDevice = {
         Name: req.body.name,
