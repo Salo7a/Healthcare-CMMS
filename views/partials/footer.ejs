@@ -21,9 +21,31 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+<!--GSAP-->
+<script src="/javascripts/gsap.min.js"></script>
+<!--Barba-->
+<script src="/javascripts/barba.js"></script>
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
+
+<script>
+    barba.init({
+        transitions: [{
+            name: 'opacity-transition',
+            leave(data) {
+                return gsap.to(data.current.container, {
+                    opacity: 0
+                });
+            },
+            enter(data) {
+                return gsap.from(data.next.container, {
+                    opacity: 0
+                });
+            }
+        }]
+    });
+</script>

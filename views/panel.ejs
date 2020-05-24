@@ -17,7 +17,7 @@
     <!-- Custom CSS Block -->
     <%- block('css').toString() %>
 </head>
-<body class="hold-transition sidebar-mini">
+<body data-barba="wrapper" class="hold-transition sidebar-mini">
 <div class="wrapper">
 
     <!-- Navbar -->
@@ -53,7 +53,10 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <%- body -%>
+                    <main data-barba="container" data-barba-namespace="home">
+                        <%- body -%>
+                    </main>
+
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
