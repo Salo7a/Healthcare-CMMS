@@ -6,17 +6,19 @@
                 <div style="margin-bottom: 10px;" class="table-buttons">
                     <!-- Add New Department Button -->
                     <!-- Add New Device Button -->
-                    <a type="button" class="btn btn-block btn-primary" href="/devices/add">Add New Device</a>
+                    <a type="button" class="btn btn-block btn-primary" href="/devices/add">
+                        <i class="fas fa-plus"></i> Add
+                    </a>
 
                     <!-- Delete All The Devices Button -->
-                    <a type="button" class="btn btn-block btn-danger" href="/devices/deleteAll">Erase Database</a>
+                    <!--                    <a type="button" class="btn btn-block btn-danger" href="/devices/deleteAll">Erase Database</a>-->
                 </div>
             <% } %>
             <!--            Enter Your Content Here-->
-
-            <!-- Check length of devices list -->
-            <!-- In case we found devices -->
-            <% if (devices.length > 0) { %>
+            <div class="col-md-12">
+                <!-- Check length of devices list -->
+                <!-- In case we found devices -->
+                <% if (devices.length > 0) { %>
                 <!-- Devices Table -->
                 <table id="devicesTable" class="table table-bordered table-striped">
                     <!-- Headers -->
@@ -101,6 +103,7 @@
             <% } else { %>
                 <h1>No Devices Found</h1>
             <% } %>
+            </div>
             <!--            Enter Your Content Here-->
         </div>
     </div>

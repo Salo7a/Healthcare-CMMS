@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-
+    <link rel="stylesheet" href="/css/Styles.css">
+    <link rel="stylesheet" href="/css/csspin.css">
     <!-- Custom CSS Block -->
     <%- block('css').toString() %>
 
@@ -25,6 +26,7 @@
     <script src="/javascripts/barba.js"></script>
     <!-- jQuery -->
     <script src="/plugins/jquery/jquery.min.js"></script>
+
     <!-- Bootstrap 4 -->
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
@@ -36,6 +38,13 @@
 
 </head>
 <body data-barba="wrapper" class="hold-transition sidebar-mini">
+
+<div class=" js-preloader preloader-wrapper">
+    <div class="preloader">
+        <div class="cp-spinner cp-balls"></div>
+    </div>
+</div>
+
 <div class="wrapper">
 
     <!-- Navbar -->
@@ -87,6 +96,10 @@
     <% include partials/toasts.ejs %>
     <!-- Custom JS Block -->
     <%- block('js').toString() %>
+    <script src="/javascripts/jquery.preloadinator.min.js"></script>
 
+    <script>
+        $('.js-preloader').preloadinator();
+    </script>
 </body>
 </html>
