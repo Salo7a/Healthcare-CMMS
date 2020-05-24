@@ -16,7 +16,9 @@ router.get('/', isAuth, (req, res, next) => {
 
 // GET Route Handler for create report page
 router.get('/createReport', isAuth, (req, res, next) => {
-    Device.findAll({include :[ Department ]})
+    Device.findAll({
+        include :[ Department ]
+    })
         .then(Devices => {
             res.render('reports/createReport', {
                 title: 'Reports Extraction',

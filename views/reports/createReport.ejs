@@ -2,14 +2,27 @@
 <div class="col-md-12">
     <div class="card card-default">
         <div class="card-body">
-            <form role="form">
+            <form role="form" action="/reports/report" method="post">
                 <div class="row">
+                    <!-- select Report Type -->
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="reportsMenu">Select Report Type</label>
+                            <select id="reportsMenu" name="reportsMenu" class="form-control" required>
+                                <option value="" selected disabled>Report Type</option>
+                                <option value="Repairing">Repairing</option>
+                                <option value="PPM">PPM</option>
+                                <option value="Daily Inspection">Daily Inspection</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <!-- select The Department -->
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Select Department</label>
-                            <select id="departmentsMenu" class="form-control">
-                                <option value="" selected>Department Name</option>
+                            <label for="departmentsMenu">Select Department</label>
+                            <select id="departmentsMenu" name="departmentsMenu" class="form-control" required>
+                                <option value="" selected disabled>Department Name</option>
                                 <option value="1">Cardiac Catheterization</option>
                                 <option value="2">Surgery Care</option>
                                 <option value="3">Cardiology</option>
@@ -21,10 +34,9 @@
                     <!-- select The Device -->
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Select Device</label>
-                            <select id="devicesMenu" class="form-control">
-                                <option selected>Device Name</option>
-                                <option>option 1</option>
+                            <label for="devicesMenu">Select Device</label>
+                            <select id="devicesMenu" name="devicesMenu" class="form-control" required>
+                                <option value="" selected disabled>Device Name</option>
                             </select>
                         </div>
                     </div>
@@ -32,23 +44,9 @@
                     <!-- select The Serial -->
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Select Serial</label>
-                            <select id="serialsMenu" class="form-control">
-                                <option selected>Serial</option>
-                                <option>option 1</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- select Report Type -->
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Select Report Type</label>
-                            <select id="reportsMenu" class="form-control">
-                                <option selected>Report Type</option>
-                                <option value="1">option 1</option>
-                                <option value="2">option 2</option>
-                                <option value="3">option 3</option>
+                            <label for="serialsMenu">Select Serial</label>
+                            <select id="serialsMenu" name="serialsMenu" class="form-control" required>
+                                <option value="" selected disabled>Serial</option>
                             </select>
                         </div>
                     </div>
@@ -56,7 +54,9 @@
                 </div>
                 <div class="row no-print">
                     <div class="col-12">
-                        <a href="" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-print"></i> Print
+                        </button>
                     </div>
                 </div>
 
@@ -65,38 +65,76 @@
     </div>
 </div>
 
-<script> let allDevices = <% devices %> </script>
+<script type="text/javascript">
+    let allDevices = [];
+    let d = {};
+</script>
 
+<% for (var i = 0; i < devices.length; i++) { %>
+    <script>
+        d = {
+            id: `<%= devices[i].id %>`,
+            Name: `<%= devices[i].Name %>`,
+            Serial: `<%= devices[i].Serial %>`,
+            DepartmentId: `<%= devices[i].DepartmentId %>`
+        }
+        allDevices.push(d);
+    </script>
+<% } %>
 
 <script type="text/javascript">
     const departsMenu = document.querySelector('#departmentsMenu');
     const devicesMenu = document.querySelector('#devicesMenu');
     const serialsMenu = document.querySelector('#serialsMenu');
+    let departDevicesList;
 
-    departsMenu.addEventListener('change', function ()
-    {
+    departsMenu.addEventListener('change', () => {
         // Get the devices with the selected department only
         const depID = departsMenu.value;
-        console.log(depID);
-        console.log(allDevices);
-        const departDevicesList = allDevices.filter((device) => device.DepartmentId === depID);
-        console.log(departDevicesList);
+        let devicesLength = devicesMenu.options.length;
 
-        // // Create options with the devices of that department
-        // for (let i = 0; i < departDevicesList.length; i++)
-        // {
-        //     // create new option element
-        //     let opt = document.createElement('option');
-        //
-        //     // create text node to add to option element (opt)
-        //     opt.appendChild( document.createTextNode(departDevicesList.Name) );
-        //
-        //     // set value property of opt
-        //     opt.value = departDevicesList.id;
-        //
-        //     // add opt to end of select box (sel)
-        //     devicesMenu.appendChild(opt);
-        // }
+        console.log(`DepID, ${depID}`);
+        departDevicesList = allDevices.filter((device) => device.DepartmentId === depID);
+
+        // Delete Old Options of Devices
+        for (let j = 1; j < devicesLength; j++) {
+            devicesLength = devicesMenu.options.length;
+            devicesMenu.removeChild(devicesMenu.options[devicesLength-1])
+        }
+
+        // Create options with the devices of that department
+        departDevicesList.forEach((device) => {
+            let opt = document.createElement('option');                 // create new option element
+            opt.appendChild( document.createTextNode(device.Name) );    // create text node to add to option element (opt)
+            opt.value = device.id;                                      // set value property of opt
+            devicesMenu.appendChild(opt);                               // add opt to end of select box (sel)
+        });
     });
+
+    devicesMenu.addEventListener('change', () => {
+        // Get the serial with the selected device only
+        const devID = devicesMenu.value;
+        let serialsLength = serialsMenu.options.length;
+        console.log(`defID ${devID}`);
+        const selectedDevice = departDevicesList.filter((device) => device.id === devID)[0];
+        console.log(`selectedDevice ${selectedDevice}`);
+        console.log(`selectedDevice Name ${selectedDevice.Name}`);
+
+        console.log(`serialsLength ${serialsLength}`);
+        // Delete Old Options of Serial
+        for (let j = 1; j < serialsLength; j++) {
+            serialsLength = serialsMenu.options.length;
+            serialsMenu.removeChild(serialsMenu.options[serialsLength-1]);
+            console.log('Deleted ', selectedDevice.Serial);
+        }
+
+        // Create option with the serial of that device
+        let opt = document.createElement('option');                           // create new option element
+        opt.appendChild( document.createTextNode(selectedDevice.Serial) );    // create text node to add to option element (opt)
+        opt.value = selectedDevice.Serial;                                    // set value property of opt
+        serialsMenu.appendChild(opt);                                         // add opt to end of select box (sel)
+        serialsMenu.selectedIndex = 1;
+    });
+
 
 </script>
