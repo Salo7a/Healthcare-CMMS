@@ -89,6 +89,7 @@
                                                     <td><%= devices[i].ScrappingDate %></td>
                                                     <td><%= devices[i].SupplyingCompany %></td>
                                                     <td><%= devices[i].Department.Name %></td>
+                                                    <td><%= devices[i].PPMInterval %></td>
                                                     <td>
                                                         <form action="/devices/alert" method="post">
                                                             <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>

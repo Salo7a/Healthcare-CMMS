@@ -107,6 +107,7 @@
 <!--                            <span class="float-right text-muted text-sm">12 hours</span>-->
 <!--                        </a>-->
                         <% for (var i = 0; i < nLength; i++) { %>
+                            <% console.log(`udId ${user.DepartmentId}, ndID ${notifications[i].DepartmentId}`) %>
                             <% if (user.DepartmentId === notifications[i].DepartmentId) { %>
                                 <div class="dropdown-divider"></div>
                                     <form action="/workorder/order" method="post">

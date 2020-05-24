@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         WorkOrder.belongsTo(models.Device);
         WorkOrder.belongsTo(models.Department);
         WorkOrder.belongsTo(models.User);
+        WorkOrder.hasOne(models.Notification);
     };
 
     return WorkOrder;

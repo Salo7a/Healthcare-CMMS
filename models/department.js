@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) =>
         Department.hasMany(models.Device);
         Department.hasMany(models.Indoor);
         Department.hasMany(models.User);
+        Department.hasMany(models.Notification);
     };
     
     return Department;
