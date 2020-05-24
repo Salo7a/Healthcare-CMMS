@@ -9,15 +9,21 @@ const models = require('../models');
 // GET Route Handler for main reports page
 router.get('/', isAuth, (req, res, next) => {
     res.render('reports/index', {
-        title: 'Reports'
+        title: 'Reports',
+        user: req.user
     });
 });
 
 // GET Route Handler for create report page
 router.get('/createReport', isAuth, (req, res, next) => {
-    res.render('reports/createReport', {
-        title: 'Reports Extraction'
-    });
+    Device.findAll({include :[ Department ]})
+        .then(Devices => {
+            res.render('reports/createReport', {
+                title: 'Reports Extraction',
+                user: req.user,
+                devices: Devices
+            });
+        });
 });
 
 module.exports = router;

@@ -65,3 +65,38 @@
     </div>
 </div>
 
+<script> let allDevices = <% devices %> </script>
+
+
+<script type="text/javascript">
+    const departsMenu = document.querySelector('#departmentsMenu');
+    const devicesMenu = document.querySelector('#devicesMenu');
+    const serialsMenu = document.querySelector('#serialsMenu');
+
+    departsMenu.addEventListener('change', function ()
+    {
+        // Get the devices with the selected department only
+        const depID = departsMenu.value;
+        console.log(depID);
+        console.log(allDevices);
+        const departDevicesList = allDevices.filter((device) => device.DepartmentId === depID);
+        console.log(departDevicesList);
+
+        // // Create options with the devices of that department
+        // for (let i = 0; i < departDevicesList.length; i++)
+        // {
+        //     // create new option element
+        //     let opt = document.createElement('option');
+        //
+        //     // create text node to add to option element (opt)
+        //     opt.appendChild( document.createTextNode(departDevicesList.Name) );
+        //
+        //     // set value property of opt
+        //     opt.value = departDevicesList.id;
+        //
+        //     // add opt to end of select box (sel)
+        //     devicesMenu.appendChild(opt);
+        // }
+    });
+
+</script>
