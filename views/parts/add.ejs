@@ -42,18 +42,43 @@
                                     placeholder="Installation Date">
                             </div>
 
-                            <!-- Device -->
+                            <!-- select The Department -->
                             <div class="form-group">
-                                <label>Device</label>
-                                <select name="device" class="form-control select2" style="width: 100%;">
-                                    <option selected disabled>Select a Device</option>
-                                    <% for (let i = 0; i<devices.length; i++ ) { %>
-                                    <option value="<%= devices[i].id %>">
-                                        <%= devices[i].Name + " , " + devices[i].Model + " , " + devices[i].Serial + " , " + devices[i].Department.Name %>
-                                    </option>
-                                    <% } %>
+                                <label for="departmentsMenu">Select Department</label>
+                                <select id="departmentsMenu" name="departmentsMenu" class="form-control" required>
+                                    <option value="" selected disabled>Department Name</option>
+                                    <option value="1">Cardiac Catheterization</option>
+                                    <option value="2">Surgery Care</option>
+                                    <option value="3">Cardiology</option>
+                                    <option value="4">Emergency</option>
                                 </select>
                             </div>
+
+                            <!-- select The Device -->
+                            <div class="form-group">
+                                <label for="devicesMenu">Select Device</label>
+                                <select id="devicesMenu" name="devicesMenu" class="form-control" required>
+                                    <option value="" selected disabled>Device Name</option>
+                                    <option value="all">All Devices</option>
+                                </select>
+                            </div>
+
+                            <!-- select The Serial -->
+                            <div class="form-group">
+                                <label for="serialsMenu">Select Serial</label>
+                                <select id="serialsMenu" name="serialsMenu" class="form-control" required>
+                                    <option value="" selected disabled>Serial</option>
+                                </select>
+                            </div>
+
+                            <!-- select The Model -->
+                            <div class="form-group">
+                                <label for="modelsMenu">Select Model</label>
+                                <select id="modelsMenu" name="modelsMenu" class="form-control" required>
+                                    <option value="" selected disabled>Model</option>
+                                </select>
+                            </div>
+
                         </div>
 
 
@@ -70,3 +95,127 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    let allDevices = [];
+    let d = {};
+</script>
+
+<% for (var i = 0; i < devices.length; i++) { %>
+    <script>
+        d = {
+            id: `<%= devices[i].id %>`,
+            Name: `<%= devices[i].Name %>`,
+            Serial: `<%= devices[i].Serial %>`,
+            Model: `<%= devices[i].Model %>`,
+            DepartmentId: `<%= devices[i].DepartmentId %>`
+        }
+        allDevices.push(d);
+    </script>
+<% } %>
+
+<script type="text/javascript">
+    const departsMenu = document.querySelector('#departmentsMenu');
+    const devicesMenu = document.querySelector('#devicesMenu');
+    const serialsMenu = document.querySelector('#serialsMenu');
+    const reportsMenu = document.querySelector('#reportsMenu');
+    const modelsMenu = document.querySelector('#modelsMenu');
+    let departDevicesList;
+
+    departsMenu.addEventListener('change', () => {
+        // Get the devices with the selected department only
+        const depID = departsMenu.value;
+        let devicesLength = devicesMenu.options.length;
+
+        console.log(`DepID, ${depID}`);
+        departDevicesList = allDevices.filter((device) => device.DepartmentId === depID);
+
+        // Delete Old Options of Devices
+        for (let j = 2; j < devicesLength; j++) {
+            devicesLength = devicesMenu.options.length;
+            devicesMenu.removeChild(devicesMenu.options[devicesLength-1])
+            devicesMenu.selectedIndex = 0;
+        }
+
+        // Delete Old Option for Serial
+        if (serialsMenu.options.length === 2) {
+            serialsMenu.removeChild(serialsMenu.options[1]);
+            serialsMenu.selectedIndex = 0;
+        }
+
+        // Delete Old Option for Model
+        if (modelsMenu.options.length === 2) {
+            modelsMenu.removeChild(modelsMenu.options[1]);
+            modelsMenu.selectedIndex = 0;
+        }
+
+        // Create options with the devices of that department
+        departDevicesList.forEach((device) => {
+            let opt = document.createElement('option');                 // create new option element
+            opt.appendChild( document.createTextNode(device.Name) );    // create text node to add to option element (opt)
+            opt.value = device.id;                                      // set value property of opt
+            devicesMenu.appendChild(opt);                               // add opt to end of select box (sel)
+        });
+    });
+
+    devicesMenu.addEventListener('change', () => {
+        // Get the serial with the selected device only
+        const devID = devicesMenu.value;
+        let serialsLength = serialsMenu.options.length;
+        console.log(`defID ${devID}`);
+        if (devID !== 'all')
+        {
+            const selectedDevice = departDevicesList.filter((device) => device.id === devID)[0];
+            console.log(`selectedDevice ${selectedDevice}`);
+            console.log(`selectedDevice Name ${selectedDevice.Name}`);
+
+            console.log(`serialsLength ${serialsLength}`);
+            // Delete Old Options of Serial
+            for (let j = 1; j < serialsLength; j++) {
+                serialsLength = serialsMenu.options.length;
+                serialsMenu.removeChild(serialsMenu.options[serialsLength-1]);
+                console.log('Deleted ', selectedDevice.Serial);
+            }
+
+            // Delete Old Option for Model
+            if (modelsMenu.options.length === 2) {
+                modelsMenu.removeChild(modelsMenu.options[1]);
+                modelsMenu.selectedIndex = 0;
+            }
+
+            // Create option with the serial of that device
+            serialsMenu.disabled = false;
+            let opt = document.createElement('option');                           // create new option element
+            opt.appendChild( document.createTextNode(selectedDevice.Serial) );    // create text node to add to option element (opt)
+            opt.value = selectedDevice.Serial;                                    // set value property of opt
+            serialsMenu.appendChild(opt);                                         // add opt to end of select box (sel)
+            serialsMenu.selectedIndex = 1;
+
+            // Create option with the model of that device
+            serialsMenu.disabled = false;
+            let opt2 = document.createElement('option');                           // create new option element
+            opt2.appendChild( document.createTextNode(selectedDevice.Model) );    // create text node to add to option element (opt)
+            opt2.value = selectedDevice.Serial;                                    // set value property of opt
+            modelsMenu.appendChild(opt2);                                         // add opt to end of select box (sel)
+            modelsMenu.selectedIndex = 1;
+        }
+        else
+        {
+            // Delete Old Option for Serial
+            if (serialsMenu.options.length === 2) {
+                serialsMenu.removeChild(serialsMenu.options[1]);
+                serialsMenu.selectedIndex = 0;
+                serialsMenu.disabled = true;
+            }
+
+            // Delete Old Option for Model
+            if (modelsMenu.options.length === 2) {
+                modelsMenu.removeChild(modelsMenu.options[1]);
+                modelsMenu.selectedIndex = 0;
+                modelsMenu.disabled = true;
+            }
+        }
+    });
+
+</script>
