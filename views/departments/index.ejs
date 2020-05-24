@@ -3,13 +3,13 @@
     <div class="card card-default">
         <div class="card-body">
             <% if (user.isAdmin) { %>
-                <div style="margin-bottom: 10px;" class="table-buttons">
+                <div class="table-buttons">
                     <!-- Add New Department Button -->
-                    <a type="button" class="btn btn-block btn-primary" href="/departments/add">
+                    <a type="button" class="btn btn-outline-primary" href="/departments/add">
                         <i class="fas fa-plus"></i> Add
                     </a>
                     <!-- Delete All The Department Button -->
-                    <a type="button" class="btn btn-block btn-primary" href="/departments/deleteAll">
+                    <a type="button" class="btn btn-danger" href="/departments/deleteAll">
                         <i class="fas fa-trash"></i> Erase All
                     </a>
                 </div>
