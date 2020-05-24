@@ -26,11 +26,11 @@ router.get('/', function (req, res, next) {
 router.get('/add', isAdmin, (req, res) => {
     departments.findAll().then(
         departments =>{
-            personnel.findAll().then(
+            user.findAll().then(
                 personnel=> {
                     device.findAll().then(
                         device=>{
-                            res.render('workorder/order', {
+                            res.render('workorder/addWorkOrder', {
                                 title: 'Add',
                                 departments, personnel, device
                             }

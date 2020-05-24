@@ -5,7 +5,6 @@
         <div class="card-body">
 
             <div class="row-cols-4">
-                                <a type="button" class="btn btn-block btn-primary" href="/workorder/add">Add New Work</a>
                 <div class="input-group input-group-sm" >
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -33,8 +32,9 @@
                         <tbody>
                         <% for(var i = 0; i < workOrders.length; i++) { %>
                         <tr>
-                            <th>woow</th>
-                            <th><%=workOrders[i].date%></th>
+
+                            <th><%=workOrders[i].User.Name%></th>
+                            <th><%=workOrders[i].Date%></th>
                             <th><%=workOrders[i].Device.Name%></th>
                             <th><%=workOrders[i].name%></th>
                             <%}%>
