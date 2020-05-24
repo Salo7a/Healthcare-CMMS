@@ -17,14 +17,14 @@
 
                 <tbody>
 
-                <% for (var i = 0; i < report.length; i++) { %>
-                <tr>
-                    <td><%= report[i].Device.Name%></td>
-                    <td><%= report[i].Department.Name%></td>
-                    <td><%= report[i].user.Name%></td>
-                    <td><%= report[i].daily.description%></td>
-                    <td><%= report[i].daily.action%></td>
-                </tr>
+                <% for (var i = 0; i <= report.length; i++) { %>
+                    <tr>
+                        <td><%= report[i].dataValues.Device.Name%></td>
+                        <td><%= report[i].dataValues.Department.Name%></td>
+                        <td><%= report[i].dataValues.user.Name%></td>
+                        <td><%= report[i].dataValues.alert.description%></td>
+                        <td><%= report[i].dataValues.alert.action%></td>
+                    </tr>
                 <% } %>
 
                 </tbody>

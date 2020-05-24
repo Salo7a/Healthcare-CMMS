@@ -31,11 +31,17 @@ router.get('/createReport', isAuth, (req, res, next) => {
 
 router.post("/report", isAuth, (req, res)=>{
     console.log("The Type is ", req.body.reportsMenu);
+
     models.WorkOrder.findAll({
         include: [Device, Department],
-        where: {type : req.body.reportsMenu}
+        where: {
+            type : req.body.reportsMenu,
+            DeviceId: req.body.devicesMenu,
+            DepartmentId : req.body.departmentsMenu
+        }
     }).then( report => {
-        console.log(report);
+        console.log("Report Result",report);
+
         res.render('reports/report', {
             title: req.body.type +" Detailed Report",
             user: req.user,

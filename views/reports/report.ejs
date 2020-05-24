@@ -2,34 +2,42 @@
 <div class="col-md-12">
     <div class="card card-default">
         <div class="card-body">
-            <% console.log( "HERE ", report[0] )%>
-            <% console.log( "HERE ", report.WorkOrder )%>
-            <% console.log( "HERE ", report.Department )%>
-            <% console.log( "HERE ", report.Device)%>
+            <% console.log( "HERE 0", report[0].dataValues )%>
+            <% console.log( "HERE 1", report[0].dataValues.Device )%>
+            <% console.log( "HERE 2", report[0].dataValues.Device.Name )%>
+            <% console.log( "HERE 3", report[0].dataValues.Department.Name)%>
+            <% if (report.length > 0) { %>
 
-            <blockquote class="blockquote text-center">
-                <p class="mb-0"><%= report[0].type %> Detailed Report </p>
-                <p class="mb-1"> <%= user.Name %> From : <%= report[0].Department.Name %> </p>
-                <p> Created At : <%= report[0].createdAt %></p>
-                <footer class="blockquote-footer"><cite title="Source Title">Extra Cool CMMS</cite></footer>
-            </blockquote>
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0"><%= report[0].type %> Detailed Report </p>
+                    <p class="mb-1"> <%= user.Name %> From : <%= report[0].dataValues.Department.Name %> </p>
+                    <p> Created At : <%= report[0].createdAt %></p>
+                    <footer class="blockquote-footer"><cite title="Source Title">Extra Cool CMMS</cite></footer>
+                </blockquote>
 
-            <!--    Alert        -->
-            <% if (report[0].type === "Repair") { %>
-                <% include repair.ejs %>
-            <% } %>
-            <!--    Daily        -->
-            <% if (report[0].type === "Daily") { %>
-                <% include daily.ejs%>
-            <% } %>
-            <!--    PPM        -->
-            <% if (report[0].type === "PPM") { %>
-                <% include ppm.ejs%>
+                <!--    Alert        -->
+                <% if (report[0].dataValues.type === "Repair") { %>
+                        <% console.log("repair")%>
+                        <% include repair.ejs %>
+                <% } %>
+                <!--    Daily        -->
+                <% if (report[0].dataValues.type === "Daily") { %>
+                        <% console.log("daily")%>
+                        <% include daily.ejs%>
+                <% } %>
+                <!--    PPM        -->
+                <% if (report[0].dataValues.type === "PPM") { %>
+                        <% console.log("ppm") %>
+                        <% include ppm.ejs%>
+                <% } %>
+
+                <script type="text/javascript">
+                    window.addEventListener("load", window.print());
+
+                </script>
+            <% } else {%>
+                <h1> NO RESULTS FOUND</h1>
             <% } %>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    window.addEventListener("load", window.print());
-</script>
