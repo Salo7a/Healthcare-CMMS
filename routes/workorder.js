@@ -102,8 +102,6 @@ router.post('/add', isAuth, (req, res) => {
     workOrders.create(newWork).then(result => {
         req.flash("success", "Added New Work Order Successfully");
         res.redirect("/");
-        console.log(newWork);
-        console.log(workOrders);
     });
 });
 

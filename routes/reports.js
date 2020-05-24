@@ -28,4 +28,20 @@ router.get('/createReport', isAuth, (req, res, next) => {
         });
 });
 
+
+router.post("/report", isAuth, (req, res)=>{
+    console.log("The Type is ", req.body.reportsMenu);
+    models.WorkOrder.findAll({
+        include: [Device, Department],
+        where: {type : req.body.reportsMenu}
+    }).then( report => {
+        console.log(report);
+        res.render('reports/report', {
+            title: req.body.type +" Detailed Report",
+            user: req.user,
+            report
+        });
+    });
+});
+
 module.exports = router;
