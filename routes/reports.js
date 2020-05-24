@@ -40,7 +40,6 @@ router.post("/report", isAuth, (req, res)=>{
             DepartmentId : req.body.departmentsMenu
         }
     }).then( report => {
-        console.log("Report Result",report);
 
         res.render('reports/report', {
             title: req.body.type +" Detailed Report",

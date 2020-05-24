@@ -2,10 +2,7 @@
 <div class="col-md-12">
     <div class="card card-default">
         <div class="card-body">
-            <% console.log( "HERE 0", report[0].dataValues )%>
-            <% console.log( "HERE 1", report[0].dataValues.Device )%>
-            <% console.log( "HERE 2", report[0].dataValues.Device.Name )%>
-            <% console.log( "HERE 3", report[0].dataValues.Department.Name)%>
+
             <% if (report.length > 0) { %>
 
                 <blockquote class="blockquote text-center">
@@ -14,19 +11,22 @@
                     <p> Created At : <%= report[0].createdAt %></p>
                     <footer class="blockquote-footer"><cite title="Source Title">Extra Cool CMMS</cite></footer>
                 </blockquote>
+                <% console.log(report); %>
+                <% console.log(report[0].type); %>
+
 
                 <!--    Alert        -->
-                <% if (report[0].dataValues.type === "Repair") { %>
+                <% if (report[0].type === "Repair") { %>
                         <% console.log("repair")%>
                         <% include repair.ejs %>
                 <% } %>
                 <!--    Daily        -->
-                <% if (report[0].dataValues.type === "Daily") { %>
+                <% if (report.type === "Daily") { %>
                         <% console.log("daily")%>
                         <% include daily.ejs%>
                 <% } %>
                 <!--    PPM        -->
-                <% if (report[0].dataValues.type === "PPM") { %>
+                <% if (report.type === "PPM") { %>
                         <% console.log("ppm") %>
                         <% include ppm.ejs%>
                 <% } %>
