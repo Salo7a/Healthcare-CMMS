@@ -9,9 +9,9 @@
                             <i class="fas fa-users" ></i> Add Personnel
                         </a>
                     <% } %>
-                    <div class="card-body">
-                        <table id="pT" class="table table-bordered table-hover">
-                            <thead>
+                        <div class="card-body">
+                            <table id="pT" class="table table-bordered table-hover">
+                                <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -19,9 +19,10 @@
                                     <th>Role</th>
                                     <th>Phone Number</th>
                                     <th>Department</th>
+                                    <th>Action</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
                                         <% if (user.isAdmin) { %>
@@ -56,8 +57,8 @@
                                     </tr>
                                 <% } %>
                             </tbody>
-                        </table>
-                    </div>
+                            </table>
+                        </div>
 
                 <% } else { %>
                     <h1> 0 Personnel Found </h1>
@@ -66,6 +67,20 @@
         </div>
     </div>
 </div>
-<% block('js').append('<script src="/plugins/datatables/jquery.dataTables.js"></script>') %>
-<% block('js').append('<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>') %>
-<% block('js').append('<script> $(function () {$("#pT").DataTable();})</script>') %>
+
+
+<% block('css').append('<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">') %>
+<% block('css').append('<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">') %>
+<% block('js').append('<script src="/plugins/datatables/jquery.dataTables.min.js"></script>') %>
+<% block('js').append('<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>') %>
+<% block('js').append('<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>') %>
+<% block('js').append('<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>') %>
+<% block('js').append('<script> $(function () {$("#pT").DataTable({\n' +
+        '      "paging": true,\n' +
+        '      "lengthChange": true,\n' +
+        '      "searching": true,\n' +
+        '      "ordering": true,\n' +
+        '      "info": true,\n' +
+        '      "autoWidth": false,\n' +
+        '      "responsive": true,\n' +
+        '    });})</script>') %>
