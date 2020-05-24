@@ -10,22 +10,37 @@
                     <th>Device</th>
                     <th>Department</th>
                     <th>Eng/Tech</th>
-                    <th>Description</th>
-                    <th>Action</th>
+                    <th>Remove Foreign </th>
+                    <th>Cracks ? </th>
+                    <th>Broken Battery  </th>
+                    <th>Damaged Battery  </th>
+                    <th>Spare Battery  </th>
+                    <th>Broken Cable  </th>
+                    <th>Damaged Cable  </th>
+                    <th>Spare Cable  </th>
+                    <th>Other Inspections  </th>
                 </tr>
                 </thead>
 
                 <tbody>
 
-                <% for (var i = 0; i < data.length; i++) { %>
+                <% report.forEach(rep =>{ %>
                     <tr>
-                        <td>data.Device</td>
-                        <td>data.Department</td>
-                        <td>data.Eng</td>
-                        <td>data.Description</td>
-                        <td>data.Action</td>
+                        <td><%= rep.Device.Name %>                   </td>
+                        <td><%= rep.Department.Name %>               </td>
+                        <td><%= rep.User.Name %>                     </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).foreign )%>       </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).cracks) %>        </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).broken_bat) %>    </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).damage_bat) %>    </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).spare_bat) %>     </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).broken_cable) %>  </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).damage_cable) %>  </td>
+                        <td><%= Boolean(JSON.parse(rep.daily).spare_cable) %>   </td>
+                        <td><%= JSON.parse(rep.daily).other %>         </td>
                     </tr>
-                <% } %>
+                <% })%>
+
                 </tbody>
             </table>
         </div>

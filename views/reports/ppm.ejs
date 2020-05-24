@@ -1,53 +1,45 @@
-<% layout('panel') -%>
-<div class="col-md-12">
-    <div class="card card-default">
-        <div class="card-body">
-            <form role="form">
-                <div class="row">
-                    <!-- select The Department -->
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Select Department</label>
-                            <select id="departmentsMenu" class="form-control">
-                                <option value="" selected>Department Name</option>
-                                <option value="1">Cardiac Catheterization</option>
-                                <option value="2">Surgery Care</option>
-                                <option value="3">Cardiology</option>
-                                <option value="4">Emergency</option>
-                            </select>
-                        </div>
-                    </div>
+<section class="invoice">
 
-                    <!-- select The Device -->
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Select Device</label>
-                            <select id="devicesMenu" class="form-control">
-                                <option selected>Device Name</option>
-                                <option>option 1</option>
-                            </select>
-                        </div>
-                    </div>
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
 
-                    <!-- select The Serial -->
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Select Serial</label>
-                            <select id="serialsMenu" class="form-control">
-                                <option selected>Serial</option>
-                                <option>option 1</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row no-print">
-                    <div class="col-12">
-                        <a href="" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                    </div>
-                </div>
+                <tr>
+                    <th>Device</th>
+                    <th>Department</th>
+                    <th>Eng/Tech</th>
+                    <th>Dust Removal </th>
+                    <th>Clean Surface </th>
+                    <th>Lubricated  </th>
+                    <th>Calibrated  </th>
+                    <th>Replaced   </th>
+                    <th>Adjustments  </th>
+                    <th>Comments  </th>
+                </tr>
+                </thead>
 
-            </form>
+                <tbody>
+
+                <% report.forEach(rep =>{ %>
+                    <% console.log(JSON.parse(rep.alert))%>
+                    <tr>
+                        <td><%= rep.Device.Name %>                   </td>
+                        <td><%= rep.Department.Name %>               </td>
+                        <td><%= rep.User.Name %>                     </td>
+                        <td><%= Boolean(JSON.parse(rep.ppm).clean_dust) %> </td>
+                        <td><%= Boolean(JSON.parse(rep.ppm).clean_surface) %>       </td>
+                        <td><%= Boolean(JSON.parse(rep.ppm).lubricated) %>       </td>
+                        <td><%= Boolean(JSON.parse(rep.ppm).calibrated) %>       </td>
+                        <td><%= JSON.parse(rep.ppm).desc_replaced %>       </td>
+                        <td><%= JSON.parse(rep.ppm).desc_adjustments %>       </td>
+                        <td><%= JSON.parse(rep.ppm).comments %>       </td>
+                    </tr>
+                <% })%>
+
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
-
+</section>

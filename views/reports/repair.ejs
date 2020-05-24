@@ -17,15 +17,16 @@
 
                 <tbody>
 
-                <% for (var i = 0; i <= report.length; i++) { %>
+                <% report.forEach(rep =>{ %>
+                    <% console.log(JSON.parse(rep.alert))%>
                     <tr>
-                        <td><%= report[i].Device.Name %>       </td>
-                        <td><%= report[i].Department.Name %>   </td>
-                        <td><%= report[i].user.Name %>         </td>
-                        <td><%= report[i].alert.description %> </td>
-                        <td><%= report[i].alert.action %>      </td>
+                        <td><%= rep.Device.Name %>                   </td>
+                        <td><%= rep.Department.Name %>               </td>
+                        <td><%= rep.User.Name %>                     </td>
+                        <td><%= JSON.parse(rep.alert).description %> </td>
+                        <td><%= JSON.parse(rep.alert).action %>       </td>
                     </tr>
-                <% } %>
+                <% })%>
 
                 </tbody>
             </table>
