@@ -1,11 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const {isAdmin} = require('../utils/filters');
-const workqueue = require('../models').WorkQueue;
-router.get('/view', function (req, res, next) {
-    res.render('workQueue', {
-        title: 'list of work queue'
-    });
+const workorder = require('../models').WorkOrder;
+const device = require('../models').Device;
+const departments = require("../models").Department;
+const user = require("../models").User;
+
+router.get('/', function (req, res, next) {
+    workOrders.findAll().then(WorkOrder=> {
+        res.render('workQueue', {
+            title: 'Unfinished Work',
+            workOrders: WorkOrder
+        });
+    })
+        .catch((error) => {
+            console.log(error.toString());
+            res.status(400).send(error)
+        });
+
 });
 // GET Route to manage any new work queue
 // router.get('/add', isAdmin, (req, res) => {
