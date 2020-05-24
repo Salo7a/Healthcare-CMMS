@@ -10,7 +10,7 @@ const device = require('../models').Device;
 const notification = require('../models').Notification;
 
 router.get('/', function (req, res, next) {
-    workOrders.findAll().then(WorkOrder=> {
+    workOrders.findAll({include: [departments, device, user]}).then(WorkOrder => {
         res.render('workorder/workorder', {
             title: 'Work list',
             workOrders: WorkOrder
@@ -47,7 +47,7 @@ router.post('/order', isAuth, (req, res) =>{
     }).then(
         notification => {
             console.log("NOT", notification);
-            res.render("workorder/order",{
+            res.render("workorder/order", {
                 title: "Show All Personnel",
                 notification
             })
@@ -56,10 +56,22 @@ router.post('/order', isAuth, (req, res) =>{
         console.log(error.toString());
         res.status(400).send(error)
     });
-})
+});
 
 router.post('/add', isAuth, (req, res) => {
-
+    if (Daily) {
+        WorkOrder.findOne({
+            where: {
+                Date: new Date()
+            }
+        }).then(dailyrow => {
+            let daily = JSON.parse(dailyrow.daily);
+            daily[req.body.deviceId]['foreign'] = req.body.removed;
+            daily[req.body.deviceId]['cracks'] = req.body.cracks;
+            daily[req.body.deviceId]['broken_bat'] = req.body.broken;
+            dailyrow.save()
+        })
+    }
     const newWork = {
         // name: req.body.task,
         // date: req.body.Date,
@@ -69,7 +81,7 @@ router.post('/add', isAuth, (req, res) => {
         DepartmentId: req.user.DepartmentId,
         UserId: req.user.id,
         type: req.body.type,
-        DeviceId : req.body.deviceId,
+        DeviceId: req.body.deviceId,
 
         alert: JSON.stringify({
             description : req.body.description,
