@@ -6,7 +6,10 @@ module.exports = (sequelize, DataTypes) =>
         // attributes
         Name: DataTypes.STRING,
         Model: DataTypes.STRING,
-        Serial: DataTypes.STRING,
+        Serial: {
+            type: DataTypes.STRING,
+            unique: true
+        },
         ImportDate: DataTypes.STRING,
         InstallationDate: DataTypes.STRING,
         SupplyingCompany: DataTypes.STRING,

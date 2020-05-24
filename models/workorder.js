@@ -3,13 +3,14 @@ const models = require('../models');
 module.exports = (sequelize, DataTypes) => {
     const WorkOrder = sequelize.define('WorkOrder', {
         type: DataTypes.STRING,
-
         // for Alert Type
-        alert : DataTypes.JSON,
+        alert: DataTypes.JSON,
         // for Daily type
-        daily : DataTypes.JSON,
+        daily: DataTypes.JSON,
         // for PPM Type
-        ppm : DataTypes.JSON
+        ppm: DataTypes.JSON,
+        State: DataTypes.STRING,
+        Date: DataTypes.DATEONLY
     }, {});
     WorkOrder.associate = function (models) {
         // associations can be defined here

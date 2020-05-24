@@ -8,10 +8,11 @@ const Persons = require("../models").Indoor;
 
 const {NotAuth, isAuth} = require('../utils/filters');
 const {check, validationResult, body} = require('express-validator');
+const {GenerateDates, GenerateOrders, AddTestData, GenerateQueue} = require('../utils/GenerateData');
 const {Op} = require('sequelize');
 const Chance = require('chance');
 // const loadCSVData = require('../utils/loadCSV');
-const fs = require('fs')
+const fs = require('fs');
 const neatCsv = require('neat-csv');
 require('dotenv').config();
 let chance = new Chance();
@@ -33,7 +34,18 @@ router.get('/login', NotAuth, function (req, res, next) {
         title: 'Login'
     });
 });
+router.get('/test', NotAuth, function (req, res, next) {
+    try {
+        GenerateDates();
+        GenerateOrders();
+        req.flash("success", "Data Generated Successfully");
+    } catch (e) {
+        req.flash("error", "An error occurred while generating data");
+        console.log(e);
+    }
 
+    res.redirect('/auth/login');
+});
 router.post('/login', NotAuth, passport.authenticate('local', {
         failureRedirect: '/auth/login',
         failureFlash: true
