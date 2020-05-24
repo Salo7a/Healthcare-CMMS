@@ -1,41 +1,36 @@
 <% layout('panel') -%>
 <div class="col-md-12">
-    <div class="card card-success">
+    <div class="card card-default">
         <div class="card-body">
-            <div class="card-header">
-                <h3 class="card-title">
-                    All Departments
-                </h3>
-                <% if (user.isAdmin) { %>
-                    <div class="table-buttons">
-                        <!-- Add New Department Button -->
-                        <a type="button" class="btn btn-block btn-primary" href="/departments/add">Add New
-                            Department</a>
-                        <!-- Delete All The Department Button -->
-                        <a type="button" class="btn btn-block btn-danger" href="/departments/deleteAll">Erase
-                            Database</a>
-                    </div>
-                <% } %>
-            </div>
-            <div class="row">
-                <!-- Check length of departments list -->
-                <!-- In case we found departments -->
-                <% if (departments.length > 0) { %>
-                    <!-- Departments Table -->
-                    <table id="departmentsTable" class="table table-bordered table-hover table-striped col-md-12">
-                        <!-- Headers -->
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <!-- /Headers -->
+            <% if (user.isAdmin) { %>
+                <div style="margin-bottom: 10px;" class="table-buttons">
+                    <!-- Add New Department Button -->
+                    <a type="button" class="btn btn-block btn-primary" href="/departments/add">Add New
+                        Department</a>
+                    <!-- Delete All The Department Button -->
+                    <a type="button" class="btn btn-block btn-danger" href="/departments/deleteAll">Erase
+                        Database</a>
+                </div>
+            <% } %>
+            <!-- Check length of departments list -->
+            <!-- In case we found departments -->
+            <% if (departments.length > 0) { %>
+                <!-- Departments Table -->
 
-                                <!-- Table Rows -->
-                                <tbody>
-                                <% for(var i=0; i<departments.length; i++) {%>
+                <table id="departmentsTable" class="table table-bordered table-hover table-striped col-md-12">
+                    <!-- Headers -->
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <!-- /Headers -->
+
+                    <!-- Table Rows -->
+                    <tbody>
+                    <% for(var i=0; i<departments.length; i++) {%>
                                     <tr>
                                         <td><%= departments[i].id %></td>
                                         <td><%= departments[i].Name %></td>
@@ -52,29 +47,25 @@
                                 </tbody>
                                 <!-- /Table Rows -->
 
-                            </table>
+                </table>
 
-                <% }else{ %>
-                    <h1>No Departments Found</h1>
-                <% } %>
+            <% }else{ %>
+                <h1>No Departments Found</h1>
+            <% } %>
 
-                <!--            Enter Your Content Here-->
-            </div>
+            <!--            Enter Your Content Here-->
         </div>
     </div>
 </div>
-<% block('css').append('<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">') %>
-<% block('css').append('<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">') %>
-<% block('js').append('<script src="/plugins/datatables/jquery.dataTables.min.js"></script>') %>
-<% block('js').append('<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>') %>
-<% block('js').append('<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>') %>
-<% block('js').append('<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>') %>
-<% block('js').append('<script> $(function () {$("#departmentsTable").DataTable({\n' +
-        '      "paging": true,\n' +
-        '      "lengthChange": true,\n' +
-        '      "searching": true,\n' +
-        '      "ordering": true,\n' +
-        '      "info": true,\n' +
-        '      "autoWidth": false,\n' +
-        '      "responsive": true,\n' +
-        '    });})</script>') %>
+
+<script> $(function () {
+        $("#departmentsTable").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    })</script>') %>

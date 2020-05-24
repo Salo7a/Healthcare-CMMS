@@ -13,9 +13,27 @@
     <link rel="stylesheet" href="/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
     <!-- Custom CSS Block -->
     <%- block('css').toString() %>
+
+    <!--GSAP-->
+    <script src="/javascripts/gsap.min.js"></script>
+    <!--Barba-->
+    <script src="/javascripts/barba.js"></script>
+    <!-- jQuery -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
 </head>
 <body data-barba="wrapper" class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -52,11 +70,8 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <main data-barba="container" data-barba-namespace="home">
-                        <%- body -%>
-                    </main>
-
+                <div class="row" data-barba="container" data-barba-namespace="home">
+                    <%- body -%>
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
