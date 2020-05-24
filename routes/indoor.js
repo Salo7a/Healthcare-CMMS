@@ -65,6 +65,6 @@ router.get('/show', isAuth, (req, res) => {
         console.log(error.toString());
         res.status(400).send(error)
     });
-})
+});
 
 module.exports = router;

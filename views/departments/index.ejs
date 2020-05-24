@@ -3,20 +3,22 @@
     <div class="card card-default">
         <div class="card-body">
             <% if (user.isAdmin) { %>
-                <div style="margin-bottom: 10px;" class="table-buttons">
+                <div style="margin-bottom: 10px;" class="table-buttons" align="right">
                     <!-- Add New Department Button -->
-                    <a type="button" class="btn btn-block btn-primary" href="/departments/add">Add New
-                        Department</a>
+                    <a type="button" class="btn btn-block btn-primary" href="/departments/add">
+                        <i class="fas fa-plus"></i> Add
+                    </a>
                     <!-- Delete All The Department Button -->
-                    <a type="button" class="btn btn-block btn-danger" href="/departments/deleteAll">Erase
-                        Database</a>
+                    <a type="button" class="btn btn-block btn-primary" href="/departments/deleteAll">
+                        <i class="fas fa-trash"></i> Erase All
+                    </a>
                 </div>
             <% } %>
             <!-- Check length of departments list -->
             <!-- In case we found departments -->
             <% if (departments.length > 0) { %>
                 <!-- Departments Table -->
-
+            <div class="col-md-12">
                 <table id="departmentsTable" class="table table-bordered table-hover table-striped col-md-12">
                     <!-- Headers -->
                     <thead>
@@ -52,7 +54,7 @@
             <% }else{ %>
                 <h1>No Departments Found</h1>
             <% } %>
-
+            </div>
             <!--            Enter Your Content Here-->
         </div>
     </div>
