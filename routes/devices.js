@@ -84,7 +84,7 @@ router.post('/alert', isAuth, (req, res) => {
             };
             Notification.create(newNotification)
                 .then(() => {
-                    res.redirect("/");
+                    res.redirect("/devices");
                 });
         });
 });
