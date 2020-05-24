@@ -78,11 +78,29 @@ app.use((req, res, next) => {
 
 // Middleware for notifications
 app.use(function (req, res, next) {
-    Notification.findAll({include :[ Device, Department ]})
-        .then(notifications => {
-            res.locals.notifications = notifications;
-            next();
-        });
+    if (req.isAuthenticated()) {
+        if (req.user.isAdmin) {
+            Notification.findAndCountAll({include: [Device, Department]})
+                .then(notifications => {
+                    res.locals.notifications = notifications.rows;
+                    res.locals.nLength = notifications.count;
+                    next();
+                });
+        } else {
+            Notification.findAndCountAll({
+                where: {
+                    DepartmentId: req.user.DepartmentId
+                }, include: [Device, Department]
+            })
+                .then(notifications => {
+                    res.locals.notifications = notifications.rows;
+                    res.locals.nLength = notifications.count;
+                    next();
+                });
+        }
+    } else {
+        next();
+    }
 });
 
 app.use('/', indexRouter);
