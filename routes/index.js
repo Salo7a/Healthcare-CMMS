@@ -7,7 +7,7 @@ const User = require('../models').User;
 const Device = require('../models').Device;
 const Department = require('../models').Department;
 const WorkOrder = require("../models").WorkOrder;
-const Inventory = require("../models").Inventory;
+const Inventory = require("../models").Parts;
 const isAdmin = require('../utils/filters').isAdmin;
 
 router.get('/', isAuth, function (req, res, next) {
@@ -39,7 +39,7 @@ router.get('/', isAuth, function (req, res, next) {
                                 }).then(DepTime => {
                                     res.render('index', {
                                         title: 'Home - Extra Cool CMMS',
-                                        users, devices, departments, orders, DepDev, DepAlert, DepTime
+                                        users, devices, departments, orders, DepDev, DepAlert, DepTime, inv
                                     });
                                 })
                             })
