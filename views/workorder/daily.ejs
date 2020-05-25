@@ -8,8 +8,9 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
-            <thead>
+        <form method="post" action="/workorder/add">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
                 <tr>
                     <th>Device</th>
                     <th>Foreign Substances Removed</th>
@@ -22,39 +23,41 @@
                     <th>Spare Cable </th>
                     <th>Other Inspections </th>
                 </tr>
-            </thead>
-            <tbody>
-            <% device.forEach(dev => { %>
-                <tr>
-                    <td><%= dev.Name%></td>
-                    <td><input class="form-check-input" name="removed" type="checkbox"></td>
-                    <td><input class="form-check-input" name="cracks" type="checkbox"></td>
-                    <td> <input class="form-check-input" name="broken" type="checkbox"> </td>
-                    <td><input class="form-check-input" name="damage" type="checkbox"></td>
-                    <td> <input class="form-check-input" name="spare" type="checkbox"> </td>
-                    <td><input class="form-check-input" name="broken_cable" type="checkbox"> </td>
-                    <td><input class="form-check-input" name="damage_cable" type="checkbox"> </td>
-                    <td> <input class="form-check-input" name="spare_cable" type="checkbox"></td>
-                    <td> <textarea class="form-control" name="other" rows="2" placeholder="Parts ..."></textarea> </td>
-                </tr>
-            <%})%>
+                </thead>
+                <tbody>
+                <% device.forEach(dev => { %>
+                    <tr>
+                        <td><%= dev.Name%></td>
+                        <td><input class="form-check-input" name="removed" type="checkbox"></td>
+                        <td><input class="form-check-input" name="cracks" type="checkbox"></td>
+                        <td> <input class="form-check-input" name="broken" type="checkbox"> </td>
+                        <td><input class="form-check-input" name="damage" type="checkbox"></td>
+                        <td> <input class="form-check-input" name="spare" type="checkbox"> </td>
+                        <td><input class="form-check-input" name="broken_cable" type="checkbox"> </td>
+                        <td><input class="form-check-input" name="damage_cable" type="checkbox"> </td>
+                        <td> <input class="form-check-input" name="spare_cable" type="checkbox"></td>
+                        <td> <textarea class="form-control" name="other" rows="2" placeholder="Parts ..."></textarea> </td>
+                    </tr>
+                <%})%>
 
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>Device</th>
-                <th>Foreign Substances Removed</th>
-                <th> Cracks Found </th>
-                <th>Broken Battery</th>
-                <th>Damaged Battery</th>
-                <th>Spare Battery</th>
-                <th>Broken Cable </th>
-                <th>Damaged Cable </th>
-                <th>Spare Cable </th>
-                <th>Other Inspections </th>
-            </tr>
-            </tfoot>
-        </table>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Device</th>
+                    <th>Foreign Substances Removed</th>
+                    <th> Cracks Found </th>
+                    <th>Broken Battery</th>
+                    <th>Damaged Battery</th>
+                    <th>Spare Battery</th>
+                    <th>Broken Cable </th>
+                    <th>Damaged Cable </th>
+                    <th>Spare Cable </th>
+                    <th>Other Inspections </th>
+                </tr>
+                </tfoot>
+            </table>
+
+        </form>
     </div>
     <div class="card-footer">
         <button type="submit" class="btn btn-primary">Submit</button>
