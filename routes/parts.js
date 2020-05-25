@@ -40,7 +40,7 @@ router.post('/add', isAdmin, (req, res) => {
         Quantity: req.body.quantity,
         Price: req.body.price,
         InstallationDate: req.body.installationDate,
-        DeviceId: req.body.device
+        DeviceId: req.body.devicesMenu
     };
     parts.create(newPart).then(result => {
         req.flash("success", "Added Part Successfully");
