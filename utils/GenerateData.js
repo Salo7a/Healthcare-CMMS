@@ -4,10 +4,12 @@ const Department = require('../models').Department;
 const Indoor = require("../models").Indoor;
 const WorkOrder = require("../models").WorkOrder;
 const WorkQueue = require("../models").WorkQueue;
+const Notification = require('../models').Notification;
 const {Op} = require('sequelize');
-const {format, formatDistance, subDays, addDays, isToday, endOfDay, parseISO, isDate} = require('date-fns');
+const {format, formatDistance, subDays, addDays, isToday, endOfDay, parseISO, isBefore} = require('date-fns');
 const random = require('random');
 const fs = require('fs');
+const neatCsv = require('neat-csv');
 module.exports = {
     AddTestData: function (req, res, next) {
         User.create({
@@ -36,7 +38,7 @@ module.exports = {
             });
         }
 
-        fs.readFile(__dirname + '../routes/DevicesData.csv', async (err, data) => {
+        fs.readFile(__dirname + '/DevicesData.csv', async (err, data) => {
             if (err) {
                 console.log('errorrrr');
                 console.error(err);
@@ -65,7 +67,7 @@ module.exports = {
             console.log('Created!')
         });
 
-        fs.readFile(__dirname + "./routes/indoor.csv", async (err, data) => {
+        fs.readFile(__dirname + "/indoor.csv", async (err, data) => {
             if (err) {
                 console.log(err);
             }
@@ -102,20 +104,18 @@ module.exports = {
                 if (!isToday(parseISO(device.LastDaily)) && device.PPMInterval < 365) {
                     device.LastDaily = subDays(parseISO(today), 1)
                 }
-                if (!device.LastPPM) {
-                    let ran = random.int(min = -1, max = 2);
-                    console.log(ran);
-                    device.LastPPM = subDays(parseISO(today), ran + device.PPMInterval)
-                }
+                let ran = random.int(min = -1, max = 2);
+                console.log(ran);
+                device.LastPPM = subDays(parseISO(today), ran + device.PPMInterval);
                 device.save();
             })
         })
     },
     GenerateOrders: async function (req, res, next) {
-        let dailyorder = await WorkOrder.create({
+        let dailyorder = await WorkOrder.findOrCreate({where:{
             type: "Daily",
             Date: new Date()
-        });
+        }});
         let daily = {};
         Device.findAll().then(Devices => {
             let daily = {};
@@ -130,16 +130,49 @@ module.exports = {
                         DeviceId: device.id,
                         Date: new Date()
                     })
+                }else if(isBefore(addDays(new Date(device.LastPPM), device.PPMInterval), new Date()))
+                {
+                    WorkOrder.create({
+                        type: "PPM",
+                        State: "Completed",
+                        DepartmentId: device.DepartmentId,
+                        DeviceId: device.id,
+                        Date: new Date(addDays(new Date(device.LastPPM), device.PPMInterval))
+                    })
                 }
                 if (!isToday(parseISO(device.LastDaily))) {
                     daily[device.id] = {
                         Name: device.Name,
                         Serial: device.Serial,
-                        Status: "Pending"
+                        State: "Pending"
                     };
-                    dailyorder.daily = daily;
-                    dailyorder.save()
+                    console.log(dailyorder[1]);
+                    if(dailyorder[1]){
+                        dailyorder[0].daily = daily;
+                        dailyorder[0].Status = "Pending";
+                        dailyorder[0].save();
+                    }
                 }
+            });
+            const newNotification = {
+                Type: 'Daily',
+                Date: new Date()
+            };
+            Notification.findOne({where:{
+                    Date: new Date()
+                }
+            }).then((noti) => {
+                if(!noti){
+                    Notification.create(newNotification)
+                }
+            });
+            WorkOrder.findAll().then(orders=>{
+                orders.forEach(order=>{
+                    if(isBefore(new Date(order.Date), new Date())){
+                        order.Status = 'Completed';
+                        order.save();
+                    }
+                })
             })
         });
     },
