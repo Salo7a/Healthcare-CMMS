@@ -21,7 +21,9 @@
                                     <th>Role</th>
                                     <th>Phone Number</th>
                                     <th>Department</th>
-                                    <th>Action</th>
+                                    <% if (user.isAdmin) { %>
+                                        <th>Action</th>
+                                    <% } %>
                                 </tr>
                                 </thead>
                                 <tbody>
