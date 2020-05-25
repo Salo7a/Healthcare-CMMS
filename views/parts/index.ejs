@@ -42,6 +42,7 @@
                         <tbody>
                             <% for(var i = 0; i < parts.length; i++) { %>
                             <tr>
+                                <% if (user.isAdmin) { %>
                                 <td><%= parts[i].Type %></td>
                                 <td><%= parts[i].Model %></td>
                                 <td><%= parts[i].Quantity %></td>
@@ -57,6 +58,26 @@
                                         </button>
                                     </form>
                                 </td>
+                                <% } else { %>
+                                <% console.log('userId ', user.DepartmentId) %>
+                                <% console.log('depId ', parts[i].Device.DepartmentId) %>
+                                <% if (user.DepartmentId === parts[i].Device.DepartmentId) { %>
+                                <td><%= parts[i].Type %></td>
+                                <td><%= parts[i].Model %></td>
+                                <td><%= parts[i].Quantity %></td>
+                                <td><%= parts[i].Price %></td>
+                                <td><%= parts[i].InstallationDate %></td>
+                                <td><%= parts[i].Device.Name %></td>
+                                <td><%= parts[i].Device.Serial %></td>
+                                <td>
+                                    <form action="/parts/delete" method="post">
+                                        <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
+                                        <button type="submit" class="btn btn-block btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <% } %>
                             </tr>
                             <% } %>
 
@@ -69,10 +90,10 @@
                 <!-- /.card-body -->
 
             </div>
-                <!-- /.card -->
+            <!-- /.card -->
 
             <% }else{ %>
-                <h1>No Parts Found</h1>
+            <h1>No Parts Found</h1>
             <% } %>
 
             <!--            Enter Your Content Here-->
