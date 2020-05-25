@@ -24,20 +24,18 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/add', isAdmin, (req, res) => {
-    departments.findAll().then(
-        departments =>{
-            personnel.findAll().then(
-                personnel=> {
-                    device.findAll().then(
-                        device=>{
-                            res.render('workorder/addWorkOrder', {
-                                title: 'New Work Order',
-                                // today: new Date(),
-                                departments, personnel, device
-                            }
-                        );
-                    });
+
+    departments.findAll().then( departments =>{
+        personnel.findAll().then(personnel=> {
+            device.findAll().then(device=>{
+                res.render('workorder/addWorkOrder', {
+                    title: 'New Work Order',
+                    departments,
+                    personnel,
+                    device
                 });
+            });
+        });
     });
 });
 
@@ -66,18 +64,30 @@ router.post('/order', isAuth, (req, res) =>{
 });
 
 router.post('/add', isAuth, (req, res) => {
-    console.log("ssssss",req.body.department);
-    if (req.body.WQclass === 'normal') {
-        const newWork = {
-            // name: req.body.task,
-            Date: req.body.Date,
+    console.log(req.body.type);
+    if (req.body.type === 'Daily') {
+        workOrders.findOne({
+            where:{
+                Date: new Date(),
+                Type: "Daily"
+            }
+        }).then(order=>{
+            let daily = order.daily
+            let devs = Object.keys(daily) ;
+            let target = ["removed", "cracks", "broken", "damage", "spare", "broken_cable", "damage_cable",
+                "spare_cable" , "other"];
+            let keys = Object.keys(req.body) ;
+            console.log(daily);
 
             // DeviceId: req.body.device,
 
-            DepartmentId: req.body.department,
-            UserId: req.user.id,
-            type: req.body.WQclass,
-            DeviceId: req.body.device,
+
+
+
+            // DepartmentId: req.body.department,
+            // UserId: req.user.id,
+            // type: req.body.WQclass,
+            // DeviceId: req.body.device,
         };
         //     DepartmentId: req.user.DepartmentId,
         //     UserId: req.user.id,
@@ -98,16 +108,23 @@ router.post('/add', isAuth, (req, res) => {
         // }
         // console.log("asdasd", req.removed);
         workOrders.create(newWork).then(result => {
+            keys.forEach(key =>{
+                if(target.includes(key)){
+                    let checked = req.body[key];
+                    devs.forEach(dev => {
+                        if(checked.includes(dev)){
+                            daily[dev][key] = "Checked";
+                        }
+                    })
+                }
+            })
+            order.daily = daily
+            order.save()
             req.flash("success", "Added New Work Order Successfully");
             res.redirect("/");
         });
     } else {
         const newWork = {
-            // name: req.body.task,
-            Date: req.body.Date,
-
-            // DeviceId: req.body.device,
-
             DepartmentId: req.user.DepartmentId,
             UserId: req.user.id,
             type: req.body.type,
@@ -140,7 +157,6 @@ router.post('/add', isAuth, (req, res) => {
                 other: req.body.other
             })
         };
-
         workOrders.create(newWork).then(result => {
             req.flash("success", "Added New Work Order Successfully");
             res.redirect("/");
