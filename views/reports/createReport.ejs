@@ -77,6 +77,7 @@
             id: `<%= devices[i].id %>`,
             Name: `<%= devices[i].Name %>`,
             Serial: `<%= devices[i].Serial %>`,
+            Model: `<%= devices[i].Model %>`,
             DepartmentId: `<%= devices[i].DepartmentId %>`
         }
         allDevices.push(d);
@@ -127,6 +128,7 @@
         // Enable devices menu after choosing the department
         if (departsMenu.value !== "") {
             devicesMenu.disabled = false;
+            serialsMenu.disabled = true;
         }
 
         // Get the devices with the selected department only
@@ -160,6 +162,8 @@
         // Enable departments menu after choosing the report type
         if (reportsMenu.value !== "") {
             departsMenu.disabled = false;
+            devicesMenu.disabled = true;
+            serialsMenu.disabled = true;
         }
 
         // Reset Options of Department and delete other options
@@ -167,4 +171,5 @@
         deleteDevices();
         deleteSerials();
     });
+
 </script>
