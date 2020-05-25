@@ -4,6 +4,7 @@
         <div class="card-body">
             <div class="card-header">
                 <h3 class="card-title">
+                    <% if (user.isAdmin) { %>
                     <div>
                         <!-- Add New Part Button -->
                         <a type="button" class="btn btn-block btn-primary" href="/parts/add">Add New Part</a>
@@ -11,6 +12,7 @@
                         <!-- Delete All The Parts Button -->
                         <a type="button" class="btn btn-block btn-danger" href="/parts/deleteAll">Erase Database</a>
                     </div>
+                    <% } %>
                 </h3>
             </div>
             <!--            Enter Your Content Here-->
@@ -42,21 +44,43 @@
                         <tbody>
                             <% for(var i = 0; i < parts.length; i++) { %>
                             <tr>
-                                <td><%= parts[i].Type %></td>
-                                <td><%= parts[i].Model %></td>
-                                <td><%= parts[i].Quantity %></td>
-                                <td><%= parts[i].Price %></td>
-                                <td><%= parts[i].InstallationDate %></td>
-                                <td><%= parts[i].Device.Name %></td>
-                                <td><%= parts[i].Device.Serial %></td>
-                                <td>
-                                    <form action="/parts/delete" method="post">
-                                        <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
-                                        <button type="submit" class="btn btn-block btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                <% if (user.isAdmin) { %>
+                                    <td><%= parts[i].Type %></td>
+                                    <td><%= parts[i].Model %></td>
+                                    <td><%= parts[i].Quantity %></td>
+                                    <td><%= parts[i].Price %></td>
+                                    <td><%= parts[i].InstallationDate %></td>
+                                    <td><%= parts[i].Device.Name %></td>
+                                    <td><%= parts[i].Device.Serial %></td>
+                                    <td>
+                                        <form action="/parts/delete" method="post">
+                                            <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
+                                            <button type="submit" class="btn btn-block btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                <% } else { %>
+                                    <% console.log('userId ', user.DepartmentId) %>
+                                    <% console.log('depId ', parts[i].Device.DepartmentId) %>
+                                    <% if (user.DepartmentId === parts[i].Device.DepartmentId) { %>
+                                        <td><%= parts[i].Type %></td>
+                                        <td><%= parts[i].Model %></td>
+                                        <td><%= parts[i].Quantity %></td>
+                                        <td><%= parts[i].Price %></td>
+                                        <td><%= parts[i].InstallationDate %></td>
+                                        <td><%= parts[i].Device.Name %></td>
+                                        <td><%= parts[i].Device.Serial %></td>
+                                        <td>
+                                            <form action="/parts/delete" method="post">
+                                                <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
+                                                <button type="submit" class="btn btn-block btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    <% } %>
+                                <% } %>
                             </tr>
                             <% } %>
 
@@ -69,10 +93,10 @@
                 <!-- /.card-body -->
 
             </div>
-                <!-- /.card -->
+            <!-- /.card -->
 
             <% }else{ %>
-                <h1>No Parts Found</h1>
+            <h1>No Parts Found</h1>
             <% } %>
 
             <!--            Enter Your Content Here-->
