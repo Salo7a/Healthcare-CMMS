@@ -24,16 +24,17 @@
 
                 <tbody>
                 <% report.forEach(rep =>{ %>
+                    <% console.log(" asdasd ", rep.daily )%>
                     <% Object.keys(rep.daily).forEach(dev=>{ %>
                         <tr>
-                            <td><%= rep.User.Name %>                     </td>
-                            <td><%= rep.daily[dev].Name     %>               </td>
-                            <td><%= rep.daily[dev].Serial     %>               </td>
-                            <td><%= rep.daily[dev].foreign %>       </td>
+                            <td><%= rep.User.Name %>                </td>
+                            <td><%= rep.daily[dev].Name     %>      </td>
+                            <td><%= rep.daily[dev].Serial     %>    </td>
+                            <td><%= rep.daily[dev].removed %>       </td>
                             <td><%= rep.daily[dev].cracks %>        </td>
-                            <td><%= rep.daily[dev].broken_bat %>    </td>
-                            <td><%= rep.daily[dev].damage_bat %>    </td>
-                            <td><%= rep.daily[dev].spare_bat%>     </td>
+                            <td><%= rep.daily[dev].broken     %>    </td>
+                            <td><%= rep.daily[dev].damage     %>    </td>
+                            <td><%= rep.daily[dev].spare    %>      </td>
                             <td><%= rep.daily[dev].broken_cable %>  </td>
                             <td><%= rep.daily[dev].damage_cable %>  </td>
                             <td><%= rep.daily[dev].spare_cable %>   </td>
