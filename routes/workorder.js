@@ -34,9 +34,9 @@ router.get('/add', isAdmin, (req, res) => {
                                 title: 'Add',
                                 departments, personnel, device
                             }
-                        )
+                        );
                     });
-                })
+                });
     });
 });
 
@@ -78,7 +78,7 @@ router.post('/add', isAuth, (req, res) => {
             damage_cable : req.body.damage_cable,
             spare_cable : req.body.spare_cable,
             other : req.body.other
-        })
+        });
 
     }
     const newWork = {
