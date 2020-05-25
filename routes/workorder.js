@@ -31,7 +31,7 @@ router.get('/add', isAdmin, (req, res) => {
                     device.findAll().then(
                         device=>{
                             res.render('workorder/addWorkOrder', {
-                                title: 'Add',
+                                title: 'New Work Order',
                                 departments, personnel, device
                             }
                         )
