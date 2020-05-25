@@ -32,12 +32,12 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="deviceId">Device</label>
-                                <select name="device" class="form-control">
-                                    <% for(var i=0; i<device.length; i++) {%>
-                                        <option value="<%= device[i].id %>"><%= device[i].Name %> <%=device[i].Model%></option>
-                                    <%}%>
-                                </select>
+                                <label for="device">Device</label>
+                                    <select name="device" class="form-control">
+                                        <% for(var i=0; i<device.length; i++) {%>
+                                            <option value="<%= device[i].id %>"><%= device[i].Name %> <%=device[i].Model%></option>
+                                        <%}%>
+                                    </select>
 
                             </div>
                             <div class="form-group">
@@ -48,10 +48,11 @@
                                 <label for="Date">Date</label>
                                 <input type="date" class="form-control" name="Date" placeholder="Deadline Date">
                             </div>
-
                         </div>
+
                         <!-- /.card-body -->
                         <div class="card-footer">
+                            <input type="hidden" name="WQclass" value="normal">
                             <button type="submit" class="btn btn-primary">Submit Task</button>
                         </div>
                     </form>
