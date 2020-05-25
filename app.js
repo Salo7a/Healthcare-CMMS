@@ -12,6 +12,7 @@ const helmet = require('helmet');
 const Device = require('./models').Device;
 const Department = require('./models').Department;
 const Notification = require('./models').Notification;
+const {Op} = require('sequelize');
 
 let passportConfig = require('./config/passport');
 
@@ -89,7 +90,7 @@ app.use(function (req, res, next) {
         } else {
             Notification.findAndCountAll({
                 where: {
-                    DepartmentId: req.user.DepartmentId
+                    DepartmentId: {[Op.or]: [req.user.DepartmentId, null]}
                 }, include: [Device, Department]
             })
                 .then(notifications => {
