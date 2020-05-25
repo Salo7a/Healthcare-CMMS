@@ -36,7 +36,7 @@ router.get('/login', NotAuth, function (req, res, next) {
         title: 'Login'
     });
 });
-router.get('/test', NotAuth, function (req, res, next) {
+router.get('/test', function (req, res, next) {
     try {
         AddTestData();
         GenerateDates();
