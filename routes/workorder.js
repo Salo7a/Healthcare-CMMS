@@ -15,6 +15,7 @@ router.get('/', function (req, res, next) {
             title: 'Work list',
             workOrders: WorkOrder
         });
+        console.log("ahii",workOrders);
     })
     .catch((error) => {
         console.log(error.toString());
@@ -65,8 +66,18 @@ router.post('/order', isAuth, (req, res) =>{
 
 router.post('/add', isAuth, (req, res) => {
     console.log(req.body.type);
-    if (req.body.type === 'Daily') {
-        // const newWork = {
+    if (req.body.WQclass === 'normal') {
+        const newWork = {
+            // name: req.body.task,
+            Date: req.body.Date,
+
+            // DeviceId: req.body.device,
+
+            DepartmentId: req.department,
+            UserId: req.user.id,
+            type: req.body.type,
+            DeviceId: req.body.device
+        }
         //     DepartmentId: req.user.DepartmentId,
         //     UserId: req.user.id,
         //     type: req.body.type,
@@ -84,11 +95,12 @@ router.post('/add', isAuth, (req, res) => {
         //         other : req.body.other
         //     })
         // }
-        console.log("asdasd", req.removed);
-    } else {
+        // console.log("asdasd", req.removed);
+    }
+    else {
         const newWork = {
             // name: req.body.task,
-            // date: req.body.Date,
+            Date: req.body.Date,
 
             // DeviceId: req.body.device,
 
@@ -96,13 +108,13 @@ router.post('/add', isAuth, (req, res) => {
             UserId: req.user.id,
             type: req.body.type,
             DeviceId: req.body.deviceId,
-
             alert: JSON.stringify({
                 description: req.body.description,
                 action: req.body.action
             }),
 
-            ppm: JSON.stringify({
+            ppm:
+                JSON.stringify({
                 clean_dust: req.body.clean_dust,
                 clean_surface: req.body.clean_surface,
                 lubricated: req.body.lubricated,
