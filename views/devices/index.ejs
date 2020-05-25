@@ -19,31 +19,31 @@
                 <!-- Check length of devices list -->
                 <!-- In case we found devices -->
                 <% if (devices.length > 0) { %>
-                <!-- Devices Table -->
-                <table id="devicesTable" class="table table-bordered table-striped">
-                    <!-- Headers -->
-                    <thead>
-                    <tr>
-                                        <th>Name</th>
-                                        <th>Model</th>
-                                        <th>Serial</th>
-                                        <th>Import Date</th>
-                                        <th>Installation Date</th>
-                                        <th>Scrapping Date</th>
-                                        <th>Supplying Company</th>
-                                        <th>Department</th>
-                                        <th>PPM Interval</th>
-                                        <% if (user.isAdmin) { %>
+                    <!-- Devices Table -->
+                    <table id="devicesTable" class="table table-bordered table-striped">
+                        <!-- Headers -->
+                        <thead>
+                        <tr>
+                            <th data-priority="1">Name</th>
+                            <th data-priority="2">Model</th>
+                            <th data-priority="3"> Serial</th>
+                            <th>Import Date</th>
+                            <th>Installation Date</th>
+                            <th>Scrapping Date</th>
+                            <th>Supplying Company</th>
+                            <th>Department</th>
+                            <th>PPM Interval</th>
+                            <% if (user.isAdmin) { %>
                                             <th>Delete</th>
                                         <% } %>
-                                        <th>Alert</th>
-                                    </tr>
-                                </thead>
-                                <!-- /Headers -->
+                            <th data-priority="4">Alert</th>
+                        </tr>
+                        </thead>
+                        <!-- /Headers -->
 
-                                <!-- Table Rows -->
-                                <tbody>
-                                    <% for (var i = 0; i < devices.length; i++) { %>
+                        <!-- Table Rows -->
+                        <tbody>
+                        <% for (var i = 0; i < devices.length; i++) { %>
                                         <tr>
                                             <% if (user.isAdmin) { %>
                                                 <td><%= devices[i].Name %></td>
