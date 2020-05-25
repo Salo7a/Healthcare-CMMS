@@ -33,6 +33,7 @@
                         <tbody>
                         <% for(var i = 0; i < workOrders.length; i++) { %>
                         <tr>
+
                             <% if(workOrders[i].User){ %>
                             <th><%= workOrders[i].User.Name %></th>
                             <% }else{ %>
@@ -67,6 +68,7 @@
 <!-- /.content -->
 
 <% block('js').append('<script> $(function () {$("#work").DataTable({\n' +
+
         '      "paging": true,\n' +
         '      "lengthChange": true,\n' +
         '      "searching": true,\n' +

@@ -20,13 +20,12 @@ router.get('/', function (req, res, next) {
         console.log(error.toString());
         res.status(400).send(error)
     });
-
 });
 
 router.get('/add', isAdmin, (req, res) => {
     departments.findAll().then(
         departments =>{
-            user.findAll().then(
+            personnel.findAll().then(
                 personnel=> {
                     device.findAll().then(
                         device=>{
@@ -41,7 +40,7 @@ router.get('/add', isAdmin, (req, res) => {
 });
 
 router.post('/order', isAuth, (req, res) =>{
-    console.log("body", req.body)
+    console.log("body", req.body);
     notification.findOne({
         include: [device, departments],
         where: {id : req.body.notificationID}
