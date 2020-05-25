@@ -1,103 +1,73 @@
-<div class="card card-warning">
+<div class="card">
     <div class="card-header">
-        <h3 class="card-title">General Elements</h3>
+        <h3 class="card-title">Daily Report Form (department)</h3>
+    </div>
+    <div class="form-group">
+        <label> Engineer/Technician </label>
+        <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form role="form" method="POST" action="/workorder/add" >
-            <div class="row">
-                <div class="col-sm-6">
-                    <!-- text input -->
-                    <div class="form-group">
-                        <label>Department</label>
-                        <input type="text" name="dep" value="<%= notification.Department.Name%>" class="form-control" placeholder="Department ...">
-                    </div>
-                </div>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Device</th>
+                    <th>Foreign Substances Removed</th>
+                    <th> Cracks Found </th>
+                    <th>Broken Battery</th>
+                    <th>Damaged Battery</th>
+                    <th>Spare Battery</th>
+                    <th>Broken Cable </th>
+                    <th>Damaged Cable </th>
+                    <th>Spare Cable </th>
+                    <th>Other Inspections </th>
+                </tr>
+            </thead>
+            <tbody>
+            <% device.forEach(dev => { %>
+                <tr>
+                    <td><%= dev.Name%></td>
+                    <td><input class="form-check-input" name="removed" type="checkbox"></td>
+                    <td><input class="form-check-input" name="cracks" type="checkbox"></td>
+                    <td> <input class="form-check-input" name="broken" type="checkbox"> </td>
+                    <td><input class="form-check-input" name="damage" type="checkbox"></td>
+                    <td> <input class="form-check-input" name="spare" type="checkbox"> </td>
+                    <td><input class="form-check-input" name="broken_cable" type="checkbox"> </td>
+                    <td><input class="form-check-input" name="damage_cable" type="checkbox"> </td>
+                    <td> <input class="form-check-input" name="spare_cable" type="checkbox"></td>
+                    <td> <textarea class="form-control" name="other" rows="2" placeholder="Parts ..."></textarea> </td>
+                </tr>
+            <%})%>
 
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label> Device </label>
-                        <input type="text" name="device" class="form-control" placeholder="Device ..." value="<%= notification.Device.Name%>">
-                    </div>
-                </div>
-
-            </div>
-
-            <ol>
-                <li>
-                    <label>Inspect Physical Condition : </label>
-                    <div class="row">
-                            <!-- checkbox -->
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="removed" type="checkbox">
-                                    <label class="form-check-label">Removed Foreign Substaces</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="cracks" type="checkbox">
-                                    <label class="form-check-label">Damage or Cracks</label>
-                                </div>
-                            </div>
-                    </div>
-                </li>
-                <li>
-                    <label>Inspect Battery/ies</label>
-                    <div class="row">
-                            <!-- checkbox -->
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="broken" type="checkbox">
-                                    <label class="form-check-label">Broken/Loose/Worn Pins</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="damage" type="checkbox">
-                                    <label class="form-check-label">Damaged/Leaking Battery</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="spare" type="checkbox">
-                                    <label class="form-check-label">Spare Battery Available</label>
-                                </div>
-                            </div>
-                    </div>
-                </li>
-                <li>
-                    <label>Inspect Power Source</label>
-                    <div class="row">
-                            <!-- checkbox -->
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="broken_cable" type="checkbox">
-                                    <label class="form-check-label"> Plugged </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="damage_cable" type="checkbox">
-                                    <label class="form-check-label">Damaged/Worn Caple</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="spare_cable" type="checkbox">
-                                    <label class="form-check-label">Spare Cable Available</label>
-                                </div>
-                            </div>
-                    </div>
-                </li>
-                <li>
-                    <label><i class="far fa-arrow-right"></i> Other Inspections Added  </label>
-                    <div class="form-group">
-                        <textarea class="form-control" name="other" rows="2" placeholder="Parts ..."></textarea>
-                    </div>
-                </li>
-            </ol>
-            <div class="form-group">
-                <label> Engineer/Technician </label>
-                <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
-            </div>
-            <input type="text" name="type" class="form-control" placeholder="Device ..." value="<%= notification.Type %>" hidden>
-
-            <!-- /.card-body -->
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Device</th>
+                <th>Foreign Substances Removed</th>
+                <th> Cracks Found </th>
+                <th>Broken Battery</th>
+                <th>Damaged Battery</th>
+                <th>Spare Battery</th>
+                <th>Broken Cable </th>
+                <th>Damaged Cable </th>
+                <th>Spare Cable </th>
+                <th>Other Inspections </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
     <!-- /.card-body -->
 </div>
+
+
+
+
+
+
+
+
+
+

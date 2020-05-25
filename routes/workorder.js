@@ -49,7 +49,8 @@ router.post('/order', isAuth, (req, res) =>{
             console.log("NOT", notification);
             res.render("workorder/order", {
                 title: "Show All Personnel",
-                notification
+                notification,
+                device
             })
         }
     ).catch((error) => {
