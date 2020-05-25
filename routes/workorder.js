@@ -34,29 +34,29 @@ router.get('/add', isAdmin, (req, res) => {
                                 title: 'New Work Order',
                                 departments, personnel, device
                             }
-                        )
+                        );
                     });
-                })
+                });
     });
 });
 
 router.post('/order', isAuth, (req, res) =>{
-    const devices= device.findAll({
-        where: {
-            id: req.body.notificationID
-        }
-    })
+    console.log("body", req.body)
     notification.findOne({
         include: [device, departments],
         where: {id : req.body.notificationID}
     }).then(
         notification => {
-            console.log("NOT", notification);
-            res.render("workorder/order", {
-                title: notification.Type,
-                notification,
-                devices
-            })
+            device.findAll({
+                where: { DepartmentId : req.user.DepartmentId}
+            }).then( devices => {
+                console.log("NOT", notification);
+                res.render("workorder/order", {
+                    title: notification.Type,
+                    notification,
+                    devices
+                })
+            });
         }
     ).catch((error) => {
         console.log(error.toString());
@@ -65,64 +65,72 @@ router.post('/order', isAuth, (req, res) =>{
 });
 
 router.post('/add', isAuth, (req, res) => {
-    if (req.body.type === 'daily') {
+    console.log(req.body.type);
+    if (req.body.type === 'Daily') {
+        // const newWork = {
+        //     DepartmentId: req.user.DepartmentId,
+        //     UserId: req.user.id,
+        //     type: req.body.type,
+        //     DeviceId: req.body.deviceId,
+        //
+        //     daily : JSON.stringify({
+        //         foreign : req.body.removed,
+        //         cracks : req.body.cracks,
+        //         broken_bat : req.body.broken,
+        //         damage_bat: req.body.damage,
+        //         spare_bat : req.body.spare,
+        //         broken_cable :req.body.broken_cable,
+        //         damage_cable : req.body.damage_cable,
+        //         spare_cable : req.body.spare_cable,
+        //         other : req.body.other
+        //     })
+        // }
+        console.log("asdasd", req.removed);
+    } else {
+        const newWork = {
+            // name: req.body.task,
+            // date: req.body.Date,
 
-        daily : JSON.stringify({
-            foreign : req.body.removed,
-            cracks : req.body.cracks,
-            broken_bat : req.body.broken,
-            damage_bat: req.body.damage,
-            spare_bat : req.body.spare,
-            broken_cable :req.body.broken_cable,
-            damage_cable : req.body.damage_cable,
-            spare_cable : req.body.spare_cable,
-            other : req.body.other
-        })
+            // DeviceId: req.body.device,
 
+            DepartmentId: req.user.DepartmentId,
+            UserId: req.user.id,
+            type: req.body.type,
+            DeviceId: req.body.deviceId,
+
+            alert: JSON.stringify({
+                description: req.body.description,
+                action: req.body.action
+            }),
+
+            ppm: JSON.stringify({
+                clean_dust: req.body.clean_dust,
+                clean_surface: req.body.clean_surface,
+                lubricated: req.body.lubricated,
+                calibrated: req.body.calibrated,
+                desc_replaced: req.body.desc_replaced,
+                desc_adjustments: req.body.desc_adjustments,
+                comments: req.body.comments
+            }),
+
+            daily: JSON.stringify({
+                foreign: req.body.removed,
+                cracks: req.body.cracks,
+                broken_bat: req.body.broken,
+                damage_bat: req.body.damage,
+                spare_bat: req.body.spare,
+                broken_cable: req.body.broken_cable,
+                damage_cable: req.body.damage_cable,
+                spare_cable: req.body.spare_cable,
+                other: req.body.other
+            })
+        };
+
+        workOrders.create(newWork).then(result => {
+            req.flash("success", "Added New Work Order Successfully");
+            res.redirect("/");
+        });
     }
-    const newWork = {
-        // name: req.body.task,
-        // date: req.body.Date,
-
-        // DeviceId: req.body.device,
-
-        DepartmentId: req.user.DepartmentId,
-        UserId: req.user.id,
-        type: req.body.type,
-        DeviceId: req.body.deviceId,
-
-        alert: JSON.stringify({
-            description : req.body.description,
-            action : req.body.action
-        }),
-
-        ppm :  JSON.stringify({
-            clean_dust : req.body.clean_dust,
-            clean_surface : req.body.clean_surface,
-            lubricated: req.body.lubricated,
-            calibrated : req.body.calibrated,
-            desc_replaced : req.body.desc_replaced,
-            desc_adjustments : req.body.desc_adjustments,
-            comments : req.body.comments
-        }),
-
-        daily : JSON.stringify({
-            foreign : req.body.removed,
-            cracks : req.body.cracks,
-            broken_bat : req.body.broken,
-            damage_bat: req.body.damage,
-            spare_bat : req.body.spare,
-            broken_cable :req.body.broken_cable,
-            damage_cable : req.body.damage_cable,
-            spare_cable : req.body.spare_cable,
-            other : req.body.other
-        })
-    };
-
-    workOrders.create(newWork).then(result => {
-        req.flash("success", "Added New Work Order Successfully");
-        res.redirect("/");
-    });
 });
 
 module.exports = router;

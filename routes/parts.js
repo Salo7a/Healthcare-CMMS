@@ -13,7 +13,7 @@ router.get('/', isAuth, (req, res) => {
         parts => {
             res.render('parts/index', {
                 title: 'Parts List',
-                parts
+                parts : parts
             }).catch((error) => {
                 console.log(error.toString());
                 res.status(400).send(error);
@@ -40,7 +40,7 @@ router.post('/add', isAdmin, (req, res) => {
         Quantity: req.body.quantity,
         Price: req.body.price,
         InstallationDate: req.body.installationDate,
-        DeviceId: req.body.device
+        DeviceId: req.body.devicesMenu
     };
     parts.create(newPart).then(result => {
         req.flash("success", "Added Part Successfully");
@@ -56,7 +56,7 @@ router.post('/delete', isAdmin, (req, res) => {
 });
 
 //POST Route Handler for Deleting all part
-router.get('deleteAll', isAdmin, (req, res) => {
+router.get('/deleteAll', isAdmin, (req, res) => {
     parts.destroy({
         where: {}
     }).then(() => {

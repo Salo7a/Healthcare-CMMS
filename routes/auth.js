@@ -5,11 +5,12 @@ const User = require('../models').User;
 const Device = require('../models').Device;
 const Department = require('../models').Department;
 const Persons = require("../models").Indoor;
+const Notification = require("../models").Notification;
 
-const {NotAuth, isAuth} = require('../utils/filters');
-const {check, validationResult, body} = require('express-validator');
-const {GenerateDates, GenerateOrders, AddTestData, GenerateQueue} = require('../utils/GenerateData');
-const {Op} = require('sequelize');
+const { NotAuth, isAuth } = require('../utils/filters');
+const { check, validationResult, body } = require('express-validator');
+const { GenerateDates, GenerateOrders, AddTestData, GenerateQueue } = require('../utils/GenerateData');
+const { Op } = require('sequelize');
 const Chance = require('chance');
 // const loadCSVData = require('../utils/loadCSV');
 const fs = require('fs');
@@ -19,7 +20,7 @@ let chance = new Chance();
 
 function issueToken(user, done) {
     let chance = new Chance();
-    let token = chance.word({length: 60});
+    let token = chance.word({ length: 60 });
     user.update({
         RememberHash: token
     }).then(result => {
@@ -30,6 +31,7 @@ function issueToken(user, done) {
 }
 
 router.get('/login', NotAuth, function (req, res, next) {
+    Notification.create({Type: "Daily"});
     res.render('login', {
         title: 'Login'
     });
@@ -48,22 +50,22 @@ router.get('/test', NotAuth, function (req, res, next) {
     res.redirect('/auth/login');
 });
 router.post('/login', NotAuth, passport.authenticate('local', {
-        failureRedirect: '/auth/login',
-        failureFlash: true
-    }), function (req, res, next) {
-        req.flash('success', 'You\'ve Logged In Successfully');
-        if (!req.body.remember_me) {
-            return next();
-        }
+    failureRedirect: '/auth/login',
+    failureFlash: true
+}), function (req, res, next) {
+    req.flash('success', 'You\'ve Logged In Successfully');
+    if (!req.body.remember_me) {
+        return next();
+    }
 
-        issueToken(req.user, function (err, token) {
-            if (err) {
-                return next(err);
-            }
-            res.cookie('remember_me', token, {path: '/', httpOnly: true, maxAge: 604800000});
-            return next();
-        });
-    },
+    issueToken(req.user, function (err, token) {
+        if (err) {
+            return next(err);
+        }
+        res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+        return next();
+    });
+},
     function (req, res) {
         res.redirect('/');
     });
@@ -76,7 +78,7 @@ router.get('/addtest', function (req, res, next) {
         Title: "Head of Engineering",
         Password: "password",
         isAdmin: true,
-        DepartmentId : 1
+        DepartmentId: 1
     });
     User.create({
         Name: "Jane Doe",
@@ -85,30 +87,27 @@ router.get('/addtest', function (req, res, next) {
         Title: "MRI Technician",
         Password: "password",
         isAdmin: false,
-        DepartmentId :1
+        DepartmentId: 1
     });
 
-    const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}]
-    for (let i = 0; i < departmentsList.length; i++)
-    {
+    const departmentsList = [{ "Cardiac Catheterization": 1 }, { "Surgery Care": 2 }, { "Cardiology": 3 }, { "Emergency": 4 }]
+    for (let i = 0; i < departmentsList.length; i++) {
         Department.create({
             Name: Object.keys(departmentsList[i])[0]
         });
     }
-    
-    fs.readFile('routes/DevicesData.csv',   async (err, data) => {
-        if (err)
-        {
+
+    fs.readFile('routes/DevicesData.csv', async (err, data) => {
+        if (err) {
             console.log('errorrrr');
             console.error(err);
             return
         }
-        
+
         let devicesList;
         devicesList = await neatCsv(data);
         console.log(devicesList[0]);
-        for (let i=0; i < devicesList.length; i++)
-        {
+        for (let i = 0; i < devicesList.length; i++) {
             // Return the id of the department
             const currentDepartment = departmentsList.filter(dep => dep[devicesList[i].Department]);
             const currentDepID = currentDepartment[0][devicesList[i].Department];
@@ -127,8 +126,8 @@ router.get('/addtest', function (req, res, next) {
         console.log('Created!')
     });
 
-    fs.readFile("routes/indoor.csv", async (err, data)=>{
-        if(err){
+    fs.readFile("routes/indoor.csv", async (err, data) => {
+        if (err) {
             console.log(err);
         }
         let indoor;
@@ -137,35 +136,53 @@ router.get('/addtest', function (req, res, next) {
         indoor.forEach(person => {
             Persons.create({
                 firstName: person.firstName,
-                lastName : person.lastName,
-                birthday : person.birthday,
-                email    : person.email,
-                Role     : person.Role,
-                phone    : person.phone,
-                DepartmentId : person.DepartmentId
+                lastName: person.lastName,
+                birthday: person.birthday,
+                email: person.email,
+                Role: person.Role,
+                phone: person.phone,
+                DepartmentId: person.DepartmentId
             });
             User.create({
                 Name: person.firstName + " " + person.lastName,
-                Email : person.email,
-                birthday : person.birthday,
-                Phone : person.phone,
-                Title : person.Role,
-                Password : "password",
-                isAdmin : false,
-                DepartmentId : person.DepartmentId
+                Email: person.email,
+                birthday: person.birthday,
+                Phone: person.phone,
+                Title: person.Role,
+                Password: "password",
+                isAdmin: false,
+                DepartmentId: person.DepartmentId
             })
         });
     });
     console.log("Created Persons");
 
+    fs.readFile("routes/partsData.csv", async (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        let parts;
+        parts = await neatCsv(data);
+        console.log(parts);
+        parts.forEach(part => {
+            Parts.create({
+                Type: part.type,
+                Model: part.model,
+                Quantity: part.quantity,
+                Price: part.price,
+                InstallationDate: part.installationDate,
+                DeviceId: part.devID
+            });
+        });
+    });
 
     req.flash("success", "Test Accounts And Devices Were Added Successfully");
     res.redirect('/auth/login');
 });
 
-router.get("/userlist", isAuth,(req, res)=>{
+router.get("/userlist", isAuth, (req, res) => {
     User.findAll().then(
-        users =>{
+        users => {
             res.render("users", {
                 title: "Users List",
                 users
@@ -175,7 +192,7 @@ router.get("/userlist", isAuth,(req, res)=>{
 });
 
 
-router.post('/delete', isAuth, (req, res)=>{
+router.post('/delete', isAuth, (req, res) => {
     User.destroy({
         where: {
             id: req.body.usersID
