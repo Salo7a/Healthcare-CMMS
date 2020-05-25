@@ -22,7 +22,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="DepartmentId">Department</label>
+                                <label for="department">Department</label>
                                 <select name="department" class="form-control">
                                     <% for(var i=0; i<departments.length; i++) {%>
                                     <option value="<%=departments[i].id%>" ><%= departments[i].Name %></option>
@@ -33,11 +33,11 @@
 
                             <div class="form-group">
                                 <label for="device">Device</label>
-                                    <select name="device" class="form-control">
-                                        <% for(var i=0; i<device.length; i++) {%>
-                                            <option value="<%= device[i].id %>"><%= device[i].Name %> <%=device[i].Model%></option>
-                                        <%}%>
-                                    </select>
+                                <select name="device" class="form-control">
+                                    <% for(var i=0; i<device.length; i++) {%>
+                                        <option value="<%= device[i].id %>"><%= device[i].Name %> <%=device[i].Model%></option>
+                                    <%}%>
+                                </select>
 
                             </div>
                             <div class="form-group">
