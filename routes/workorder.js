@@ -32,6 +32,7 @@ router.get('/add', isAdmin, (req, res) => {
                         device=>{
                             res.render('workorder/addWorkOrder', {
                                 title: 'New Work Order',
+                                // today: new Date(),
                                 departments, personnel, device
                             }
                         );
@@ -73,7 +74,7 @@ router.post('/add', isAuth, (req, res) => {
 
             // DeviceId: req.body.device,
 
-            DepartmentId: req.department,
+            DepartmentId: req.body.department,
             UserId: req.user.id,
             type: req.body.WQclass,
             DeviceId: req.body.device,
