@@ -25,30 +25,37 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Action</th>
+                        <% if (user.isAdmin) { %>
+                            <th>Action</th>
+                        <% } %>
                     </tr>
                     </thead>
                     <!-- /Headers -->
 
                     <!-- Table Rows -->
                     <tbody>
-                    <% for(var i=0; i<departments.length; i++) {%>
-                                    <tr>
+                        <% for(var i=0; i<departments.length; i++) {%>
+                            <tr>
+                                <% if (user.isAdmin) { %>
+                                    <td><%= departments[i].id %></td>
+                                    <td><%= departments[i].Name %></td>
+                                    <td><form action="/departments/delete" method="post">
+                                            <input type="text" name="departmentID" value="<%= departments[i].id%>" hidden>
+                                            <button type="submit" class="btn btn-block btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                <% } else { %>
+                                    <% if (user.DepartmentId === departments[i].id) { %>
                                         <td><%= departments[i].id %></td>
                                         <td><%= departments[i].Name %></td>
-                                        <td><form action="/departments/delete" method="post">
-                                                <input type="text" name="departmentID" value="<%= departments[i].id%>" hidden>
-                                                <button type="submit" class="btn btn-block btn-danger">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                    <% } %>
                                 <% } %>
-
-                                </tbody>
+                            </tr>
+                        <% } %>
+                    </tbody>
                                 <!-- /Table Rows -->
-
                 </table>
 
             <% }else{ %>
