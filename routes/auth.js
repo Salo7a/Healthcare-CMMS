@@ -5,6 +5,7 @@ const User = require('../models').User;
 const Device = require('../models').Device;
 const Department = require('../models').Department;
 const Persons = require("../models").Indoor;
+const Notification = require("../models").Notification;
 
 const {NotAuth, isAuth} = require('../utils/filters');
 const {check, validationResult, body} = require('express-validator');
@@ -30,6 +31,7 @@ function issueToken(user, done) {
 }
 
 router.get('/login', NotAuth, function (req, res, next) {
+    Notification.create({Type: "Daily"});
     res.render('login', {
         title: 'Login'
     });

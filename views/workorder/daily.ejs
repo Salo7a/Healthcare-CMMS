@@ -2,13 +2,14 @@
     <div class="card-header">
         <h3 class="card-title">Daily Report Form (department)</h3>
     </div>
-    <div class="form-group">
-        <label> Engineer/Technician </label>
-        <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
-    </div>
     <!-- /.card-header -->
     <div class="card-body">
         <form method="post" action="/workorder/add">
+            <div class="form-group">
+                <label> Engineer/Technician </label>
+                <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
+            </div>
+
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -25,18 +26,19 @@
                 </tr>
                 </thead>
                 <tbody>
+                <% console.log("HERERERER", devices)%>
                 <% devices.forEach(dev => { %>
                     <tr>
                         <td><%= dev.Name%></td>
-                        <td><input class="form-check-input" name="removed[]" type="checkbox"></td>
-                        <td><input class="form-check-input" name="cracks[]" type="checkbox"></td>
-                        <td> <input class="form-check-input" name="broken[]" type="checkbox"> </td>
-                        <td><input class="form-check-input" name="damage[]" type="checkbox"></td>
-                        <td> <input class="form-check-input" name="spare[]" type="checkbox"> </td>
-                        <td><input class="form-check-input" name="broken_cable[]" type="checkbox"> </td>
-                        <td><input class="form-check-input" name="damage_cable[]" type="checkbox"> </td>
-                        <td> <input class="form-check-input" name="spare_cable[]" type="checkbox"></td>
-                        <td> <textarea class="form-control" name="other[]" rows="2" placeholder="Parts ..."></textarea> </td>
+                        <td><input name="removed[]" type="checkbox"></td>
+                        <td><input name="cracks[]" type="checkbox"></td>
+                        <td> <input name="broken[]" type="checkbox"> </td>
+                        <td><input name="damage[]" type="checkbox"></td>
+                        <td> <input name="spare[]" type="checkbox"> </td>
+                        <td><input name="broken_cable[]" type="checkbox"> </td>
+                        <td><input name="damage_cable[]" type="checkbox"> </td>
+                        <td> <input name="spare_cable[]" type="checkbox"></td>
+                        <td> <textarea name="other[]" rows="2" placeholder="Parts ..."></textarea> </td>
                     </tr>
                 <%})%>
 
@@ -56,14 +58,15 @@
                 </tr>
                 </tfoot>
             </table>
+            <input type="text" name="type" value="<%= notification.Type %>" hidden>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary" >Submit</button>
+            </div>
 
         </form>
     </div>
-    <input type="text" name="type" value="<%= notification.Type %>" hidden>
 
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
 
     <!-- /.card-body -->
 </div>
@@ -103,15 +106,15 @@
                 type: 'POST',
                 url: '/workorder/add',
                 data: {
-                    'removed': removed,
-                    'cracks': cracks,
-                    'broken': broken,
-                    'damage': damage,
-                    'spare': spare,
-                    'damage_cable': damage_cable,
-                    'broken_cable' : broken_cable,
-                    'spare_cable': spare_cable,
-                    'other': other,
+                    removed,
+                    cracks,
+                    broken,
+                    damage,
+                    pare,
+                    damage_cable,
+                    broken_cable,
+                    spare_cable,
+                    other,
                 },
                 success: function() {
                     console.log("removed   ..  ",removed);
