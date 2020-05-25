@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Daily Report Form (department)</h3>
+        <h3 class="card-title">Daily Report Form <% notification.DepartmentId %></h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -26,27 +26,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% console.log("HERERERER", devices)%>
                 <% devices.forEach(dev => { %>
                     <tr>
                         <td><%= dev.Name%></td>
-                        <td><input name="removed[]" type="checkbox"></td>
-                        <td><input name="cracks[]" type="checkbox"></td>
-                        <td> <input name="broken[]" type="checkbox"> </td>
-                        <td><input name="damage[]" type="checkbox"></td>
-                        <td> <input name="spare[]" type="checkbox"> </td>
-                        <td><input name="broken_cable[]" type="checkbox"> </td>
-                        <td><input name="damage_cable[]" type="checkbox"> </td>
-                        <td> <input name="spare_cable[]" type="checkbox"></td>
-                        <td> <textarea name="other[]" rows="2" placeholder="Parts ..."></textarea> </td>
+                        <td><input name="removed" value="<%= dev.id%>" type="checkbox"></td>
+                        <td><input name="cracks"  value="<%= dev.id%>"type="checkbox"></td>
+                        <td><input name="broken"  value="<%= dev.id%>" type="checkbox"></td>
+                        <td><input name="damage"  value="<%= dev.id%>" type="checkbox"></td>
+                        <td><input name="spare"   value="<%= dev.id%>" type="checkbox"></td>
+                        <td><input name="broken_cable" value="<%= dev.id%>"type="checkbox"></td>
+                        <td><input name="damage_cable" value="<%= dev.id%>"type="checkbox"></td>
+                        <td><input name="spare_cable"  value="<%= dev.id%>"type="checkbox"></td>
+                        <td><textarea name="other" value="<%= dev.id%>"rows="2" placeholder="Parts ..."></textarea> </td>
                     </tr>
                 <%})%>
 
                 </tbody>
             </table>
             <input type="text" name="type" value="<%= notification.Type %>" hidden>
+            <input type="text" name="dev" value="<%= devices.length %>" hidden>
 
-            <div class="card-footer">
+            <div>
                 <button type="submit" class="btn btn-primary" >Submit</button>
             </div>
 
@@ -57,56 +57,89 @@
     <!-- /.card-body -->
 </div>
 
-<script>
-    $(function() {
-        $('.submit').click(function() {
-            let removed = $('input[name="removed[]"]').map(function(){
-                return this.value;
-            }).get();
-            let cracks = $('input[name="cracks[]"]').map(function(){
-                return this.value;
-            }).get();
-            let broken = $('input[name="broken[]"]').map(function(){
-                return this.value;
-            }).get();
-            let damage = $('input[name="damage[]"]').map(function(){
-                return this.value;
-            }).get();
-            let spare = $('input[name="spare[]"]').map(function(){
-                return this.value;
-            }).get();
-            let broken_cable = $('input[name="broken_cable[]"]').map(function(){
-                return this.value;
-            }).get();
-            let damage_cable = $('input[name="damage_cable[]"]').map(function(){
-                return this.value;
-            }).get();
-            let spare_cable = $('input[name="spare_cable[]"]').map(function(){
-                return this.value;
-            }).get();
-            let other = $('input[name="other[]"]').map(function(){
-                return this.value;
-            }).get();
+<!--<script>-->
+<!--    $(function() {-->
+<!--        $('.submit').click(function() {-->
+<!--            var removed = $('input[name="remove"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var cracks = $('input[name="cracks"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var broken = $('input[name="broken"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var damage = $('input[name="damage"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var spare = $('input[name="spare"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var broken_cable = $('input[name="broken_cable"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var damage_cable = $('input[name="damage_cable"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var spare_cable = $('input[name="spare_cable"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
+<!--            var other = $('input[name="other"]').map(function(){-->
+<!--                return this.value;-->
+<!--            }).get();-->
 
-            $.ajax({
-                type: 'POST',
-                url: '/workorder/add',
-                data: {
-                    removed,
-                    cracks,
-                    broken,
-                    damage,
-                    pare,
-                    damage_cable,
-                    broken_cable,
-                    spare_cable,
-                    other,
-                },
-                success: function() {
-                    console.log("removed   ..  ",removed);
-                    console.log("cracks    ..  ",cracks);
-                }
-            });
-        });
-    });
-</script>
+<!--    //         $.ajax({-->
+<!--    //             type: 'POST',-->
+<!--    //             url: '/workorder/add',-->
+<!--    //             dataType : 'json',-->
+<!--    //             data: JSON.stringify({-->
+<!--    //                 "removed" :removed,-->
+<!--    //                 "cracks"  :cracks,-->
+<!--    //                 "broken"  :broken,-->
+<!--    //                 "damage"  :damage,-->
+<!--    //                 "spare"   :spare,-->
+<!--    //                 "broke_cable" :broken_cable,-->
+<!--    //                 "damage_cable":damage_cable,-->
+<!--    //                 "spare_cable" :spare_cable,-->
+<!--    //                 "other"   :other,-->
+<!--    //             }),-->
+<!--    //             success: function() {-->
+<!--    //                 console.log("removed   ..  ",removed);-->
+<!--    //                 console.log("cracks    ..  ",cracks);-->
+<!--    //                 console.log("data    ..  ",data);-->
+<!--    //             }-->
+<!--    //         });-->
+<!--    //     });-->
+<!--    });-->
+<!--    var xmlhttp;-->
+
+<!--    if (window.XMLHttpRequest) {-->
+
+<!--        // code for IE7+, Firefox, Chrome, Opera, Safari-->
+<!--        xmlhttp = new XMLHttpRequest();-->
+<!--    }-->
+
+<!--    else {-->
+<!--        // code for IE6, IE5-->
+<!--        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");-->
+<!--    }-->
+
+<!--    xmlhttp.onreadystatechange = function() {-->
+<!--        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {-->
+<!--            if(xmlhttp.status == 200){-->
+<!--                console.log('request successfull : ', xmlhttp.responseText);-->
+<!--            }-->
+<!--            else if(xmlhttp.status == 400) {-->
+<!--                alert('There was an error 400')-->
+<!--            }-->
+<!--            else {-->
+<!--                alert('something else other than 200 was returned')-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+
+<!--    xmlhttp.open("post", "~/process_post", true);-->
+<!--    xmlhttp.send(JSON.stringify({-->
+
+<!--    })); //your custom data-->
+<!--</script>-->
