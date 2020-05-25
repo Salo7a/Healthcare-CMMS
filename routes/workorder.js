@@ -11,11 +11,12 @@ const notification = require('../models').Notification;
 
 router.get('/', function (req, res, next) {
     workOrders.findAll({include: [departments, device, user]}).then(WorkOrder => {
+        console.log("ahii",WorkOrder);
         res.render('workorder/workorder', {
             title: 'Work list',
-            workOrders: WorkOrder
+            workOrders: WorkOrder,
+            user: req.user
         });
-        console.log("ahii",workOrders);
     })
     .catch((error) => {
         console.log(error.toString());
@@ -108,6 +109,7 @@ router.post('/add', isAuth, (req, res) => {
     }else {
         const newWork = {
             DepartmentId: req.user.DepartmentId,
+            Date: new Date(),
             UserId: req.user.id,
             type: req.body.type,
             DeviceId: req.body.deviceId,

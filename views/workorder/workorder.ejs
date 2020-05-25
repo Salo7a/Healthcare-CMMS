@@ -31,31 +31,32 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <% console.log(user)%>
+                        <% console.log(workOrders.DepartmentId) %>
                         <% for(var i = 0; i < workOrders.length; i++) { %>
-                        <tr>
-
-                            <% if(workOrders[i].User){ %>
-                            <th><%= workOrders[i].User.Name %></th>
-                            <% }else{ %>
-                                <th>Any</th>
-                            <% } %>
-                            <th><%= workOrders[i].Date %></th>
-                            <% if(workOrders[i].Device){ %>
-                            <th><%= workOrders[i].Device.Name %></th>
-                            <% }else{ %>
-                                <th>All</th>
-                            <% } %>
-                            <% if(workOrders[i].Department){ %>
-                            <th><%= workOrders[i].Department.Name %></th>
-                            <% }else{ %>
-                                <th>All</th>
-                            <% } %>
-                            <th><%= workOrders[i].type %></th>
-                            <th><%= workOrders[i].State %></th>
-
-                        <% } %>
-                        </tr>
-
+                            <tr>
+                                <% if (workOrders[i].DepartmentId === user.DepartmentId) { %>
+                                    <% if(workOrders[i].User){ %>
+                                    <th><%= workOrders[i].User.Name %></th>
+                                    <% }else{ %>
+                                        <th>Any</th>
+                                    <% } %>
+                                    <th><%= workOrders[i].Date %></th>
+                                    <% if(workOrders[i].Device){ %>
+                                    <th><%= workOrders[i].Device.Name %></th>
+                                    <% }else{ %>
+                                        <th>All</th>
+                                    <% } %>
+                                    <% if(workOrders[i].Department){ %>
+                                    <th><%= workOrders[i].Department.Name %></th>
+                                    <% }else{ %>
+                                        <th>All</th>
+                                    <% } %>
+                                    <th><%= workOrders[i].type %></th>
+                                    <th><%= workOrders[i].State %></th>
+                                <% } %>
+                            </tr>
+                        <% }%>
                         </tbody>
                     </table>
 
