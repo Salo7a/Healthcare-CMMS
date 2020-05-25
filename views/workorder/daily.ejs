@@ -25,7 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% device.forEach(dev => { %>
+                <% devices.forEach(dev => { %>
                     <tr>
                         <td><%= dev.Name%></td>
                         <td><input class="form-check-input" name="removed[]" type="checkbox"></td>
@@ -68,12 +68,56 @@
     <!-- /.card-body -->
 </div>
 
+<script>
+    $(function() {
+        $('.submit').click(function() {
+            let removed = $('input[name="removed[]"]').map(function(){
+                return this.value;
+            }).get();
+            let cracks = $('input[name="cracks[]"]').map(function(){
+                return this.value;
+            }).get();
+            let broken = $('input[name="broken[]"]').map(function(){
+                return this.value;
+            }).get();
+            let damage = $('input[name="damage[]"]').map(function(){
+                return this.value;
+            }).get();
+            let spare = $('input[name="spare[]"]').map(function(){
+                return this.value;
+            }).get();
+            let broken_cable = $('input[name="broken_cable[]"]').map(function(){
+                return this.value;
+            }).get();
+            let damage_cable = $('input[name="damage_cable[]"]').map(function(){
+                return this.value;
+            }).get();
+            let spare_cable = $('input[name="spare_cable[]"]').map(function(){
+                return this.value;
+            }).get();
+            let other = $('input[name="other[]"]').map(function(){
+                return this.value;
+            }).get();
 
-
-
-
-
-
-
-
-
+            $.ajax({
+                type: 'POST',
+                url: '/workorder/add',
+                data: {
+                    'removed': removed,
+                    'cracks': cracks,
+                    'broken': broken,
+                    'damage': damage,
+                    'spare': spare,
+                    'damage_cable': damage_cable,
+                    'broken_cable' : broken_cable,
+                    'spare_cable': spare_cable,
+                    'other': other,
+                },
+                success: function() {
+                    console.log("removed   ..  ",removed);
+                    console.log("cracks    ..  ",cracks);
+                }
+            });
+        });
+    });
+</script>

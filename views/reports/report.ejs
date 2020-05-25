@@ -1,39 +1,48 @@
 <% layout('panel') -%>
 <div class="col-md-12">
     <div class="card card-default">
-        <div class="card-body">
+        <div class="card-body align-content-center">
 
             <% if (report.length > 0) { %>
+                <div id="printableArea">
+                    <blockquote class="blockquote text-center">
+                        <p class="mb-0"><%= report[0].type %> Detailed Report </p>
+                        <p class="mb-1"> <%= user.Name %> from <%= report[0].dataValues.Department.Name %> </p>
+                        <p> Created At : <%= report[0].createdAt %></p>
+                        <footer class="blockquote-footer"><cite title="Source Title">Extra Cool CMMS</cite></footer>
+                    </blockquote>
 
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0"><%= report[0].type %> Detailed Report </p>
-                    <p class="mb-1"> <%= user.Name %> from <%= report[0].dataValues.Department.Name %> </p>
-                    <p> Created At : <%= report[0].createdAt %></p>
-                    <footer class="blockquote-footer"><cite title="Source Title">Extra Cool CMMS</cite></footer>
-                </blockquote>
-                <% console.log(report); %>
-                <% console.log(report[0].type); %>
-
-
-                <!--    Alert        -->
-                <% if (report[0].type === "Repair") { %>
+                    <!--    Alert        -->
+                    <% if (report[0].type === "Repair") { %>
                         <% console.log("repair")%>
                         <% include repair.ejs %>
-                <% } %>
-                <!--    Daily        -->
-                <% if (report.type === "Daily") { %>
+                    <% } %>
+                    <!--    Daily        -->
+                    <% if (report.type === "Daily") { %>
                         <% console.log("daily")%>
                         <% include daily.ejs%>
-                <% } %>
-                <!--    PPM        -->
-                <% if (report.type === "PPM") { %>
+                    <% } %>
+                    <!--    PPM        -->
+                    <% if (report.type === "PPM") { %>
                         <% console.log("ppm") %>
                         <% include ppm.ejs%>
-                <% } %>
+                    <% } %>
+                </div>
+
+                <input type="button" class="btn btn-app center" onclick="printDiv('printableArea')" value="Save">
+
 
                 <script type="text/javascript">
-                    window.addEventListener("load", window.print());
+                    function printDiv(divName) {
+                        var printContents = document.getElementById(divName).innerHTML;
+                        var originalContents = document.body.innerHTML;
 
+                        document.body.innerHTML = printContents;
+
+                        window.print();
+
+                        document.body.innerHTML = originalContents;
+                    }
                 </script>
             <% } else {%>
                 <h1> NO RESULTS FOUND</h1>

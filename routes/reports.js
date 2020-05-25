@@ -31,22 +31,41 @@ router.get('/createReport', isAuth, (req, res, next) => {
 
 router.post("/report", isAuth, (req, res)=>{
     console.log("The Type is ", req.body.reportsMenu);
+    if (req.body.devicesMenu === "all"){
+        console.log("ALL")
+        models.WorkOrder.findAll({
+            include: [Device, Department, models.User],
+            where: {
+                type : req.body.reportsMenu,
+                DepartmentId : req.body.departmentsMenu
+            }
+        }).then( report => {
 
-    models.WorkOrder.findAll({
-        include: [Device, Department, models.User],
-        where: {
-            type : req.body.reportsMenu,
-            DeviceId: req.body.devicesMenu,
-            DepartmentId : req.body.departmentsMenu
-        }
-    }).then( report => {
-
-        res.render('reports/report', {
-            title: req.body.reportsMenu +" Detailed Report",
-            user: req.user,
-            report
+            res.render('reports/report', {
+                title: req.body.reportsMenu +" Detailed Report",
+                user: req.user,
+                report
+            });
         });
-    });
+    } else {
+        models.WorkOrder.findAll({
+            include: [Device, Department, models.User],
+            where: {
+                type : req.body.reportsMenu,
+                DeviceId: req.body.devicesMenu,
+                DepartmentId : req.body.departmentsMenu
+            }
+        }).then( report => {
+
+            res.render('reports/report', {
+                title: req.body.reportsMenu +" Detailed Report",
+                user: req.user,
+                report
+            });
+        });
+
+    }
+
 });
 
 module.exports = router;

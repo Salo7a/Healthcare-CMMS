@@ -34,13 +34,19 @@ router.get('/add', isAdmin, (req, res) => {
                                 title: 'Add',
                                 departments, personnel, device
                             }
-                        )
+                        );
                     });
-                })
+                });
     });
 });
 
 router.post('/order', isAuth, (req, res) =>{
+    console.log("body", req.body)
+    const devices= device.findAll({
+        where: {
+            id: req.body.notificationID
+        }
+    });
     notification.findOne({
         include: [device, departments],
         where: {id : req.body.notificationID}
@@ -48,9 +54,9 @@ router.post('/order', isAuth, (req, res) =>{
         notification => {
             console.log("NOT", notification);
             res.render("workorder/order", {
-                title: "Show All Personnel",
+                title: notification.Type,
                 notification,
-                device
+                devices
             })
         }
     ).catch((error) => {
@@ -60,18 +66,20 @@ router.post('/order', isAuth, (req, res) =>{
 });
 
 router.post('/add', isAuth, (req, res) => {
-    if (Daily) {
-        WorkOrder.findOne({
-            where: {
-                Date: new Date()
-            }
-        }).then(dailyrow => {
-            let daily = JSON.parse(dailyrow.daily);
-            daily[req.body.deviceId]['foreign'] = req.body.removed;
-            daily[req.body.deviceId]['cracks'] = req.body.cracks;
-            daily[req.body.deviceId]['broken_bat'] = req.body.broken;
-            dailyrow.save()
-        })
+    if (req.body.type === 'daily') {
+
+        daily : JSON.stringify({
+            foreign : req.body.removed,
+            cracks : req.body.cracks,
+            broken_bat : req.body.broken,
+            damage_bat: req.body.damage,
+            spare_bat : req.body.spare,
+            broken_cable :req.body.broken_cable,
+            damage_cable : req.body.damage_cable,
+            spare_cable : req.body.spare_cable,
+            other : req.body.other
+        });
+
     }
     const newWork = {
         // name: req.body.task,
