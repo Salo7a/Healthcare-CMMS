@@ -13,7 +13,6 @@ const Device = require('./models').Device;
 const Department = require('./models').Department;
 const Notification = require('./models').Notification;
 const {Op} = require('sequelize');
-const {GenerateDates, GenerateOrders, AddTestData, GenerateQueue} = require('../utils/GenerateData');
 let passportConfig = require('./config/passport');
 
 const workorderRouter = require('./routes/workorder');
