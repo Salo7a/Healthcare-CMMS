@@ -1,0 +1,43 @@
+type,model,quantity,price,installationDate,devID
+CPU,Volcano  IVUS,1,,08/02/16,1
+Table-top control panel,Volcano  IVUS,1,,08/02/16,1
+Touhpad,Bedside touchpad controller,1,,08/02/16,1
+Monitor,19” LCD,1,,08/02/16,1
+Cart,VIO,1,,08/02/16,3
+"Basket,Wire",VIO,1,,08/02/16,3
+Foot Switch,VIO ReMode two-pedal,1,,08/02/16,3
+Cables,ECG,2,,08/02/16,7
+Leads,ECG,10,,08/02/16,7
+Electrode Set,ECG,2,,08/02/16,7
+"Electrode, Adult",10pK (barrel style) ,10,271,03/03/19,8
+"Electrode, Child",10pK (barrel style) ,10,290,03/01/19,8
+"Cables, Pads",Handsfree (barrel style),5,142,03/01/19,8
+Syringe,50ml,30,,09/12/19,9
+"Stand, Pump",TOP-3300,1,,11/01/05,12
+"Tubing, pump",TOP IV H-series,4,,06/07/19,12
+Syringe,60ml,25,,09/12/19,14
+"Stand, Pump",TOP-3300,1,,11/01/05,15
+"Tubing, pump",TOP IV H-series,4,,06/07/19,15
+Electrode Set,Pacemaker,30,,08/08/19,16
+Paddles,Plug-in,30,,08/08/19,16
+Jar,VASO DA 1000cc,15,,08/02/18,17
+Jar,VASO DA 2000cc,20,,08/02/18,17
+Jar,VASO DA 4000cc,10,,08/02/18,17
+Cannula,Disoposavle Sterile,20,,09/12/19,17
+Charger Unit,Multi-voltage,1,,06/02/17,17
+"Tube, suction",2 meter,8,,09/12/19,17
+Paper Pack,Schiller AT 102,50,19.02,09/12/19,18
+Electrode Set,IMCO Tab Adult-1000,30,37.8,09/12/19,18
+Compressor,51000-09750,1,9800,04/07/18,19
+"Sensor, Temperature",900MR863,1,210,08/02/16,19
+Compressor,51000-09750,1,9800,08/02/16,20
+"Sensor, Temperature",900MR863,1,210,08/02/16,20
+"Stand, Monitor",SL2700,1,,08/02/16,22
+"Stand, Monitor",SL2700,1,,08/02/16,10
+"Stand, Monitor",SL2700,1,,08/02/16,11
+Paper Pack,Schiller AT 102,50,19.02,09/12/19,23
+Electrode Set,IMCO Tab Adult-1000,30,37.8,09/12/19,23
+Paper Pack,Schiller AT 102,50,19.02,09/12/19,24
+Electrode Set,IMCO Tab Adult-1000,30,37.8,09/12/19,24
+Mattress,RX600,1,,03/11/18,25
+"Blade , Saw",FMM250Q,10,,09/09/19,27
