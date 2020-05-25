@@ -41,11 +41,12 @@ router.get('/add', isAdmin, (req, res) => {
 });
 
 router.post('/order', isAuth, (req, res) =>{
+    console.log("body", req.body)
     const devices= device.findAll({
         where: {
             id: req.body.notificationID
         }
-    })
+    });
     notification.findOne({
         include: [device, departments],
         where: {id : req.body.notificationID}
