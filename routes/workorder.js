@@ -119,6 +119,7 @@ router.post('/add', isAuth, (req, res) => {
                 }
             })
             order.daily = daily
+            order.State = 'Done';
             order.save()
             req.flash("success", "Added New Work Order Successfully");
             res.redirect("/");

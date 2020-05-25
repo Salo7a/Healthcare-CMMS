@@ -40,7 +40,7 @@ router.post("/report", isAuth, (req, res)=>{
                 DepartmentId : req.body.departmentsMenu
             }
         }).then( report => {
-
+            console.log(report);
             res.render('reports/report', {
                 title: req.body.reportsMenu +" Detailed Report",
                 user: req.user,
@@ -56,16 +56,14 @@ router.post("/report", isAuth, (req, res)=>{
                 DepartmentId : req.body.departmentsMenu
             }
         }).then( report => {
-
+            console.log(report);
             res.render('reports/report', {
                 title: req.body.reportsMenu +" Detailed Report",
                 user: req.user,
                 report
             });
         });
-
     }
-
 });
 
 module.exports = router;
