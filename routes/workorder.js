@@ -20,7 +20,6 @@ router.get('/', function (req, res, next) {
         console.log(error.toString());
         res.status(400).send(error)
     });
-
 });
 
 router.get('/add', isAdmin, (req, res) => {
