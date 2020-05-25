@@ -54,14 +54,25 @@ router.get('/', isAuth, function (req, res, next) {
 });
 
 router.get('/addtest', function (req, res, next) {
-    Device.create({
-        Name: "Siemens T7 MRI",
-        ModelNumber: "T7",
-        SerialNumber: "00001",
-        Department: "Imaging",
-        InstallationDate: "09/05/2020"
-    }).then(device => {
-        console.log(device)
+    User.findOrCreate({
+        where: {
+            Name: "John Doe",
+            Phone: "01123456789",
+            Title: "Head of Engineering",
+            Password: "password",
+            isAdmin: true,
+            DepartmentId: 1
+        }
+    });
+    User.findOrCreate({
+        where: {
+            Name: "Jane Doe",
+            Phone: "01123456789",
+            Title: "MRI Technician",
+            Password: "password",
+            isAdmin: false,
+            DepartmentId: 1
+        }
     });
     req.flash("success", "Added Device Successfully");
     res.redirect("/");
