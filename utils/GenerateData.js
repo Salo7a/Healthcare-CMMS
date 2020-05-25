@@ -195,16 +195,60 @@ module.exports = {
                     }
                 }
             });
-            const newNotification = {
+            const newNotification1 = {
                 Type: 'Daily',
-                Date: new Date()
+                Date: new Date(),
+                DepartmentId : "1"
             };
             Notification.findOne({where:{
-                    Date: new Date()
+                    Date: new Date(),
+                    DepartmentId : "3"
                 }
             }).then((noti) => {
                 if(!noti){
-                    Notification.create(newNotification)
+                    Notification.create(newNotification1)
+                }
+            });
+            const newNotification2 = {
+                Type: 'Daily',
+                Date: new Date(),
+                DepartmentId : "2"
+            };
+            Notification.findOne({where:{
+                    Date: new Date(),
+                    DepartmentId : "2"
+                }
+            }).then((noti) => {
+                if(!noti){
+                    Notification.create(newNotification2)
+                }
+            });
+            const newNotification3 = {
+                Type: 'Daily',
+                Date: new Date(),
+                DepartmentId : "3"
+            };
+            Notification.findOne({where:{
+                    Date: new Date(),
+                    DepartmentId : "3"
+                }
+            }).then((noti) => {
+                if(!noti){
+                    Notification.create(newNotification3)
+                }
+            });
+            const newNotification4 = {
+                Type: 'Daily',
+                Date: new Date(),
+                DepartmentId : "4"
+            };
+            Notification.findOne({where:{
+                    Date: new Date(),
+                    DepartmentId : "4"
+                }
+            }).then((noti) => {
+                if(!noti){
+                    Notification.create(newNotification4)
                 }
             });
             WorkOrder.findAll().then(orders=>{
