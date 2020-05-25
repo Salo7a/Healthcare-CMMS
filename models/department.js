@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) =>
 {
     const Department = sequelize.define('Department', {
         // attributes
-        Name: DataTypes.STRING
+        Name: {
+            type: DataTypes.STRING,
+            unique: true
+        }
     }, {});
     
     Department.associate = function (models) {
