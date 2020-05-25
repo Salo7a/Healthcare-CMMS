@@ -28,15 +28,15 @@
                 <% device.forEach(dev => { %>
                     <tr>
                         <td><%= dev.Name%></td>
-                        <td><input class="form-check-input" name="removed" type="checkbox"></td>
-                        <td><input class="form-check-input" name="cracks" type="checkbox"></td>
-                        <td> <input class="form-check-input" name="broken" type="checkbox"> </td>
-                        <td><input class="form-check-input" name="damage" type="checkbox"></td>
-                        <td> <input class="form-check-input" name="spare" type="checkbox"> </td>
-                        <td><input class="form-check-input" name="broken_cable" type="checkbox"> </td>
-                        <td><input class="form-check-input" name="damage_cable" type="checkbox"> </td>
-                        <td> <input class="form-check-input" name="spare_cable" type="checkbox"></td>
-                        <td> <textarea class="form-control" name="other" rows="2" placeholder="Parts ..."></textarea> </td>
+                        <td><input class="form-check-input" name="removed[]" type="checkbox"></td>
+                        <td><input class="form-check-input" name="cracks[]" type="checkbox"></td>
+                        <td> <input class="form-check-input" name="broken[]" type="checkbox"> </td>
+                        <td><input class="form-check-input" name="damage[]" type="checkbox"></td>
+                        <td> <input class="form-check-input" name="spare[]" type="checkbox"> </td>
+                        <td><input class="form-check-input" name="broken_cable[]" type="checkbox"> </td>
+                        <td><input class="form-check-input" name="damage_cable[]" type="checkbox"> </td>
+                        <td> <input class="form-check-input" name="spare_cable[]" type="checkbox"></td>
+                        <td> <textarea class="form-control" name="other[]" rows="2" placeholder="Parts ..."></textarea> </td>
                     </tr>
                 <%})%>
 
@@ -59,9 +59,12 @@
 
         </form>
     </div>
+    <input type="text" name="type" value="<%= notification.Type %>" hidden>
+
     <div class="card-footer">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+
     <!-- /.card-body -->
 </div>
 
