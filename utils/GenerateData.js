@@ -132,13 +132,31 @@ module.exports = {
         })
     },
     GenerateOrders: async function (req, res, next) {
-        let dailyorder = await WorkOrder.findOrCreate({where:{
+        let dailyorder1 = await WorkOrder.findOrCreate({where:{
             type: "Daily",
-            Date: new Date()
+            DepartmentId: "1",
+            Date: new Date(),
+
         }});
-        let daily = {};
+        let dailyorder2 = await WorkOrder.findOrCreate({where:{
+                type: "Daily",
+                DepartmentId: "2",
+                Date: new Date()
+            }});
+        let dailyorder3 = await WorkOrder.findOrCreate({where:{
+                type: "Daily",
+                DepartmentId: "3",
+                Date: new Date()
+            }});
+        let dailyorder4 = await WorkOrder.findOrCreate({where:{
+                type: "Daily",
+                DepartmentId: "4",
+                Date: new Date()
+            }});
+        let dailyorder = [dailyorder1,dailyorder2,dailyorder3,dailyorder4];
+        let daily = [{},{},{},{}];
         Device.findAll().then(Devices => {
-            let daily = {};
+            let daily = [{},{},{},{}];
             Devices.forEach(device => {
                 console.log(isToday(addDays(new Date(device.LastPPM), device.PPMInterval)));
                 if (isToday(addDays(new Date(device.LastPPM), device.PPMInterval))) {
@@ -164,16 +182,16 @@ module.exports = {
                     })
                 }
                 if (!isToday(parseISO(device.LastDaily))) {
-                    daily[device.id] = {
+                    daily[ device.DepartmentId -1][device.id] = {
                         Name: device.Name,
                         Serial: device.Serial,
                         State: "Pending"
                     };
-                    console.log(dailyorder[1]);
-                    if(dailyorder[1]){
-                        dailyorder[0].daily = daily;
-                        dailyorder[0].Status = "Pending";
-                        dailyorder[0].save();
+                    console.log(dailyorder[ device.DepartmentId -1][1]);
+                    if(dailyorder[ device.DepartmentId -1][1]){
+                        dailyorder[ device.DepartmentId -1][0].daily = daily[ device.DepartmentId -1];
+                        dailyorder[ device.DepartmentId -1][0].Status = "Pending";
+                        dailyorder[ device.DepartmentId -1][0].save();
                     }
                 }
             });
