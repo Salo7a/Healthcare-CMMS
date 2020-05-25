@@ -1,18 +1,62 @@
 <% layout('panel') -%>
-<div class="col-md-12">
-    <div class="card card-default">
-        <div class="card-body">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <%= title %>
-                </h3>
-            </div>
-            <div class="row">
-                <!--            Enter Your Content Here-->
-                <script>
-                </script>
-                <!--            Enter Your Content Here-->
-            </div>
+
+<div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-gradient-success">
+        <div class="inner">
+            <h3><%= users %></h3>
+
+            <p>Personnel</p>
         </div>
+        <div class="icon">
+            <i class="fas fa-user-friends"></i>
+        </div>
+        <a href="/indoor/show" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
+<!-- ./col -->
+<div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-gradient-info">
+        <div class="inner">
+            <h3><%= devices %></h3>
+
+            <p>Devices</p>
+        </div>
+        <div class="icon">
+            <i class="fab fa-medapps"></i>
+        </div>
+        <a href="/devices" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+<!-- ./col -->
+<div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-gradient-dark">
+        <div class="inner">
+            <h3><%= inv %></h3>
+
+            <p>Parts</p>
+        </div>
+        <div class="icon">
+            <i class="fas fa-cogs"></i>
+        </div>
+        <a href="/parts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+<!-- ./col -->
+<div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-gradient-maroon">
+        <div class="inner">
+            <h3><%= orders %></h3>
+
+            <p>Work Orders</p>
+        </div>
+        <div class="icon">
+            <i class="fas fa-sticky-note"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+

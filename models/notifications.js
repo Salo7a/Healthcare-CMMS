@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) =>
 {
     const Notification = sequelize.define('Notification', {
         // attributes
-        Type: DataTypes.STRING
+        Type: DataTypes.STRING,
+        Date: DataTypes.DATEONLY
     });
     
     Notification.associate = function (models) {

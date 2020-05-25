@@ -10,7 +10,7 @@ const device = require('../models').Device;
 const notification = require('../models').Notification;
 
 router.get('/', function (req, res, next) {
-    workOrders.findAll().then(WorkOrder=> {
+    workOrders.findAll({include: [departments, device, user]}).then(WorkOrder => {
         res.render('workorder/workorder', {
             title: 'Work list',
             workOrders: WorkOrder
@@ -30,78 +30,106 @@ router.get('/add', isAdmin, (req, res) => {
                     device.findAll().then(
                         device=>{
                             res.render('workorder/addWorkOrder', {
-                                title: 'Add',
+                                title: 'New Work Order',
                                 departments, personnel, device
                             }
-                        )
+                        );
                     });
-                })
+                });
     });
 });
 
 router.post('/order', isAuth, (req, res) =>{
+    console.log("body", req.body)
     notification.findOne({
         include: [device, departments],
         where: {id : req.body.notificationID}
     }).then(
         notification => {
-            console.log("NOT", notification);
-            res.render("workorder/order",{
-                title: "Show All Personnel",
-                notification
-            })
+            device.findAll({
+                where: { DepartmentId : req.user.DepartmentId}
+            }).then( devices => {
+                console.log("NOT", notification);
+                res.render("workorder/order", {
+                    title: notification.Type,
+                    notification,
+                    devices
+                })
+            });
         }
     ).catch((error) => {
         console.log(error.toString());
         res.status(400).send(error)
     });
-})
+});
 
 router.post('/add', isAuth, (req, res) => {
+    console.log(req.body.type);
+    if (req.body.type === 'Daily') {
+        // const newWork = {
+        //     DepartmentId: req.user.DepartmentId,
+        //     UserId: req.user.id,
+        //     type: req.body.type,
+        //     DeviceId: req.body.deviceId,
+        //
+        //     daily : JSON.stringify({
+        //         foreign : req.body.removed,
+        //         cracks : req.body.cracks,
+        //         broken_bat : req.body.broken,
+        //         damage_bat: req.body.damage,
+        //         spare_bat : req.body.spare,
+        //         broken_cable :req.body.broken_cable,
+        //         damage_cable : req.body.damage_cable,
+        //         spare_cable : req.body.spare_cable,
+        //         other : req.body.other
+        //     })
+        // }
+        console.log("asdasd", req.removed);
+    } else {
+        const newWork = {
+            // name: req.body.task,
+            // date: req.body.Date,
 
-    const newWork = {
-        // name: req.body.task,
-        // date: req.body.Date,
+            // DeviceId: req.body.device,
 
-        // DeviceId: req.body.device,
+            DepartmentId: req.user.DepartmentId,
+            UserId: req.user.id,
+            type: req.body.type,
+            DeviceId: req.body.deviceId,
 
-        DepartmentId: req.user.DepartmentId,
-        UserId: req.user.id,
-        type: req.body.type,
-        DeviceId : req.body.deviceId,
+            alert: JSON.stringify({
+                description: req.body.description,
+                action: req.body.action
+            }),
 
-        alert: JSON.stringify({
-            description : req.body.description,
-            action : req.body.action
-        }),
+            ppm: JSON.stringify({
+                clean_dust: req.body.clean_dust,
+                clean_surface: req.body.clean_surface,
+                lubricated: req.body.lubricated,
+                calibrated: req.body.calibrated,
+                desc_replaced: req.body.desc_replaced,
+                desc_adjustments: req.body.desc_adjustments,
+                comments: req.body.comments
+            }),
 
-        ppm :  JSON.stringify({
-            clean_dust : req.body.clean_dust,
-            clean_surface : req.body.clean_surface,
-            lubricated: req.body.lubricated,
-            calibrated : req.body.calibrated,
-            desc_replaced : req.body.desc_replaced,
-            desc_adjustments : req.body.desc_adjustments,
-            comments : req.body.comments
-        }),
+            daily: JSON.stringify({
+                foreign: req.body.removed,
+                cracks: req.body.cracks,
+                broken_bat: req.body.broken,
+                damage_bat: req.body.damage,
+                spare_bat: req.body.spare,
+                broken_cable: req.body.broken_cable,
+                damage_cable: req.body.damage_cable,
+                spare_cable: req.body.spare_cable,
+                other: req.body.other
+            })
+        };
 
-        daily : JSON.stringify({
-            foreign : req.body.removed,
-            cracks : req.body.cracks,
-            broken_bat : req.body.broken,
-            damage_bat: req.body.damage,
-            spare_bat : req.body.spare,
-            broken_cable :req.body.broken_cable,
-            damage_cable : req.body.damage_cable,
-            spare_cable : req.body.spare_cable,
-            other : req.body.other
-        })
-    };
-
-    workOrders.create(newWork).then(result => {
-        req.flash("success", "Added New Work Order Successfully");
-        res.redirect("/");
-    });
+        workOrders.create(newWork).then(result => {
+            req.flash("success", "Added New Work Order Successfully");
+            res.redirect("/");
+        });
+    }
 });
 
 module.exports = router;

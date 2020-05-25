@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
         Name: DataTypes.STRING,
         Email: {
             type: DataTypes.STRING,
-            isEmail: true
+            isEmail: true,
+            unique: true
         },
         Phone: DataTypes.STRING,
         Password: DataTypes.STRING,

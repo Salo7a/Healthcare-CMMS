@@ -27,7 +27,7 @@ router.post('/', isAdmin, (req, res) => {
         isAdmin : false,
         DepartmentId : req.body.department
     }).then( result => {
-        req.flash("Success", "Added new Person");
+        req.flash("Success", "Added New Person");
         res.redirect("/indoor");
     });
 });
@@ -46,7 +46,7 @@ router.get('/', isAdmin, (req, res) => {
         departments =>{
             console.log(departments);
             res.render('indoor/indoor', {
-                title: 'Indoor View',
+                title: 'Add User',
                 departments
             });
         }

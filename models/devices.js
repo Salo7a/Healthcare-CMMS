@@ -1,5 +1,6 @@
 'use strict';
 const models = require('../models');
+const Department = require('../models').Department;
 module.exports = (sequelize, DataTypes) =>
 {
     const Device = sequelize.define('Device', {
@@ -18,7 +19,7 @@ module.exports = (sequelize, DataTypes) =>
         LastPPM: DataTypes.DATE,
         PPMInterval: DataTypes.NUMBER
     });
-    
+
     Device.associate = function (models) {
         // associations can be defined here
         Device.hasMany(models.WorkOrder);
@@ -26,6 +27,14 @@ module.exports = (sequelize, DataTypes) =>
         Device.hasMany(models.Parts);
         Device.hasMany(models.Notification);
     };
-    
+    Device.getDepartmentCount = () => Device.findAll({
+        include: Department,
+        attributes: ['DepartmentId', [sequelize.fn('count', sequelize.col('DepartmentId')), 'count']],
+        group: ['DepartmentId'],
+        raw: true,
+        order: sequelize.literal('count DESC')
+    }).then(re => {
+        console.log(re)
+    });
     return Device;
 };

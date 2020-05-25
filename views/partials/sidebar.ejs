@@ -24,38 +24,40 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <% if(user.isAdmin) { %>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user-shield"></i>
-                            <p>
-                                Admin
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/indoor/show" class="nav-link">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>
-                                        Users List
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/indoor" class="nav-link">
-                                    <i class="nav-icon fas fa-user-plus"></i>
-                                    <p>
-                                        Add User
-                                    </p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="nav-item has-treeview <% if (title === 'Add User' || title === 'Show All Personnel') { %>menu-open<% } %>">
+                    <a href="#"
+                       class="nav-link <% if (title === 'Add User' || title === 'Show All Personnel') { %>active<% } %>">
+                        <i class="nav-icon fas fa-user-shield"></i>
+                        <p>
+                            Admin
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item ">
+                            <a href="/indoor/show"
+                               class="nav-link <% if (title === 'Show All Personnel') { %>active<% } %>">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Users List
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/indoor" class="nav-link <% if (title === 'Add User') { %>active<% } %>">
+                                <i class="nav-icon fas fa-user-plus"></i>
+                                <p>
+                                    Add User
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <% } %>
 
                 <!--  Devices Link  -->
                 <li class="nav-item">
-                    <a href="/devices" class="nav-link">
+                    <a href="/devices" class="nav-link <% if (title === 'Devices List') { %>active<% } %>">
                         <i class="fas fa-stethoscope nav-icon "></i>
                         <p>Devices</p>
                     </a>
@@ -63,7 +65,7 @@
 
                 <!--  Departments Link  -->
                 <li class="nav-item">
-                    <a href="/departments" class="nav-link">
+                    <a href="/departments" class="nav-link <% if (title === 'Departments List') { %>active<% } %>">
                         <i class="fas fa-building nav-icon "></i>
                         <p>Departments</p>
                     </a>
@@ -71,42 +73,43 @@
 
                 <!--  Individuals Link  -->
                 <% if (!user.isAdmin) { %>
-                    <li class="nav-item">
-                        <a href="/indoor/show" class="nav-link">
-                            <i class="fas fa-users nav-icon "></i>
-                            <p>Individuals</p>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="/indoor/show" class="nav-link <% if (title === 'Show All Personnel') { %>active<% } %>">
+                        <i class="fas fa-users nav-icon "></i>
+                        <p>Individuals</p>
+                    </a>
+                </li>
                 <% } %>
 
                 <!--  Parts Link  -->
                 <li class="nav-item">
-                    <a href="/parts" class="nav-link">
+                    <a href="/parts" class="nav-link <% if (title === 'Parts List') { %>active<% } %>">
                         <i class="fas fa-microchip nav-icon"></i>
                         <p>Parts</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/workorder" class="nav-link">
+                    <a href="/workorder" class="nav-link <% if (title === 'Work list') { %>active<% } %>">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>Work Order</p>
                     </a>
                 </li>
 
                 <!--  Add WorkOrder  -->
-                <% if (!user.isAdmin) { %>
-                    <li class="nav-item">
-                        <a href="/workorder/add" class="nav-link">
-                            <i class="fas fa-file-medical nav-icon"></i>
-                            <p>Add Work Order</p>
-                        </a>
-                    </li>
+                <% if (user.isAdmin) { %>
+                <li class="nav-item">
+                    <a href="/workorder/add" class="nav-link <% if (title === 'New Work Order') { %>active<% } %>">
+                        <i class="fas fa-file-medical nav-icon"></i>
+                        <p>Add Work Order</p>
+                    </a>
+                </li>
                 <% } %>
 
                 <!--  Reports Link  -->
                 <li class="nav-item">
-                    <a href="/reports/createReport" class="nav-link">
+                    <a href="/reports/createReport"
+                       class="nav-link <% if (title === 'Reports Extraction') { %>active<% } %>">
                         <i class="fas fa-file nav-icon"></i>
                         <p>Reports</p>
                     </a>

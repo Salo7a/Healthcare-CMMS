@@ -105,8 +105,6 @@
 <!--                            <span class="float-right text-muted text-sm">12 hours</span>-->
 <!--                        </a>-->
                         <% for (var i = 0; i < nLength; i++) { %>
-                            <% console.log(`udId ${user.DepartmentId}, ndID ${notifications[i].DepartmentId}`) %>
-                            <% if (user.isAdmin || user.DepartmentId === notifications[i].DepartmentId) { %>
                                 <div class="dropdown-divider"></div>
                                     <form action="/workorder/order" method="post">
                                         <input type="text" name="notificationID" value="<%= notifications[i].id %>" hidden>
@@ -120,7 +118,8 @@
                                             %>
                                             <span class="float-right text-muted text-sm"><%= dateTime %></span><br>
                                             <span class="float-left text-muted text-sm">
-                                                Department: <%= notifications[i].Department.Name %>
+                                                <% if( notifications[i].Type !== 'Daily') { %>
+                                                    Department: <%= notifications[i].Department.Name %>
                                             </span><br>
                                             <span class="float-left text-muted text-sm">
                                                 Device: <%= notifications[i].Device.Name %>
@@ -128,17 +127,21 @@
                                             <span class="float-left text-muted text-sm">
                                                 Serial: <%= notifications[i].Device.Serial %>
                                             </span><br>
+                                            <% }else { %>
+                                                <span class="float-left text-muted text-sm">
+                                                Don't Forget The Daily Checkup!
+                                            </span><br>
+                                            <% } %>
                                         </button>
                                     </form>
-                                <div class="dropdown-divider"></div>
-                            <% } %>
+                            <div class="dropdown-divider"></div>
                         <% } %>
-<!--                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>-->
+                        <!--                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>-->
                     </div>
                 </li>
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">-->
-<!--                <i class="fas fa-th-large"></i></a>-->
+        <!--        <li class="nav-item">-->
+        <!--            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">-->
+        <!--                <i class="fas fa-th-large"></i></a>-->
 <!--        </li>-->
     </ul>
 </nav>

@@ -12,7 +12,7 @@ const helmet = require('helmet');
 const Device = require('./models').Device;
 const Department = require('./models').Department;
 const Notification = require('./models').Notification;
-
+const {Op} = require('sequelize');
 let passportConfig = require('./config/passport');
 
 const workorderRouter = require('./routes/workorder');
@@ -75,7 +75,8 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
 });
-
+// GenerateDates();
+// GenerateOrders();
 // Middleware for notifications
 app.use(function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -89,7 +90,7 @@ app.use(function (req, res, next) {
         } else {
             Notification.findAndCountAll({
                 where: {
-                    DepartmentId: req.user.DepartmentId
+                    DepartmentId: {[Op.or]: [req.user.DepartmentId, null]}
                 }, include: [Device, Department]
             })
                 .then(notifications => {
