@@ -6,6 +6,7 @@ const Device = require('../models').Device;
 const Department = require('../models').Department;
 const Persons = require("../models").Indoor;
 const Notification = require("../models").Notification;
+const Parts = require("../models").Parts;
 
 const { NotAuth, isAuth } = require('../utils/filters');
 const { check, validationResult, body } = require('express-validator');

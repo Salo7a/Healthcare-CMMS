@@ -2,6 +2,7 @@ const User = require('../models').User;
 const Device = require('../models').Device;
 const Department = require('../models').Department;
 const Indoor = require("../models").Indoor;
+const Parts = require("../models").Parts;
 const WorkOrder = require("../models").WorkOrder;
 const WorkQueue = require("../models").WorkQueue;
 const Notification = require('../models').Notification;
@@ -96,6 +97,25 @@ module.exports = {
                 })
             });
         });
+        fs.readFile("routes/partsData.csv", async (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            let parts;
+            parts = await neatCsv(data);
+            console.log(parts);
+            parts.forEach(part => {
+                Parts.create({
+                    Type: part.type,
+                    Model: part.model,
+                    Quantity: part.quantity,
+                    Price: part.price,
+                    InstallationDate: part.installationDate,
+                    DeviceId: part.devID
+                });
+            });
+        });
+    
     },
     GenerateDates: function (req, res, next) {
         Device.findAll().then(Devices => {
