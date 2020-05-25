@@ -69,7 +69,8 @@ router.post('/add', isAuth, (req, res) => {
         workOrders.findOne({
             where:{
                 Date: new Date(),
-                Type: "Daily"
+                Type: "Daily",
+                DepartmentId: req.user.DepartmentId
             }
         }).then(order=> {
             let daily = order.daily;
@@ -94,6 +95,14 @@ router.post('/add', isAuth, (req, res) => {
             order.State = 'Done';
             order.save();
             req.flash("success", "Added New Work Order Successfully");
+
+            notification.findOne({
+                where: {
+                    DepartmentId : req.user.DepartmentId
+                }
+            }).then(result =>{
+                result.destroy();
+            });
             res.redirect("/");
         });
     }else {
@@ -102,6 +111,7 @@ router.post('/add', isAuth, (req, res) => {
             UserId: req.user.id,
             type: req.body.type,
             DeviceId: req.body.deviceId,
+            State: "Done",
             alert: JSON.stringify({
                 description: req.body.description,
                 action: req.body.action
@@ -130,9 +140,20 @@ router.post('/add', isAuth, (req, res) => {
                 other: req.body.other
             })
         };
-        workOrders.create(newWork).then(result => {
+        workOrders.create(newWork).then(z => {
             req.flash("success", "Added New Work Order Successfully");
             res.redirect("/");
+            console.log("asdasd");
+
+            notification.findOne({
+                where:{
+                    DeviceId : req.body.deviceId,
+                    
+                }}).then(result => {
+                console.log("Found", result );
+                result.destroy();
+            });
+
         });
     }
     console.log("ssssss",req.body.department);
@@ -140,7 +161,6 @@ router.post('/add', isAuth, (req, res) => {
         const newWork = {
             // name: req.body.task,
             Date: req.body.Date,
-
             DepartmentId: req.body.department,
             UserId: req.user.id,
             type: req.body.type,
