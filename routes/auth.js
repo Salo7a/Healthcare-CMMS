@@ -36,6 +36,7 @@ router.get('/login', NotAuth, function (req, res, next) {
 });
 router.get('/test', NotAuth, function (req, res, next) {
     try {
+        AddTestData();
         GenerateDates();
         GenerateOrders();
         req.flash("success", "Data Generated Successfully");
