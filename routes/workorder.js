@@ -24,6 +24,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/add', isAdmin, (req, res) => {
+
     departments.findAll().then( departments =>{
         personnel.findAll().then(personnel=> {
             device.findAll().then(device=>{
@@ -70,30 +71,49 @@ router.post('/add', isAuth, (req, res) => {
                 Date: new Date(),
                 Type: "Daily"
             }
-        }).then(order=>{
-            let daily = order.daily
-            let devs = Object.keys(daily) ;
+        }).then(order=> {
+            let daily = order.daily;
+            let devs = Object.keys(daily);
             let target = ["removed", "cracks", "broken", "damage", "spare", "broken_cable", "damage_cable",
-                "spare_cable" , "other"];
-            let keys = Object.keys(req.body) ;
+                "spare_cable", "other"];
+            let keys = Object.keys(req.body);
             console.log(daily);
 
-            keys.forEach(key =>{
-                if(target.includes(key)){
-                    let checked = req.body[key];
-                    devs.forEach(dev => {
-                        if(checked.includes(dev)){
-                            daily[dev][key] = "Checked";
-                        }
-                    })
-                }
-            })
-            order.daily = daily
-            order.save()
+            workOrders.create(newWork).then(result => {
+                keys.forEach(key => {
+                    if (target.includes(key)) {
+                        let checked = req.body[key];
+                        devs.forEach(dev => {
+                            if (checked.includes(dev)) {
+                                daily[dev][key] = "Checked";
+                            }
+                        })
+                    }
+                });
+                order.daily = daily;
+                order.State = 'Done';
+                order.save();
+                req.flash("success", "Added New Work Order Successfully");
+                res.redirect("/");
+            });
+        });
+    }
+        console.log("ssssss",req.body.department);
+    if (req.body.type === 'normal') {
+        const newWork = {
+            // name: req.body.task,
+            Date: req.body.Date,
+
+            DepartmentId: req.body.department,
+            UserId: req.user.id,
+            type: req.body.type,
+            DeviceId: req.body.device,
+        };
+        workOrders.create(newWork).then(result => {
             req.flash("success", "Added New Work Order Successfully");
             res.redirect("/");
         });
-    } else {
+    }else {
         const newWork = {
             DepartmentId: req.user.DepartmentId,
             UserId: req.user.id,

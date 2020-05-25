@@ -7,7 +7,6 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <!-- /.card-header -->
-
                     <!-- form start -->
                     <form role="form" action="/workorder/add" method="post">
                         <div class="card-body">
@@ -46,13 +45,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="Date">Date</label>
-                                <input type="date" class="form-control" name="Date" placeholder="Deadline Date">
+                                <input type="date" class="form-control" name="Date" placeholder="Deadline Date" min="2020-05-26">
                             </div>
                         </div>
 
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <input type="hidden" name="WQclass" value="normal">
+                            <input type="hidden" name="type" value="normal">
                             <button type="submit" class="btn btn-primary">Submit Task</button>
                         </div>
                     </form>
