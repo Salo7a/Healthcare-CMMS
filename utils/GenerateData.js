@@ -122,22 +122,25 @@ module.exports = {
             Devices.forEach(device => {
                 console.log(isToday(addDays(new Date(device.LastPPM), device.PPMInterval)));
                 if (isToday(addDays(new Date(device.LastPPM), device.PPMInterval))) {
-                    console.log('PPM');
-                    WorkOrder.create({
-                        type: "PPM",
-                        State: "Pending",
-                        DepartmentId: device.DepartmentId,
-                        DeviceId: device.id,
-                        Date: new Date()
+                    WorkOrder.findOrCreate({
+                        where: {
+                            type: "PPM",
+                            State: "Pending",
+                            DepartmentId: device.DepartmentId,
+                            DeviceId: device.id,
+                            Date: new Date()
+                        }
                     })
                 }else if(isBefore(addDays(new Date(device.LastPPM), device.PPMInterval), new Date()))
                 {
-                    WorkOrder.create({
-                        type: "PPM",
-                        State: "Completed",
-                        DepartmentId: device.DepartmentId,
-                        DeviceId: device.id,
-                        Date: new Date(addDays(new Date(device.LastPPM), device.PPMInterval))
+                    WorkOrder.findOrCreate({
+                        where: {
+                            type: "PPM",
+                            State: "Completed",
+                            DepartmentId: device.DepartmentId,
+                            DeviceId: device.id,
+                            Date: addDays(new Date(device.LastPPM), device.PPMInterval)
+                        }
                     })
                 }
                 if (!isToday(parseISO(device.LastDaily))) {
