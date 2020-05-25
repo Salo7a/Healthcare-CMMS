@@ -77,39 +77,22 @@ router.post('/add', isAuth, (req, res) => {
             let target = ["removed", "cracks", "broken", "damage", "spare", "broken_cable", "damage_cable",
                 "spare_cable", "other"];
             let keys = Object.keys(req.body);
-            console.log(daily);
+            console.log("ASdasd", daily);
 
-            workOrders.create(newWork).then(result => {
-                keys.forEach(key => {
-                    if (target.includes(key)) {
-                        let checked = req.body[key];
-                        devs.forEach(dev => {
-                            if (checked.includes(dev)) {
-                                daily[dev][key] = "Checked";
-                            }
-                        })
-                    }
-                });
-                order.daily = daily;
-                order.State = 'Done';
-                order.save();
-                req.flash("success", "Added New Work Order Successfully");
-                res.redirect("/");
+            keys.forEach(key => {
+                if (target.includes(key)) {
+                    let checked = req.body[key];
+                    devs.forEach(dev => {
+                        if (checked.includes(dev)) {
+                            daily[dev][key] = "Checked";
+                        }
+                    });
+                }
             });
-        });
-    }
-        console.log("ssssss",req.body.department);
-    if (req.body.type === 'normal') {
-        const newWork = {
-            // name: req.body.task,
-            Date: req.body.Date,
-
-            DepartmentId: req.body.department,
-            UserId: req.user.id,
-            type: req.body.type,
-            DeviceId: req.body.device,
-        };
-        workOrders.create(newWork).then(result => {
+            order.daily = daily;
+            order.UserId = req.user.id;
+            order.State = 'Done';
+            order.save();
             req.flash("success", "Added New Work Order Successfully");
             res.redirect("/");
         });
@@ -126,14 +109,14 @@ router.post('/add', isAuth, (req, res) => {
 
             ppm:
                 JSON.stringify({
-                clean_dust: req.body.clean_dust,
-                clean_surface: req.body.clean_surface,
-                lubricated: req.body.lubricated,
-                calibrated: req.body.calibrated,
-                desc_replaced: req.body.desc_replaced,
-                desc_adjustments: req.body.desc_adjustments,
-                comments: req.body.comments
-            }),
+                    clean_dust: req.body.clean_dust,
+                    clean_surface: req.body.clean_surface,
+                    lubricated: req.body.lubricated,
+                    calibrated: req.body.calibrated,
+                    desc_replaced: req.body.desc_replaced,
+                    desc_adjustments: req.body.desc_adjustments,
+                    comments: req.body.comments
+                }),
 
             daily: JSON.stringify({
                 foreign: req.body.removed,
@@ -146,6 +129,22 @@ router.post('/add', isAuth, (req, res) => {
                 spare_cable: req.body.spare_cable,
                 other: req.body.other
             })
+        };
+        workOrders.create(newWork).then(result => {
+            req.flash("success", "Added New Work Order Successfully");
+            res.redirect("/");
+        });
+    }
+    console.log("ssssss",req.body.department);
+    if (req.body.type === 'normal') {
+        const newWork = {
+            // name: req.body.task,
+            Date: req.body.Date,
+
+            DepartmentId: req.body.department,
+            UserId: req.user.id,
+            type: req.body.type,
+            DeviceId: req.body.device,
         };
         workOrders.create(newWork).then(result => {
             req.flash("success", "Added New Work Order Successfully");

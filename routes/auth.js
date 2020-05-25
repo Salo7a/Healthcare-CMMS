@@ -32,7 +32,6 @@ function issueToken(user, done) {
 }
 
 router.get('/login', NotAuth, function (req, res, next) {
-    Notification.create({Type: "Daily"});
     res.render('login', {
         title: 'Login'
     });
