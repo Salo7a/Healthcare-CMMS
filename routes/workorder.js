@@ -65,7 +65,7 @@ router.post('/order', isAuth, (req, res) =>{
 });
 
 router.post('/add', isAuth, (req, res) => {
-    console.log(req.body.type);
+    console.log("ssssss",req.body.department);
     if (req.body.WQclass === 'normal') {
         const newWork = {
             // name: req.body.task,
@@ -75,9 +75,9 @@ router.post('/add', isAuth, (req, res) => {
 
             DepartmentId: req.department,
             UserId: req.user.id,
-            type: req.body.type,
-            DeviceId: req.body.device
-        }
+            type: req.body.WQclass,
+            DeviceId: req.body.device,
+        };
         //     DepartmentId: req.user.DepartmentId,
         //     UserId: req.user.id,
         //     type: req.body.type,
@@ -96,8 +96,11 @@ router.post('/add', isAuth, (req, res) => {
         //     })
         // }
         // console.log("asdasd", req.removed);
-    }
-    else {
+        workOrders.create(newWork).then(result => {
+            req.flash("success", "Added New Work Order Successfully");
+            res.redirect("/");
+        });
+    } else {
         const newWork = {
             // name: req.body.task,
             Date: req.body.Date,
