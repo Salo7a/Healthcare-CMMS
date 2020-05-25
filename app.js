@@ -13,7 +13,7 @@ const Device = require('./models').Device;
 const Department = require('./models').Department;
 const Notification = require('./models').Notification;
 const {Op} = require('sequelize');
-
+const {GenerateDates, GenerateOrders, AddTestData, GenerateQueue} = require('../utils/GenerateData');
 let passportConfig = require('./config/passport');
 
 const workorderRouter = require('./routes/workorder');
@@ -76,7 +76,8 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
 });
-
+// GenerateDates();
+// GenerateOrders();
 // Middleware for notifications
 app.use(function (req, res, next) {
     if (req.isAuthenticated()) {
