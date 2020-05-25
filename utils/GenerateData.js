@@ -97,7 +97,7 @@ module.exports = {
                 })
             });
         });
-        fs.readFile("routes/partsData.csv", async (err, data) => {
+        fs.readFile(__dirname + "/partsData.csv", async (err, data) => {
             if (err) {
                 console.log(err);
             }
@@ -105,14 +105,14 @@ module.exports = {
             parts = await neatCsv(data);
             console.log(parts);
             parts.forEach(part => {
-                Parts.create({
+                Parts.findOrCreate({where:{
                     Type: part.type,
                     Model: part.model,
                     Quantity: part.quantity,
                     Price: part.price,
                     InstallationDate: part.installationDate,
                     DeviceId: part.devID
-                });
+                }});
             });
         });
     
