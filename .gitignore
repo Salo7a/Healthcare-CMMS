@@ -112,3 +112,5 @@ dist
 # db
 *.sqlite
 *.sqlite-journal
+
+*.tmp
