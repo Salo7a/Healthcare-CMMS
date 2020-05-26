@@ -222,14 +222,11 @@ module.exports = {
                     if (dailyorder[device.DepartmentId - 1][1]) {
                         dailyorder[device.DepartmentId - 1][0].daily = daily[device.DepartmentId - 1];
                         dailyorder[device.DepartmentId - 1][0].Status = "Pending";
+                        dailyorder[device.DepartmentId - 1][0].save();
                     }
                 }
             }
-            await dailyorder[0][0].save();
-            await dailyorder[1][0].save();
-            await dailyorder[2][0].save();
-            await dailyorder[3][0].save();
-            if (dailyorder[0][1]) {
+
                 const newNotification1 = {
                     Type: 'Daily',
                     Date: new Date(),
@@ -237,6 +234,7 @@ module.exports = {
                 };
                 await Notification.findOne({
                     where: {
+                        Type: 'Daily',
                         Date: new Date(),
                         DepartmentId: "1"
                     }
@@ -244,59 +242,55 @@ module.exports = {
                     if (!noti) {
                         Notification.create(newNotification1)
                     }
-                });
-            }
-            if (dailyorder[1][1]) {
-                const newNotification2 = {
-                    Type: 'Daily',
-                    Date: new Date(),
-                    DepartmentId: "2"
-                };
-                await Notification.findOne({
-                    where: {
+                    const newNotification2 = {
+                        Type: 'Daily',
                         Date: new Date(),
                         DepartmentId: "2"
-                    }
-                }).then((noti) => {
-                    if (!noti) {
-                        Notification.create(newNotification2)
-                    }
+                    };
+                    Notification.findOne({
+                        where: {
+                            Type: 'Daily',
+                            Date: new Date(),
+                            DepartmentId: "2"
+                        }
+                    }).then((noti) => {
+                        if (!noti) {
+                            Notification.create(newNotification2)
+                        }
+                        const newNotification3 = {
+                            Type: 'Daily',
+                            Date: new Date(),
+                            DepartmentId: "3"
+                        };
+                        Notification.findOne({
+                            where: {
+                                Type: 'Daily',
+                                Date: new Date(),
+                                DepartmentId: "3"
+                            }
+                        }).then((noti) => {
+                            if (!noti) {
+                                Notification.create(newNotification3)
+                            }
+                            const newNotification4 = {
+                                Type: 'Daily',
+                                Date: new Date(),
+                                DepartmentId: "4"
+                            };
+                            Notification.findOne({
+                                where: {
+                                    Type: 'Daily',
+                                    Date: new Date(),
+                                    DepartmentId: "4"
+                                }
+                            }).then((noti) => {
+                                if (!noti) {
+                                    Notification.create(newNotification4)
+                                }
+                            });
+                        });
+                    });
                 });
-            }
-            if (dailyorder[2][1]) {
-                const newNotification3 = {
-                    Type: 'Daily',
-                    Date: new Date(),
-                    DepartmentId: "3"
-                };
-                await Notification.findOne({
-                    where: {
-                        Date: new Date(),
-                        DepartmentId: "3"
-                    }
-                }).then((noti) => {
-                    if (!noti) {
-                        Notification.create(newNotification3)
-                    }
-                });
-            }
-            if (dailyorder[3][1]) {
-                const newNotification4 = {
-                    Type: 'Daily',
-                    Date: new Date(),
-                    DepartmentId: "4"
-                };
-                await Notification.findOne({
-                    where: {
-                        Date: new Date(),
-                        DepartmentId: "4"
-                    }
-                }).then((noti) => {
-                    if (!noti) {
-                        Notification.create(newNotification4)
-                    }
-                });
-            }
             WorkOrder.findAll().then(orders => {
                 orders.forEach(async order => {
                     if (isBefore(new Date(order.Date), new Date())) {
