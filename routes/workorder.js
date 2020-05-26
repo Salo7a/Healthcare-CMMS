@@ -106,7 +106,8 @@ router.post('/add', isAuth, (req, res) => {
             });
             res.redirect("/");
         });
-    }else {
+    }
+    if(req.body.type === 'Repair') {
         const newWork = {
             DepartmentId: req.user.DepartmentId,
             Date: new Date(),
