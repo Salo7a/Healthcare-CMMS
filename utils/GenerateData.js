@@ -11,8 +11,8 @@ const random = require('random');
 const fs = require('fs');
 const neatCsv = require('neat-csv');
 module.exports = {
-    AddTestData: function (req, res, next) {
-        User.create({
+    AddTestData: async function (req, res, next) {
+        await User.create({
             Name: "John Doe",
             Email: "admin@clinical.com",
             Phone: "01123456789",
@@ -21,7 +21,7 @@ module.exports = {
             isAdmin: true,
             DepartmentId: 1
         });
-        User.create({
+        await User.create({
             Name: "Jane Doe",
             Email: "technician@clinical.com",
             Phone: "01123456789",
@@ -33,7 +33,7 @@ module.exports = {
 
         const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}];
         for (let i = 0; i < departmentsList.length; i++) {
-            Department.create({
+            await Department.create({
                 Name: Object.keys(departmentsList[i])[0]
             });
         }
@@ -52,7 +52,7 @@ module.exports = {
                 // Return the id of the department
                 const currentDepartment = departmentsList.filter(dep => dep[devicesList[i].Department]);
                 const currentDepID = currentDepartment[0][devicesList[i].Department];
-                Device.create({
+                await Device.create({
                     Name: devicesList[i].Name,
                     Model: devicesList[i].Model,
                     Serial: devicesList[i].Serial,
@@ -67,15 +67,15 @@ module.exports = {
             console.log('Created!')
         });
 
-        fs.readFile(__dirname + "/indoor.csv", async (err, data) => {
+        await fs.readFile(__dirname + "/indoor.csv", async (err, data) => {
             if (err) {
                 console.log(err);
             }
             let indoor;
             indoor = await neatCsv(data);
             console.log(indoor);
-            indoor.forEach(person => {
-                Indoor.create({
+            indoor.forEach( person => {
+                 Indoor.create({
                     firstName: person.firstName,
                     lastName: person.lastName,
                     birthday: person.birthday,
@@ -96,15 +96,15 @@ module.exports = {
                 })
             });
         });
-        fs.readFile(__dirname + "/partsData.csv", async (err, data) => {
+        await fs.readFile(__dirname + "/partsData.csv", async (err, data) => {
             if (err) {
                 console.log(err);
             }
             let parts;
             parts = await neatCsv(data);
             console.log(parts);
-            parts.forEach(part => {
-                Parts.findOrCreate({
+            parts.forEach( part => {
+                 Parts.findOrCreate({
                     where: {
                         Type: part.type,
                         Model: part.model,
@@ -125,13 +125,10 @@ module.exports = {
                 if (!isToday(parseISO(device.LastDaily)) && device.PPMInterval < 365) {
                     device.LastDaily = subDays(parseISO(today), 1)
                 }
-                if (!device.LastPPM) {
-                    let ran = random.int(min = -1, max = 2);
-                    console.log(ran);
-                    device.LastPPM = subDays(parseISO(today), ran + device.PPMInterval);
-                    device.save();
-                }
-
+                let ran = random.int(min = -8, max = 2);
+                console.log(ran);
+                device.LastPPM = subDays(parseISO(today), ran + device.PPMInterval);
+                device.save();
             })
         })
     },
@@ -141,6 +138,7 @@ module.exports = {
                 type: "Daily",
                 DepartmentId: "1",
                 Date: new Date(),
+                State: "Pending"
 
             }
         });
@@ -148,30 +146,33 @@ module.exports = {
             where: {
                 type: "Daily",
                 DepartmentId: "2",
-                Date: new Date()
+                Date: new Date(),
+                State: "Pending"
             }
         });
         let dailyorder3 = await WorkOrder.findOrCreate({
             where: {
                 type: "Daily",
                 DepartmentId: "3",
-                Date: new Date()
+                Date: new Date(),
+                State: "Pending"
             }
         });
         let dailyorder4 = await WorkOrder.findOrCreate({
             where: {
                 type: "Daily",
                 DepartmentId: "4",
-                Date: new Date()
+                Date: new Date(),
+                State: "Pending"
             }
         });
         let dailyorder = [dailyorder1, dailyorder2, dailyorder3, dailyorder4];
-        Device.findAll().then(Devices => {
+        Device.findAll().then(async  Devices => {
             let daily = [{}, {}, {}, {}];
-            Devices.forEach(device => {
+            for (const device of Devices) {
                 console.log(isToday(addDays(new Date(device.LastPPM), device.PPMInterval)));
                 if (isToday(addDays(new Date(device.LastPPM), device.PPMInterval))) {
-                    WorkOrder.findOrCreate({
+                     await WorkOrder.findOrCreate({
                         where: {
                             type: "PPM",
                             State: "Pending",
@@ -179,9 +180,9 @@ module.exports = {
                             DeviceId: device.id,
                             Date: new Date()
                         }
-                    }).then(order => {
+                    }).then(async order => {
                         if (order[1]) {
-                            Notification.create({
+                            await Notification.create({
                                 Type: "PPM",
                                 Date: new Date(),
                                 DepartmentId: device.DepartmentId,
@@ -191,7 +192,7 @@ module.exports = {
                         }
                     })
                 } else if (isBefore(addDays(new Date(device.LastPPM), device.PPMInterval), new Date())) {
-                    WorkOrder.findOrCreate({
+                    await WorkOrder.findOrCreate({
                         where: {
                             type: "PPM",
                             State: "Completed",
@@ -201,7 +202,7 @@ module.exports = {
                         }
                     })
                 } else {
-                    WorkOrder.findOrCreate({
+                    await  WorkOrder.findOrCreate({
                         where: {
                             type: "PPM",
                             State: "Pending",
@@ -221,17 +222,20 @@ module.exports = {
                     if (dailyorder[device.DepartmentId - 1][1]) {
                         dailyorder[device.DepartmentId - 1][0].daily = daily[device.DepartmentId - 1];
                         dailyorder[device.DepartmentId - 1][0].Status = "Pending";
-                        dailyorder[device.DepartmentId - 1][0].save();
                     }
                 }
-            });
+            }
+            await dailyorder[0][0].save();
+            await dailyorder[1][0].save();
+            await dailyorder[2][0].save();
+            await dailyorder[3][0].save();
             if (dailyorder[0][1]) {
                 const newNotification1 = {
                     Type: 'Daily',
                     Date: new Date(),
                     DepartmentId: "1"
                 };
-                Notification.findOne({
+                await Notification.findOne({
                     where: {
                         Date: new Date(),
                         DepartmentId: "1"
@@ -248,7 +252,7 @@ module.exports = {
                     Date: new Date(),
                     DepartmentId: "2"
                 };
-                Notification.findOne({
+                await Notification.findOne({
                     where: {
                         Date: new Date(),
                         DepartmentId: "2"
@@ -265,7 +269,7 @@ module.exports = {
                     Date: new Date(),
                     DepartmentId: "3"
                 };
-                Notification.findOne({
+                await Notification.findOne({
                     where: {
                         Date: new Date(),
                         DepartmentId: "3"
@@ -282,7 +286,7 @@ module.exports = {
                     Date: new Date(),
                     DepartmentId: "4"
                 };
-                Notification.findOne({
+                await Notification.findOne({
                     where: {
                         Date: new Date(),
                         DepartmentId: "4"
@@ -294,10 +298,10 @@ module.exports = {
                 });
             }
             WorkOrder.findAll().then(orders => {
-                orders.forEach(order => {
+                orders.forEach(async order => {
                     if (isBefore(new Date(order.Date), new Date())) {
                         order.Status = 'Completed';
-                        order.save();
+                        await order.save();
                     }
                 })
             })
@@ -312,11 +316,11 @@ module.exports = {
             where: {
                 Date: new Date()
             }
-        }).then(orders => {
+        }).then( orders => {
                 console.log(orders);
-                orders.forEach(order => {
+                orders.forEach(async order => {
                     if (order.type === "PPM") {
-                        Notification.findOne({
+                        await Notification.findOne({
                             where: {
                                 Type: "PPM",
                                 Date: new Date(),
