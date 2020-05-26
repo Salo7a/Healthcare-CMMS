@@ -22,51 +22,34 @@
                 </div>
 
             </div>
-
-            <label> Read The Following And Check The Applied Procedures</label>
+            <div class="row">
+                <label> Read The Following And Check The Applied Procedures</label>
+            </div>
 
             <div class="row">
                 <div class="col-sm-6">
-
                     <div class="form-group">
-                        <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" name="clean_dust" type="checkbox">
                             <label class="form-check-label"> Dust Removal </label>
                         </div>
 
                         <div class="form-check">
-                            <label class="form-check-label"> Surface Cleaning </label>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-check-label"> Lubrication (if Any) </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label"> Calibration </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6">
-
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" name="clean_dust" type="checkbox">
-                        </div>
-
-                        <div class="form-check">
                             <input class="form-check-input" name="clean_surface" type="checkbox" >
+                            <label class="form-check-label"> Surface Cleaning </label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" name="lubricated" type="checkbox">
+                            <label class="form-check-label"> Lubrication (if Any) </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" name="calibrated" type="checkbox">
+                            <label class="form-check-label"> Calibration </label>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <label><i class="far fa-times-circle"></i> State Replaced Parts </label>
                 <textarea class="form-control" name="desc_replaced" rows="3" placeholder="Parts ..."></textarea>
@@ -87,7 +70,7 @@
                 <input type="text" name="name" class="form-control" placeholder="Engineer/Technician ..." value="<%= user.Name %>">
             </div>
             <input type="text" name="type" value="<%= notification.Type %>" hidden>
-            <input type="text" name="device" value="<%= notification.Device.id %>" hidden>
+            <input type="text" name="deviceId" value="<%= notification.Device.id %>" hidden>
 
             <!-- /.card-body -->
             <div class="card-footer">
