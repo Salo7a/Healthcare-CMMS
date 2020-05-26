@@ -4,7 +4,6 @@ const Department = require('../models').Department;
 const Indoor = require("../models").Indoor;
 const Parts = require("../models").Parts;
 const WorkOrder = require("../models").WorkOrder;
-const WorkQueue = require("../models").WorkQueue;
 const Notification = require('../models').Notification;
 const {Op} = require('sequelize');
 const {format, formatDistance, subDays, addDays, isToday, endOfDay, parseISO, isBefore} = require('date-fns');
