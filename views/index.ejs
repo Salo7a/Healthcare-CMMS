@@ -162,8 +162,8 @@
             options: donutOptions
         })
         var DepAlertChartCanvas = $('#DepAlert').get(0).getContext('2d')
-        let labels = []
-        let data = []
+        let labels = [];
+        let data = [];
         <% DepAlert.forEach(al=>{ %>
         labels.push("<%=al.Name %>")
         data.push(<%=al.count %>)
@@ -187,8 +187,8 @@
         })
     })
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-    let labels2 = []
-    let data2 = []
+    let labels2 = [];
+    let data2 = [];
     <% DepTime.forEach(al=>{ %>
     labels2.push("<%=al.Date %>")
     data2.push(<%=al.count %>)
