@@ -124,10 +124,14 @@ module.exports = {
                 if (!isToday(parseISO(device.LastDaily)) && device.PPMInterval < 365) {
                     device.LastDaily = subDays(parseISO(today), 1)
                 }
-                let ran = random.int(min = -1, max = 2);
-                console.log(ran);
-                device.LastPPM = subDays(parseISO(today), ran + device.PPMInterval);
-                device.save();
+                if (!device.LastPPM)
+                {
+                    let ran = random.int(min = -1, max = 2);
+                    console.log(ran);
+                    device.LastPPM = subDays(parseISO(today), ran + device.PPMInterval);
+                    device.save();
+                }
+
             })
         })
     },
@@ -154,7 +158,6 @@ module.exports = {
                 Date: new Date()
             }});
         let dailyorder = [dailyorder1,dailyorder2,dailyorder3,dailyorder4];
-        let daily = [{},{},{},{}];
         Device.findAll().then(Devices => {
             let daily = [{},{},{},{}];
             Devices.forEach(device => {
@@ -181,6 +184,17 @@ module.exports = {
                         }
                     })
                 }
+                else {
+                    WorkOrder.findOrCreate({
+                        where: {
+                            type: "PPM",
+                            State: "Pending",
+                            DepartmentId: device.DepartmentId,
+                            DeviceId: device.id,
+                            Date: addDays(new Date(device.LastPPM), device.PPMInterval)
+                        }
+                    })
+                }
                 if (!isToday(parseISO(device.LastDaily))) {
                     daily[ device.DepartmentId -1][device.id] = {
                         Name: device.Name,
@@ -195,62 +209,73 @@ module.exports = {
                     }
                 }
             });
-            const newNotification1 = {
-                Type: 'Daily',
-                Date: new Date(),
-                DepartmentId : "1"
-            };
-            Notification.findOne({where:{
+            if (dailyorder[0][1]){
+                const newNotification1 = {
+                    Type: 'Daily',
                     Date: new Date(),
-                    DepartmentId : "3"
-                }
-            }).then((noti) => {
-                if(!noti){
-                    Notification.create(newNotification1)
-                }
-            });
-            const newNotification2 = {
-                Type: 'Daily',
-                Date: new Date(),
-                DepartmentId : "2"
-            };
-            Notification.findOne({where:{
+                    DepartmentId : "1"
+                };
+                Notification.findOne({where:{
+                        Date: new Date(),
+                        DepartmentId : "1"
+                    }
+                }).then((noti) => {
+                    if(!noti){
+                        Notification.create(newNotification1)
+                    }
+                });
+            }
+            if (dailyorder[1][1]) {
+                const newNotification2 = {
+                    Type: 'Daily',
                     Date: new Date(),
-                    DepartmentId : "2"
-                }
-            }).then((noti) => {
-                if(!noti){
-                    Notification.create(newNotification2)
-                }
-            });
-            const newNotification3 = {
-                Type: 'Daily',
-                Date: new Date(),
-                DepartmentId : "3"
-            };
-            Notification.findOne({where:{
+                    DepartmentId: "2"
+                };
+                Notification.findOne({
+                    where: {
+                        Date: new Date(),
+                        DepartmentId: "2"
+                    }
+                }).then((noti) => {
+                    if (!noti) {
+                        Notification.create(newNotification2)
+                    }
+                });
+            }
+            if (dailyorder[2][1]) {
+                const newNotification3 = {
+                    Type: 'Daily',
                     Date: new Date(),
-                    DepartmentId : "3"
-                }
-            }).then((noti) => {
-                if(!noti){
-                    Notification.create(newNotification3)
-                }
-            });
-            const newNotification4 = {
-                Type: 'Daily',
-                Date: new Date(),
-                DepartmentId : "4"
-            };
-            Notification.findOne({where:{
+                    DepartmentId: "3"
+                };
+                Notification.findOne({
+                    where: {
+                        Date: new Date(),
+                        DepartmentId: "3"
+                    }
+                }).then((noti) => {
+                    if (!noti) {
+                        Notification.create(newNotification3)
+                    }
+                });
+            }
+            if (dailyorder[3][1]) {
+                const newNotification4 = {
+                    Type: 'Daily',
                     Date: new Date(),
-                    DepartmentId : "4"
-                }
-            }).then((noti) => {
-                if(!noti){
-                    Notification.create(newNotification4)
-                }
-            });
+                    DepartmentId: "4"
+                };
+                Notification.findOne({
+                    where: {
+                        Date: new Date(),
+                        DepartmentId: "4"
+                    }
+                }).then((noti) => {
+                    if (!noti) {
+                        Notification.create(newNotification4)
+                    }
+                });
+            }
             WorkOrder.findAll().then(orders=>{
                 orders.forEach(order=>{
                     if(isBefore(new Date(order.Date), new Date())){
@@ -263,5 +288,32 @@ module.exports = {
     },
     GenerateQueue: function (req, res, next) {
         next();
+    },
+    GenerateNotifications: function (req, res, next) {
+        WorkOrder.findAll({where:{
+            Date: new Date()
+            }}).then(order=>{
+                if (order.type === "PPM")
+                {
+                    Notification.findOne({where:{
+                            Type: "PPM",
+                            Date: new Date(),
+                            DepartmentId :order.DepartmentId,
+                            DeviceId: order.DeviceId,
+                            WorkOrderId: order.id
+                        }
+                    }).then((noti) => {
+                        if(!noti){
+                            Notification.create({
+                                Type: "PPM",
+                                Date: new Date(),
+                                DepartmentId :order.DepartmentId,
+                                DeviceId: order.DeviceId,
+                                WorkOrderId: order.id
+                            })
+                        }
+                    });
+                }
+        })
     }
 };
