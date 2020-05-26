@@ -32,7 +32,7 @@ router.get('/createReport', isAuth, (req, res, next) => {
 router.post("/report", isAuth, (req, res)=>{
     console.log("The Type is ", req.body.reportsMenu);
     if (req.body.devicesMenu === "all"){
-        console.log("ALL")
+        console.log("ALL");
         models.WorkOrder.findAll({
             include: [Device, Department, models.User],
             where: {

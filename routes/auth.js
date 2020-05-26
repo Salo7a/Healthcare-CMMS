@@ -61,6 +61,41 @@ router.get('/noti', function (req, res, next) {
 
     res.redirect('/auth/login');
 });
+router.get('/randomorders', function (req, res, next) {
+    try {
+        GenerateDates();
+        GenerateOrders();
+        req.flash("success", "Orders Generated Successfully");
+    } catch (e) {
+        req.flash("error", "An error occurred while generating data");
+        console.log(e);
+    }
+
+    res.redirect('/auth/login');
+});
+router.get('/orders', function (req, res, next) {
+    try {
+
+        GenerateOrders();
+        req.flash("success", "Orders Generated Successfully");
+    } catch (e) {
+        req.flash("error", "An error occurred while generating data");
+        console.log(e);
+    }
+
+    res.redirect('/auth/login');
+});
+router.get('/dates', function (req, res, next) {
+    try {
+        GenerateDates();
+        req.flash("success", "Dates Generated Successfully");
+    } catch (e) {
+        req.flash("error", "An error occurred while generating data");
+        console.log(e);
+    }
+
+    res.redirect('/auth/login');
+});
 router.post('/login', NotAuth, passport.authenticate('local', {
     failureRedirect: '/auth/login',
     failureFlash: true
