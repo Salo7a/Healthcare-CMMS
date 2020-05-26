@@ -121,8 +121,7 @@ router.post('/add', isAuth, (req, res) => {
             res.redirect("/");
         });
     }
-    if(req.body.type === 'Repair') {
-        console.log(req.body);
+    if(req.body.type === 'Repair' || req.body.type === "PPM" ) {
         const newWork = {
             DepartmentId: req.body.Department,
             Date: new Date(),
