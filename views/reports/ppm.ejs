@@ -27,7 +27,12 @@
                     <tr>
                         <td><%= rep.Device.Name %>                   </td>
                         <td><%= rep.Department.Name %>               </td>
-                        <td><%= rep.User.Name %>                     </td>
+                        <% if (rep.User) {%>
+                            <td><%= rep.User.Name %>                 </td>
+                       <% }else{%>
+                            <td>Any</td>
+                            <%}%>
+                        <%if (rep.ppm) {%>
                         <td><%= Boolean(JSON.parse(rep.ppm).clean_dust) %> </td>
                         <td><%= Boolean(JSON.parse(rep.ppm).clean_surface) %>       </td>
                         <td><%= Boolean(JSON.parse(rep.ppm).lubricated) %>       </td>
@@ -35,6 +40,17 @@
                         <td><%= JSON.parse(rep.ppm).desc_replaced %>       </td>
                         <td><%= JSON.parse(rep.ppm).desc_adjustments %>       </td>
                         <td><%= JSON.parse(rep.ppm).comments %>       </td>
+                        <%} else{%>
+                            <td><%=true%></td>
+                            <td><%=true%></td>
+                            <td><%=true%></td>
+                            <td><%=true%></td>
+                            <td>None</td>
+                            <td>None</td>
+                            <td>None</td>
+
+                        <%}%>
+
                     </tr>
                 <% })%>
 
