@@ -202,7 +202,7 @@ module.exports = {
             };
             Notification.findOne({where:{
                     Date: new Date(),
-                    DepartmentId : "3"
+                    DepartmentId : "1"
                 }
             }).then((noti) => {
                 if(!noti){
