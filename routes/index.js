@@ -23,20 +23,26 @@ router.get('/', isAuth, function (req, res, next) {
                             raw: true,
                             order: sequelize.literal('count DESC')
                         }).then(DepDev => {
+                            console.log("DepDev");
                             console.log(DepDev);
                             WorkOrder.findAll({
                                 include: [Department],
                                 where: {type: 'Repair'},
-                                attributes: ['Department.Name', 'DepartmentId', [sequelize.fn('count', sequelize.col('type')), 'count']],
+                                attributes: ['Department.Name', 'DepartmentId', [sequelize.fn('count', sequelize.col('DepartmentId')), 'count']],
                                 group: ['DepartmentId'],
-                                raw: true
+                                raw: true,
+                                order: sequelize.literal('count DESC')
                             }).then(DepAlert => {
+                                console.log("DepAlert");
+                                console.log(DepAlert);
                                 WorkOrder.findAll({
                                     where: {type: {[Op.ne]: 'Daily'}},
                                     attributes: ['Date', [sequelize.fn('count', sequelize.col('type')), 'count']],
                                     group: ['Date'],
-                                    raw: true
+                                    raw: true,
                                 }).then(DepTime => {
+                                    console.log("DepTime");
+                                    console.log(DepTime);
                                     res.render('index', {
                                         title: 'Home - Extra Cool CMMS',
                                         users, devices, departments, orders, DepDev, DepAlert, DepTime, inv

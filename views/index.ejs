@@ -14,6 +14,20 @@
         <a href="/indoor/show" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
+<div class="col-lg-3 col-6">
+    <!-- small box -->
+    <div class="small-box bg-gradient-navy">
+        <div class="inner">
+            <h3><%= departments %></h3>
+
+            <p>Departments</p>
+        </div>
+        <div class="icon">
+            <i class="fas fa-hospital-alt"></i>
+        </div>
+        <a href="/departments" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+</div>
 <!-- ./col -->
 <div class="col-lg-3 col-6">
     <!-- small box -->
@@ -45,6 +59,26 @@
     </div>
 </div>
 <!-- ./col -->
+
+<div class="col-lg-9 col-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Maintenance Jobs Timeline</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="chart">
+                <canvas id="areaChart" style="min-height: 324px; height: 324px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
 <div class="col-lg-3 col-6">
     <!-- small box -->
     <div class="small-box bg-gradient-maroon">
@@ -59,4 +93,147 @@
         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
+<div class="col-lg-6 col-12">
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Devices Per Department</h3>
 
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    <div class="card-body">
+        <canvas id="DepDev" style="height: 324px;max-width: 100%;"></canvas>
+    </div>
+    <!-- /.card-body -->
+</div>
+</div>
+<div class="col-lg-6 col-12">
+    <div class="card card-danger">
+        <div class="card-header">
+            <h3 class="card-title">Unplanned Maintenance Per Department</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <canvas id="DepAlert" style="height: 324px;max-width: 100%;"></canvas>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+        let colors = ['#d2d6de', '#3c8dbc', '#00c0ef', '#f39c12', '#f56954', '#00a65a' ]
+        let colors1 = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#f39c12']
+        var donutChartCanvas = $('#DepDev').get(0).getContext('2d')
+        let labels1 = []
+        let data1 = []
+        <% DepDev.forEach(al=>{ %>
+        labels1.push("<%=al.Name %>")
+        data1.push(<%=al.count %>)
+        <% })%>
+        var donutData        = {
+            labels:labels1,
+            datasets: [
+                {
+                    data:data1,
+                    backgroundColor : colors1.slice(0, data1.length),
+                }
+            ]
+        }
+        var donutOptions     = {
+            maintainAspectRatio : true,
+            responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var donutChart = new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
+        var DepAlertChartCanvas = $('#DepAlert').get(0).getContext('2d')
+        let labels = []
+        let data = []
+        <% DepAlert.forEach(al=>{ %>
+        labels.push("<%=al.Name %>")
+        data.push(<%=al.count %>)
+        <% })%>
+        var DepAlertData        = {
+            labels: labels,
+            datasets: [
+                {
+                    data: data,
+                    backgroundColor : colors.slice(0, data.length),
+                }
+            ]
+        }
+        console.log(DepAlertData)
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var DepAlertChart = new Chart(DepAlertChartCanvas, {
+            type: 'doughnut',
+            data: DepAlertData,
+            options: donutOptions
+        })
+    })
+    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+    let labels2 = []
+    let data2 = []
+    <% DepTime.forEach(al=>{ %>
+    labels2.push("<%=al.Date %>")
+    data2.push(<%=al.count %>)
+    <% })%>
+    var areaChartData = {
+        labels  : labels2,
+        datasets: [
+            {
+                label               : 'Maintenance Jobs',
+                backgroundColor     : 'rgba(60,141,188,0.5)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointColor          : '#1ed0ff',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data                : data2
+            }
+        ]
+    }
+
+    var areaChartOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        legend: {
+            display: true
+        },
+        scales: {
+            xAxes: [{
+                gridLines : {
+                    display : false,
+                }
+            }],
+            yAxes: [{
+                gridLines : {
+                    display : true,
+                }
+            }]
+        }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    var areaChart       = new Chart(areaChartCanvas, {
+        type: 'line',
+        data: areaChartData,
+        options: areaChartOptions
+    })
+
+</script>
