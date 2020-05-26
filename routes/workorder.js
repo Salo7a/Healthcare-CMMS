@@ -9,19 +9,33 @@ const user = require("../models").User;
 const device = require('../models').Device;
 const notification = require('../models').Notification;
 
-router.get('/', function (req, res, next) {
-    workOrders.findAll({include: [departments, device, user]}).then(WorkOrder => {
-        console.log("ahii",WorkOrder);
-        res.render('workorder/workorder', {
-            title: 'Work list',
-            workOrders: WorkOrder,
-            user: req.user
+router.get('/', isAuth,  (req, res) =>{
+    if (req.user.isAdmin){
+        console.log("Admin");
+        workOrders.findAll({include: [departments, device]}).then(WorkOrder => {
+            res.render('workorder/workorder', {
+                title: 'Work Orders List',
+                workOrders: WorkOrder
+            });
+        }).catch((error) => {
+            console.log(error.toString());
+            res.status(400).send(error)
         });
-    })
-    .catch((error) => {
-        console.log(error.toString());
-        res.status(400).send(error)
-    });
+    }
+    else {
+        console.log("Not Admin");
+        workOrders.findAll({include: [departments, device, user], where:{DepartmentId: req.user.DepartmentId}}).then(WorkOrder => {
+            res.render('workorder/workorder', {
+                title: 'Work Orders list',
+                workOrders: WorkOrder
+            });
+        })
+            .catch((error) => {
+                console.log(error.toString());
+                res.status(400).send(error)
+            });
+    }
+
 });
 
 router.get('/add', isAdmin, (req, res) => {

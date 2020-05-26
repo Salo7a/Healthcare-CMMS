@@ -34,8 +34,8 @@
                             <th>Department</th>
                             <th>PPM Interval</th>
                             <% if (user.isAdmin) { %>
-                                            <th>Delete</th>
-                                        <% } %>
+                                <th>Delete</th>
+                            <% } %>
                             <th data-priority="4">Alert</th>
                         </tr>
                         </thead>
@@ -44,65 +44,65 @@
                         <!-- Table Rows -->
                         <tbody>
                         <% for (var i = 0; i < devices.length; i++) { %>
-                                        <tr>
-                                            <% if (user.isAdmin) { %>
-                                                <td><%= devices[i].Name %></td>
-                                                <td><%= devices[i].Model %></td>
-                                                <td><%= devices[i].Serial %></td>
-                                                <td><%= devices[i].ImportDate %></td>
-                                                <td><%= devices[i].InstallationDate %></td>
-                                                <td><%= devices[i].ScrappingDate %></td>
-                                                <td><%= devices[i].SupplyingCompany %></td>
-                                                <td><%= devices[i].Department.Name %></td>
-                                                <td><%= devices[i].PPMInterval %></td>
-                                                <td>
-                                                    <form action="/devices/delete" method="post">
-                                                        <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
-                                                        <button type="submit" class="btn btn-block btn-danger">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form action="/devices/alert" method="post">
-                                                        <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
-                                                        <button type="submit" class="btn btn-block btn-warning">
-                                                            <i class="fas fa-exclamation-triangle"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            <% } else { %>
-                                                <% console.log('userId ', user.DepartmentId) %>
-                                                <% console.log('depId ', devices[i].DepartmentId) %>
-                                                <% if (user.DepartmentId === devices[i].DepartmentId) { %>
-                                                    <% console.log('Technician ', user.Name) %>
-                                                    <td><%= devices[i].Name %></td>
-                                                    <td><%= devices[i].Model %></td>
-                                                    <td><%= devices[i].Serial %></td>
-                                                    <td><%= devices[i].ImportDate %></td>
-                                                    <td><%= devices[i].InstallationDate %></td>
-                                                    <td><%= devices[i].ScrappingDate %></td>
-                                                    <td><%= devices[i].SupplyingCompany %></td>
-                                                    <td><%= devices[i].Department.Name %></td>
-                                                    <td><%= devices[i].PPMInterval %></td>
-                                                    <td>
-                                                        <form action="/devices/alert" method="post">
-                                                            <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
-                                                            <button type="submit" class="btn btn-block btn-warning">
-                                                                <i class="fas fa-exclamation-triangle"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                <% } %>
-                                            <% } %>
-                                        </tr>
-                                    <% } %>
-                                </tbody>
-                    <!-- /Table Rows -->
-                </table>
-            <% } else { %>
-                <h1>No Devices Found</h1>
-            <% } %>
+                            <% if (user.isAdmin) { %>
+                            <tr>
+
+                                    <td><%= devices[i].Name %></td>
+                                    <td><%= devices[i].Model %></td>
+                                    <td><%= devices[i].Serial %></td>
+                                    <td><%= devices[i].ImportDate %></td>
+                                    <td><%= devices[i].InstallationDate %></td>
+                                    <td><%= devices[i].ScrappingDate %></td>
+                                    <td><%= devices[i].SupplyingCompany %></td>
+                                    <td><%= devices[i].Department.Name %></td>
+                                    <td><%= devices[i].PPMInterval %></td>
+                                    <td>
+                                        <form action="/devices/delete" method="post">
+                                            <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
+                                            <button type="submit" class="btn btn-block btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="/devices/alert" method="post">
+                                            <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
+                                            <button type="submit" class="btn btn-block btn-warning">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                            </tr>
+                                <% } else if(user.DepartmentId === devices[i].DepartmentId()){ %>
+                            <tr>
+                                        <% console.log('Technician ', user.Name) %>
+                                        <td><%= devices[i].Name %></td>
+                                        <td><%= devices[i].Model %></td>
+                                        <td><%= devices[i].Serial %></td>
+                                        <td><%= devices[i].ImportDate %></td>
+                                        <td><%= devices[i].InstallationDate %></td>
+                                        <td><%= devices[i].ScrappingDate %></td>
+                                        <td><%= devices[i].SupplyingCompany %></td>
+                                        <td><%= devices[i].Department.Name %></td>
+                                        <td><%= devices[i].PPMInterval %></td>
+                                        <td>
+                                            <form action="/devices/alert" method="post">
+                                                <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
+                                                <button type="submit" class="btn btn-block btn-warning">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                            </tr>
+
+                                <% } %>
+                        <% } %>
+                        </tbody>
+                        <!-- /Table Rows -->
+                    </table>
+                <% } else { %>
+                    <h1>No Devices Found</h1>
+                <% } %>
             </div>
             <!--            Enter Your Content Here-->
         </div>

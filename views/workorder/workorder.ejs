@@ -11,15 +11,8 @@
 <!--                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>-->
 <!--                    </div>-->
 <!--                </div>-->
-
-
-            </div>
-
             <!-- Main content -->
-            <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body table-responsive p-0">
-                    <table id="work" class="table table-head-fixed text-nowrap">
+                    <table id="work" class="table table-bordered table-striped table-hover">
                         <thead>
                         <tr>
                             <th>Engineer Name</th>
@@ -31,11 +24,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% console.log(user)%>
-                        <% console.log(workOrders.DepartmentId) %>
                         <% for(var i = 0; i < workOrders.length; i++) { %>
                             <tr>
-                                <% if (workOrders[i].DepartmentId === user.DepartmentId) { %>
                                     <% if(workOrders[i].User){ %>
                                     <th><%= workOrders[i].User.Name %></th>
                                     <% }else{ %>
@@ -56,27 +46,24 @@
                                     <th><%= workOrders[i].State %></th>
                                 <% } %>
                             </tr>
-                        <% }%>
                         </tbody>
                     </table>
-
-                </div>
-                <!-- /.card-body -->
-            </div>
             <!-- /.card -->
-            <!--            Enter Your Content Here-->
+            <!--
+                                Enter Your Content Here-->
+        </div>
         </div>
     </div>
-</div>
 <!-- /.content -->
 
-<% block('js').append('<script> $(function () {$("#work").DataTable({\n' +
-
-        '      "paging": true,\n' +
-        '      "lengthChange": true,\n' +
-        '      "searching": true,\n' +
-        '      "ordering": true,\n' +
-        '      "info": true,\n' +
-        '      "autoWidth": false,\n' +
-        '      "responsive": true,\n' +
-        '    });})</script>') %>
+<script> $(function () {
+        $("#work").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    })</script>
