@@ -1,3 +1,4 @@
+<% try { %>
 <section class="invoice">
 
     <!-- Table row -->
@@ -46,3 +47,7 @@
         </div>
     </div>
 </section>
+
+<%} catch (e) {%>
+    <h1>No Results Found </h1>
+<%}%>
