@@ -10,7 +10,7 @@ const Parts = require("../models").Parts;
 
 const { NotAuth, isAuth } = require('../utils/filters');
 const { check, validationResult, body } = require('express-validator');
-const { GenerateDates, GenerateOrders, AddTestData, GenerateQueue } = require('../utils/GenerateData');
+const { GenerateDates, GenerateOrders, AddTestData, GenerateNotifications } = require('../utils/GenerateData');
 const { Op } = require('sequelize');
 const Chance = require('chance');
 // const loadCSVData = require('../utils/loadCSV');
@@ -41,6 +41,18 @@ router.get('/test', function (req, res, next) {
         AddTestData();
         GenerateDates();
         GenerateOrders();
+        GenerateNotifications();
+        req.flash("success", "Data Generated Successfully");
+    } catch (e) {
+        req.flash("error", "An error occurred while generating data");
+        console.log(e);
+    }
+
+    res.redirect('/auth/login');
+});
+router.get('/noti', function (req, res, next) {
+    try {
+        GenerateNotifications();
         req.flash("success", "Data Generated Successfully");
     } catch (e) {
         req.flash("error", "An error occurred while generating data");
