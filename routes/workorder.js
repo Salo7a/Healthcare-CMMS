@@ -165,6 +165,7 @@ router.post('/add', isAuth, (req, res) => {
 
             notification.findOne({
                 where:{
+                    type : req.body.type,
                     DeviceId : req.body.deviceId,
                     
                 }}).then(result => {
