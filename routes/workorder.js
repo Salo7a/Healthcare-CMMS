@@ -113,6 +113,7 @@ router.post('/add', isAuth, (req, res) => {
 
             notification.findOne({
                 where: {
+                    type: "Daily",
                     DepartmentId : req.user.DepartmentId
                 }
             }).then(result =>{
@@ -164,6 +165,7 @@ router.post('/add', isAuth, (req, res) => {
 
             notification.findOne({
                 where:{
+                    type : req.body.type,
                     DeviceId : req.body.deviceId,
                     
                 }}).then(result => {
