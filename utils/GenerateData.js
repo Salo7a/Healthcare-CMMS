@@ -306,6 +306,15 @@ module.exports = {
     },
     GenerateNotifications: function (req, res, next) {
         console.log("Generate Notifications");
+        Notification.findAll({where:{
+            Date: {[Op.ne]: new Date()}
+            }}).then(noti=>{
+                console.log(noti);
+                noti.forEach(notif=>{
+                        notif.destroy();
+                        notif.save();
+                })
+        })
         WorkOrder.findAll({
             where: {
                 Date: new Date()
