@@ -12,6 +12,12 @@ const fs = require('fs');
 const neatCsv = require('neat-csv');
 module.exports = {
     AddTestData: async function (req, res, next) {
+        const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}];
+        for (let i = 0; i < departmentsList.length; i++) {
+            await Department.create({
+                Name: Object.keys(departmentsList[i])[0]
+            });
+        }
         await User.create({
             Name: "John Doe",
             Email: "admin@clinical.com",
@@ -30,13 +36,6 @@ module.exports = {
             isAdmin: false,
             DepartmentId: 1
         });
-
-        const departmentsList = [{"Cardiac Catheterization": 1}, {"Surgery Care": 2}, {"Cardiology": 3}, {"Emergency": 4}];
-        for (let i = 0; i < departmentsList.length; i++) {
-            await Department.create({
-                Name: Object.keys(departmentsList[i])[0]
-            });
-        }
 
         fs.readFile(__dirname + '/DevicesData.csv', async (err, data) => {
             if (err) {
@@ -74,7 +73,7 @@ module.exports = {
             let indoor;
             indoor = await neatCsv(data);
             console.log(indoor);
-            indoor.forEach( person => {
+            await indoor.forEach( person => {
                  Indoor.create({
                     firstName: person.firstName,
                     lastName: person.lastName,
@@ -103,8 +102,8 @@ module.exports = {
             let parts;
             parts = await neatCsv(data);
             console.log(parts);
-            parts.forEach( part => {
-                 Parts.findOrCreate({
+            await parts.forEach( async part => {
+                await Parts.findOrCreate({
                     where: {
                         Type: part.type,
                         Model: part.model,
@@ -119,9 +118,9 @@ module.exports = {
 
     },
     GenerateDates: function (req, res, next) {
-        Device.findAll().then(Devices => {
+        Device.findAll().then(async Devices => {
             let today = endOfDay(new Date()).toISOString();
-            Devices.forEach(device => {
+            await Devices.forEach(device => {
                 if (!isToday(parseISO(device.LastDaily)) && device.PPMInterval < 365) {
                     device.LastDaily = subDays(parseISO(today), 1)
                 }

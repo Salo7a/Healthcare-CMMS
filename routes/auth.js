@@ -36,12 +36,12 @@ router.get('/login', NotAuth, function (req, res, next) {
         title: 'Login'
     });
 });
-router.get('/test', function (req, res, next) {
+router.get('/test', async function (req, res, next) {
     try {
-        AddTestData();
-        GenerateDates();
-        GenerateOrders();
-        GenerateNotifications();
+        await AddTestData();
+        await GenerateDates();
+        await GenerateOrders();
+        await GenerateNotifications();
         req.flash("success", "Data Generated Successfully");
     } catch (e) {
         req.flash("error", "An error occurred while generating data");

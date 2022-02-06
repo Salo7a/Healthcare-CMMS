@@ -14,11 +14,11 @@ router.get('/', isAuth, (req, res) => {
             res.render('parts/index', {
                 title: 'Parts List',
                 parts : parts
-            }).catch((error) => {
-                console.log(error.toString());
-                res.status(400).send(error);
-            });
-        });
+            })
+        }).catch((error) => {
+        console.log(error.toString());
+        res.status(400).send(error);
+    });
 });
 // GET Route Handler for adding a part
 router.get('/add', isAdmin, (req, res) => {

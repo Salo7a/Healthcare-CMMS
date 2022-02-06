@@ -59,28 +59,30 @@ router.get('/', isAuth, function (req, res, next) {
 
 });
 
-router.get('/addtest', function (req, res, next) {
-    User.findOrCreate({
+router.get('/addtest', async function (req, res, next) {
+    await User.findOrCreate({
         where: {
             Name: "John Doe",
             Phone: "01123456789",
+            Email: "admin@clinical.com",
             Title: "Head of Engineering",
             Password: "password",
             isAdmin: true,
             DepartmentId: 1
         }
     });
-    User.findOrCreate({
+    await User.findOrCreate({
         where: {
             Name: "Jane Doe",
             Phone: "01123456789",
+            Email: "technician@clinical.com",
             Title: "MRI Technician",
             Password: "password",
             isAdmin: false,
             DepartmentId: 1
         }
     });
-    req.flash("success", "Added Device Successfully");
+    req.flash("success", "Added Users Successfully");
     res.redirect("/");
 });
 router.get('/readtest', function (req, res, next) {
