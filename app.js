@@ -58,9 +58,7 @@ app.use('/plugins', express.static(path.join(__dirname, 'node_modules/admin-lte/
 //
 // }));
 
-
-//Express Session
-app.use(session({
+const sessionMiddleware = session({
     secret: "keyboard",
     cookie: {maxAge: 60000},
     store: new SequelizeStore({
@@ -68,7 +66,10 @@ app.use(session({
     }),
     resave: false,
     saveUninitialized: false
-}));
+})
+
+//Express Session
+app.use(sessionMiddleware);
 // Auth Middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -91,6 +92,34 @@ app.use(function (req, res, next) {
 });
 
 require('./utils/notifications')(app.io)
+
+// convert a connect middleware to a Socket.IO middleware
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+
+app.io.use(wrap(sessionMiddleware));
+app.io.use(wrap(passport.initialize()));
+app.io.use(wrap(passport.session()));
+
+app.io.use((socket, next) => {
+    if (socket.request.user) {
+        next();
+    } else {
+        next(new Error('unauthorized'))
+    }
+});
+
+app.io.on('connect', (socket) => {
+    console.log(`new connection ${socket.id}`);
+    socket.on('whoami', (cb) => {
+        cb(socket.request.user ? socket.request.user.username : '');
+    });
+
+    const session = socket.request.session;
+    console.log(`saving sid ${socket.id} in session ${session.id}`);
+    session.socketId = socket.id;
+    session.save();
+});
+
 // GenerateDates();
 // GenerateOrders();
 // Middleware for notifications

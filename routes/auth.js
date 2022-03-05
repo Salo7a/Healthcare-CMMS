@@ -406,6 +406,12 @@ router.post('/delete', isAuth, (req, res) => {
 // });
 
 router.get('/logout', isAuth, function (req, res, next) {
+    const socketId = req.session.socketId;
+    if (socketId && req.app.io.of("/").sockets.get(socketId)) {
+        console.log(`forcefully closing socket ${socketId}`);
+        req.app.io.of("/").sockets.get(socketId).disconnect(true);
+    }
+    res.cookie("connect.sid", "", {expires: new Date()});
     res.clearCookie('remember_me');
     req.logout();
     req.flash('success', "You're Logged Out");
