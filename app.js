@@ -13,7 +13,10 @@ const Device = require('./models').Device;
 const Department = require('./models').Department;
 const Notification = require('./models').Notification;
 const {Op} = require('sequelize');
+const socketIo = require("socket.io");
+const io = socketIo();
 let passportConfig = require('./config/passport');
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const workorderRouter = require('./routes/workorder');
 const authRouter = require('./routes/auth');
@@ -26,7 +29,7 @@ const partsRouter = require('./routes/parts');
 const reportsRouter = require('./routes/reports');
 const app = express();
 
-
+app.io = io;
 //Load Environment Variables From .env File
 
 require('dotenv').config();
@@ -44,19 +47,25 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser('keyboard'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/dist', express.static(path.join(__dirname, 'node_modules/admin-lte/dist')));
 app.use('/plugins', express.static(path.join(__dirname, 'node_modules/admin-lte/plugins')));
 //app.use(csrfMiddleware);
-app.use(helmet());
+// app.use(helmet({
+//     contentSecurityPolicy: false,
+//
+// }));
 
 
 //Express Session
 app.use(session({
     secret: "keyboard",
-    cookie: { maxAge: 60000 },
+    cookie: {maxAge: 60000},
+    store: new SequelizeStore({
+        db: db.sequelize,
+    }),
     resave: false,
     saveUninitialized: false
 }));
@@ -75,6 +84,13 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
 });
+
+app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
+
+require('./utils/notifications')(app.io)
 // GenerateDates();
 // GenerateOrders();
 // Middleware for notifications

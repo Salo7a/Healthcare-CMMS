@@ -20,13 +20,13 @@
             <!-- Check length of parts list -->
             <!-- In case we found Parts -->
             <% if (parts.length > 0) { %>
-            <!-- Parts Table -->
-            <div class="card">
+                <!-- Parts Table -->
+                <div class="card">
 
-                <div class="card-body">
-                    <table id="partsTable" class="table table-bordered table-striped">
-                        <!-- Headers -->
-                        <thead>
+                    <div class="card-body">
+                        <table id="partsTable" class="table table-bordered table-striped">
+                            <!-- Headers -->
+                            <thead>
                             <tr>
                                 <th>Type</th>
                                 <th>Model</th>
@@ -35,42 +35,31 @@
                                 <th>Installation Date</th>
                                 <th>Device Name</th>
                                 <th>Device Serial</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <!-- /Headers -->
-
-                        <!-- Table Rows -->
-                        <tbody>
-                            <% for(var i = 0; i < parts.length; i++) { %>
-                            <tr>
                                 <% if (user.isAdmin) { %>
+                                    <th>Delete</th>
+                                <% } %>
+                            </tr>
+                            </thead>
+                            <!-- /Headers -->
+
+                            <!-- Table Rows -->
+                            <tbody>
+                            <% for(var i = 0; i < parts.length; i++) { %>
+                                <tr>
                                     <td><%= parts[i].Type %></td>
                                     <td><%= parts[i].Model %></td>
                                     <td><%= parts[i].Quantity %></td>
                                     <td><%= parts[i].Price %></td>
                                     <td><%= parts[i].InstallationDate %></td>
-                                    <td><%= parts[i].Device.Name %></td>
-                                    <td><%= parts[i].Device.Serial %></td>
-                                    <td>
-                                        <form action="/parts/delete" method="post">
-                                            <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
-                                            <button type="submit" class="btn btn-block btn-danger">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                <% } else { %>
-                                    <% console.log('userId ', user.DepartmentId) %>
-                                    <% console.log('depId ', parts[i].Device.DepartmentId) %>
-                                    <% if (user.DepartmentId === parts[i].Device.DepartmentId) { %>
-                                        <td><%= parts[i].Type %></td>
-                                        <td><%= parts[i].Model %></td>
-                                        <td><%= parts[i].Quantity %></td>
-                                        <td><%= parts[i].Price %></td>
-                                        <td><%= parts[i].InstallationDate %></td>
-                                        <td><%= parts[i].Device.Name %></td>
+                                    <% if (parts[i].Device) { %>
+                                        <td>
+                                            <%= parts[i].Device.Name %></td>
                                         <td><%= parts[i].Device.Serial %></td>
+                                    <% } else { %>
+                                        <td style="font-style: italic">None</td>
+                                        <td style="font-style: italic">None</td>
+                                    <% } %>
+                                    <% if (user.isAdmin) { %>
                                         <td>
                                             <form action="/parts/delete" method="post">
                                                 <input type="text" name="partID" value="<%= parts[i].id %>" hidden>
@@ -79,17 +68,17 @@
                                                 </button>
                                             </form>
                                         </td>
+
                                     <% } %>
-                                <% } %>
-                            </tr>
+                                </tr>
                             <% } %>
 
-                        </tbody>
-                        <!-- /Table Rows -->
+                            </tbody>
+                            <!-- /Table Rows -->
 
-                    </table>
+                        </table>
 
-                </div>
+                    </div>
                 <!-- /.card-body -->
 
             </div>

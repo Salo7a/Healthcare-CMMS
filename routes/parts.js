@@ -7,7 +7,7 @@ const Department = require('../models').Department;
 const parts = require("../models").Parts;
 const user = require("../models").User;
 
-// GET Route Handler for main parts page 
+// GET Route Handler for main parts page
 router.get('/', isAuth, (req, res) => {
     parts.findAll({ include: [devices] }).then(
         parts => {
@@ -24,7 +24,6 @@ router.get('/', isAuth, (req, res) => {
 router.get('/add', isAdmin, (req, res) => {
     devices.findAll({ include: [Department] }).then(
         devices => {
-            console.log(devices);
             res.render('parts/add', {
                 title: 'Add a new part',
                 devices

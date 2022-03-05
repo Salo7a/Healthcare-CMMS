@@ -1,265 +1,132 @@
 jQuery(document).ready(function ($) {
+    let FormSubmit = () => {
+        $('.Delete').ajaxSubmit({
+            success: (res) => {
+                $(`#row-${res.id}`).remove();
+                toastr.success(res.msg);
+            },
+            error: (res) => {
+                toastr.error(res.msg);
+            }
 
-  // Header fixed and Back to top button
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 100) {
-      $('.back-to-top').fadeIn('slow');
-      $('#header').addClass('header-fixed');
-    } else {
-      $('.back-to-top').fadeOut('slow');
-      $('#header').removeClass('header-fixed');
+        });
     }
-  });
-
-  if ($(this).scrollTop() > 100) {
-    $('.back-to-top').fadeIn('slow');
-    $('#header').addClass('header-fixed');
-  }
-
-  $('.back-to-top').click(function () {
-    $('html, body').animate({
-      scrollTop: 0
-    }, 1500, 'easeInOutExpo');
-    return false;
-  });
-
-  // Initiate the wowjs animation library
-  new WOW().init();
-
-  // Initiate superfish on nav menu
-  $('.nav-menu').superfish({
-    animation: {
-      opacity: 'show'
-    },
-    speed: 300
-  });
-
-  // Mobile Navigation
-  if ($('#nav-menu-container').length) {
-    var $mobile_nav = $('#nav-menu-container').clone().prop({
-      id: 'mobile-nav'
-    });
-    $mobile_nav.find('> ul').attr({
-      'class': '',
-      'id': ''
-    });
-    $('body').append($mobile_nav);
-    $('body').prepend('<button type="button" id="mobile-nav-toggle"><i class="fa fa-bars"></i></button>');
-    $('body').append('<div id="mobile-body-overly"></div>');
-    $('#mobile-nav').find('.menu-has-children').prepend('<i class="fa fa-chevron-down"></i>');
-
-    $(document).on('click', '.menu-has-children i', function (e) {
-      $(this).next().toggleClass('menu-item-active');
-      $(this).nextAll('ul').eq(0).slideToggle();
-      $(this).toggleClass("fa-chevron-up fa-chevron-down");
-    });
-
-    $(document).on('click', '#mobile-nav-toggle', function (e) {
-      $('body').toggleClass('mobile-nav-active');
-      $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
-      $('#mobile-body-overly').toggle();
-    });
-
-    $(document).click(function (e) {
-      var container = $("#mobile-nav, #mobile-nav-toggle");
-      if (!container.is(e.target) && container.has(e.target).length === 0) {
-        if ($('body').hasClass('mobile-nav-active')) {
-          $('body').removeClass('mobile-nav-active');
-          $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
-          $('#mobile-body-overly').fadeOut();
-        }
-      }
-    });
-  } else if ($("#mobile-nav, #mobile-nav-toggle").length) {
-    $("#mobile-nav, #mobile-nav-toggle").hide();
-  }
-
-  // Smooth scroll on page hash links
-  $('.nav-menu a, #mobile-nav a, .scrollto').on('click', function () {
-    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      var target = $(this.hash);
-      if (target.length) {
-        var top_space = 0;
-
-        if ($('#header').length) {
-          top_space = $('#header').outerHeight();
-
-          if (!$('#header').hasClass('header-fixed')) {
-            top_space = top_space - 20;
-          }
-        }
-
-        $('html, body').animate({
-          scrollTop: target.offset().top - top_space
-        }, 1500, 'easeInOutExpo');
-
-        if ($(this).parents('.nav-menu').length) {
-          $('.nav-menu .menu-active').removeClass('menu-active');
-          $(this).closest('li').addClass('menu-active');
-        }
-
-        if ($('body').hasClass('mobile-nav-active')) {
-          $('body').removeClass('mobile-nav-active');
-          $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
-          $('#mobile-body-overly').fadeOut();
-        }
+    FormSubmit();
+    $(document).on('submit', '.Delete', function () {
+        let DeleteConfirm = confirm("Are you sure you want to delete?");
+        if (DeleteConfirm)
+            FormSubmit();
         return false;
-      }
-    }
-  });
-
-  // Gallery - uses the magnific popup jQuery plugin
-  $('.gallery-popup').magnificPopup({
-    type: 'image',
-    removalDelay: 300,
-    mainClass: 'mfp-fade',
-    gallery: {
-      enabled: true
-    },
-    zoom: {
-      enabled: true,
-      duration: 300,
-      easing: 'ease-in-out',
-      opener: function (openerElement) {
-        return openerElement.is('img') ? openerElement : openerElement.find('img');
-      }
-    }
-  });
-
-  // Gallery Show Toggle
-  $('#show-hidden-menu').click(function () {
-    $('.theimages').slideToggle("slow");
-    $('#galarrow').toggleClass("fa-arrow-circle-down");
-    $('#galarrow').toggleClass("fa-arrow-circle-up");
-  });
-
-  // Company Form EWaste Add
-  $(document).ready(function () {
-    let maxField = 10; //Input fields increment limitation
-    let addButton = $('.addwastec'); //Add button selector
-    let wrapper = $('.ewastewrapc'); //Input field wrapper
-    let fieldHTML = '<div class="form-row extrawasteinput"><div class="form-group col-lg-6">\n' +
-        '                    <select required class="form-control typeselect" name="etype[]" data-rule="required">\n' +
-        '                      <option class="hidden" selected disabled value="" >E-waste type</option>\n' +
-        '                      <option value="Batteries">Batteries</option>\n' +
-        '                      <option value="Cellphone">Cellphone</option>\n' +
-        '                      <option value="Computer">Computer</option>\n' +
-        '                      <option value="Fax machine">Fax machine</option>\n' +
-        '                      <option value="Microwave">Microwave</option>\n' +
-        '                      <option value="Printer">Printer</option>\n' +
-        '                      <option value="Receiver">Receiver</option>\n' +
-        '                      <option value="Refrigerator">Refrigerator</option>\n' +
-        '                      <option value="Television">Television</option>\n' +
-        '                      <option value="Others">Others</option>\n' +
-        '                    </select>\n' +
-        '                    <div class="validation"></div>\n' +
-        '                  </div>\n' +
-        '                  <div class="form-group col-lg-5">\n' +
-        '                    <input type="number" name="equantity[]" class="form-control" value="" data-rule="required" placeholder="E-waste Quantity"   />\n' +
-        '                    <div class="validation"></div>\n' +
-        '                  </div>\n' +
-        '                  <div class="form-group col-lg-1">\n' +
-        '                    <i style="color: #b21f2d" class="fas fa-minus removewastec"></i>\n' +
-        '                  </div> </div>'; //New input field html
-    let x = 1; //Initial field counter is 1
-
-    //Once add button is clicked
-    $(addButton).click(function () {
-      //Check maximum number of input fields
-      if (x < maxField) {
-        x++; //Increment field counter
-        $(wrapper).append(fieldHTML); //Add field html
-      }
     });
 
-    //Once remove button is clicked
-    $(wrapper).on('click', '.removewastec', function (e) {
-      e.preventDefault();
-      $(this).parent('div').parent('div').remove(); //Remove field html
-      x--; //Decrement field counter
+    $(document).on('submit', '#NewDep', function () {
+        $.ajax({
+            url: '/departments/add',
+            type: 'POST',
+            data: $(this).serialize(),
+            tryCount: 0,
+            retryLimit: 5,
+            success: function (res) {
+                this.tryCount = 0;
+                toastr.success(res.msg);
+                let Button = `
+                                          <form action="/departments/delete" method="post" class="Delete">
+                                            <input type="text" name="departmentID" value="${res.id}" hidden>
+                                            <button type="submit" class="btn  btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>`
+                let DepTable = $("#departmentsTable").DataTable()
+                DepTable.row.add([res.id, res.Name, Button])
+                DepTable.draw()
+                $('#NewDepModal').modal('hide')
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                if (textStatus === 'timeout') {
+                    this.tryCount++;
+                    toastr.error("Error! " + xhr.status + " " + textStatus + ", Retrying");
+                    if (this.tryCount <= this.retryLimit) {
+                        //try again
+                        $.ajax(this);
+                        return;
+                    }
+                    return;
+                }
+                if (xhr.status === 500) {
+                    toastr.error("Error! " + xhr.status + " " + textStatus);
+                } else {
+                    toastr.error("Error! " + xhr.status + " " + textStatus);
+                }
+            }
+        });
+        return false;
+    });
+    $(document).on('submit', '#NewDev', function () {
+        $.ajax({
+            url: '/devices/add',
+            type: 'POST',
+            data: $(this).serialize(),
+            tryCount: 0,
+            retryLimit: 5,
+            success: function (res) {
+                this.tryCount = 0;
+                toastr.success(res.msg);
+                let DeleteButton = `
+                    <form action="/devices/delete" method="post" class="Delete">
+                        <input type="text" name="deviceID" value="${res.id}" hidden>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                `
+                let AlertButton = `<form action="/devices/alert" method="post">
+                    <input type="text" name="deviceID" value="${res.id}" hidden>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </button>
+                </form>`
+                let DepTable = $("#departmentsTable").DataTable()
+                DepTable.row.add([res.Name, res.Manufacturer, res.Model, res.Serial, res.ImportDate, res.InstallationDate, res.ScrappingDate, res.SupplyingCompany, res.Department, res.PPMInterval, DeleteButton, AlertButton])
+                DepTable.draw()
+                $('#NewDevModal').modal('hide')
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                if (textStatus === 'timeout') {
+                    this.tryCount++;
+                    toastr.error("Error! " + xhr.status + " " + textStatus + ", Retrying");
+                    if (this.tryCount <= this.retryLimit) {
+                        //try again
+                        $.ajax(this);
+                        return;
+                    }
+                    return;
+                }
+                if (xhr.status === 500) {
+                    toastr.error("Error! " + xhr.status + " " + textStatus);
+                } else {
+                    toastr.error("Error! " + xhr.status + " " + textStatus);
+                }
+            }
+        });
+        return false;
+    });
+    $("#departmentsTable").DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+    });
+    $("#devicesTable").DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
     });
 
-    $(wrapper).on('change', '.typeselect', function (e) {
-      e.preventDefault();
-      let othertype = '<div class="form-group col-lg-11 extrat"><input type="text" name="etype[]" class="form-control"  placeholder="EWaste Type"/><div/>';
-      if ($(this).val() === 'Others') {
-        $(this).parent('div').parent('div').append(othertype);
-        $(this).attr('name', 'type');
-      } else {
-        $(this).attr('name', 'etype[]');
-        $(this).parent('div').siblings(".extrat").remove();
-      }
-    });
-  });
-  // Individual Form EWaste Add
-  $(document).ready(function () {
-    let maxField = 10; //Input fields increment limitation
-    let addButton = $('.addwastei'); //Add button selector
-    let wrapper = $('.ewastewrapi'); //Input field wrapper
-    let fieldHTML = '<div class="form-row extrawasteinput"><div class="form-group col-lg-6">\n' +
-        '                    <select required class="form-control typeselect" name="etype[]" data-rule="required">\n' +
-        '                      <option class="hidden" selected disabled value="" >E-waste type</option>\n' +
-        '                      <option value="Batteries">Batteries</option>\n' +
-        '                      <option value="Cellphone">Cellphone</option>\n' +
-        '                      <option value="Computer">Computer</option>\n' +
-        '                      <option value="Fax machine">Fax machine</option>\n' +
-        '                      <option value="Microwave">Microwave</option>\n' +
-        '                      <option value="Printer">Printer</option>\n' +
-        '                      <option value="Receiver">Receiver</option>\n' +
-        '                      <option value="Refrigerator">Refrigerator</option>\n' +
-        '                      <option value="Television">Television</option>\n' +
-        '                      <option value="Others">Others</option>\n' +
-        '                    </select>\n' +
-        '                    <div class="validation"></div>\n' +
-        '                  </div>\n' +
-        '                  <div class="form-group col-lg-5">\n' +
-        '                    <input type="number" name="equantity[]" class="form-control" value="" data-rule="required" placeholder="E-waste Quantity"   />\n' +
-        '                    <div class="validation"></div>\n' +
-        '                  </div>\n' +
-        '                  <div class="form-group col-lg-1">\n' +
-        '                    <i style="color: #b21f2d" class="fas fa-minus removewastei"></i>\n' +
-        '                  </div> </div>'; //New input field html
-    let x = 1; //Initial field counter is 1
-
-    //Once add button is clicked
-    $(addButton).click(function () {
-      //Check maximum number of input fields
-      if (x < maxField) {
-        x++; //Increment field counter
-        $(wrapper).append(fieldHTML); //Add field html
-      }
-    });
-
-    //Once remove button is clicked
-    $(wrapper).on('click', '.removewastei', function (e) {
-      e.preventDefault();
-      $(this).parent('div').parent('div').remove(); //Remove field html
-      x--; //Decrement field counter
-    });
-    $(wrapper).on('change', '.typeselect', function (e) {
-      e.preventDefault();
-      let othertype = '<div class="form-group col-lg-11 extrat"><input type="text" name="etype[]" class="form-control"  placeholder="EWaste Type"/><div/>';
-      if ($(this).val() === 'Others') {
-        $(this).parent('div').parent('div').append(othertype);
-        $(this).attr('name', 'type');
-      } else {
-        $(this).attr('name', 'etype[]');
-        $(this).parent('div').siblings(".extrat").remove();
-      }
-    });
-
-  });
-  $(document).ready(function () {
-    $(".typeselect").on('change', function () {
-      let othertype = '<div class="form-group col-lg-11 extrat"><input type="text" name="etype[]" class="form-control"  placeholder="EWaste Type"/><div/>';
-      if ($(this).val() === 'Others') {
-        $(this).parent('div').parent('div').append(othertype);
-        $(this).attr('name', 'type');
-      } else {
-        $(this).attr('name', 'etype[]');
-        $(this).parent('div').siblings(".extrat").remove();
-      }
-      return false;
-    });
-  });
-});
+})

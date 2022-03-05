@@ -34,8 +34,7 @@ router.post('/add', isAdmin, (req, res) => {
     };
     
     Department.create(newDepartment).then(result => {
-        req.flash("success", "Added Department Successfully");
-        res.redirect("/departments");
+        res.send({id: result.id, Name: req.body.name, msg: "Department created successfully."});
     });
     
 });
@@ -47,7 +46,7 @@ router.post('/delete', isAdmin, (req, res) => {
             id: req.body.departmentID
         }
     });
-    res.redirect("/devices");
+    res.send({id: req.body.departmentID, msg: "Department deleted successfully."});
 });
 
 // POST Route Handler for Deleting All the Departments

@@ -3,7 +3,7 @@
     <div class="card card-default">
         <div class="card-body">
             <div > <!--            Enter Your Content Here-->
-                <% if (personnel.length > 0) { %>
+
                     <% if (user.isAdmin) {%>
                         <div style="margin-bottom: 10px;" class="table-buttons">
                             <a type="button" class="btn btn-block btn-primary" href="/indoor">
@@ -27,46 +27,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for (var i = 0; i < personnel.length; i++) { %>
+                                <% if (personnel.length > 0) { %>
+                                    <% for (var i = 0; i < personnel.length; i++) { %>
                                     <tr>
-                                        <% if (user.isAdmin) { %>
-                                        <% console.log("User is Admin ", user.isAdmin) %>
-
                                         <td><%= personnel[i].Name %></td>
-                                        <td><%= personnel[i].Email      %></td>
-                                        <td><%= personnel[i].birthday  %></td>
-                                        <td><%= personnel[i].Title      %></td>
-                                        <td><%= personnel[i].Phone      %></td>
-                                        <td><%= personnel[i].Department.Name %></td>
+                                        <td><%= personnel[i].Email %></td>
+                                        <td><%= personnel[i].birthday %></td>
+                                        <td><%= personnel[i].Title %></td>
+                                        <td><%= personnel[i].Phone %></td>
+                                        <td>
+                                            <% if (personnel[i].Department) { %>
+                                                <%= personnel[i].Department.Name %>
+                                            <% } else { %>
+                                                <span style="font-style: italic">None</span>
+                                            <% } %>
+                                        </td>
                                         <td>
                                             <form action="/indoor/delete" method="post">
-                                                <input type="text" name="personID" value="<%= personnel[i].id %>" hidden>
-                                                <button type="submit" class="btn btn-block btn-danger">
+                                                <input type="text" name="personID" value="<%= personnel[i].id %>"
+                                                       hidden>
+                                                <button type="submit" class="btn btn-danger">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
                                         </td>
-                                        <% } else  { %>
-                                            <% if (user.DepartmentId === personnel[i].DepartmentId) { %>
-                                                <% console.log("PER", personnel[i])%>
-                                                    <td><%= personnel[i].Name %></td>
-                                                    <td><%= personnel[i].Email      %></td>
-                                                    <td><%= personnel[i].birthday  %></td>
-                                                    <td><%= personnel[i].Title      %></td>
-                                                    <td><%= personnel[i].Phone      %></td>
-                                                    <td><%= personnel[i].Department.Name %></td>
-                                            <%} %>
-
-                                        <%}%>
+                                        <% } %>
                                     </tr>
                                 <% } %>
-                            </tbody>
+                                </tbody>
                             </table>
                         </div>
-
-                <% } else { %>
-                    <h1> 0 Personnel Found </h1>
-                <% } %>
             </div>                 <!--            Enter Your Content Here-->
         </div>
     </div>

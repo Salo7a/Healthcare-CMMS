@@ -16,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
 
     Indoor.associate = function (models) {
         // associations can be defined here
-        Indoor.hasMany(models.WorkOrder);
-        Indoor.hasMany(models.Device);
-        Indoor.belongsTo(models.Department);
 
     };
 

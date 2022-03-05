@@ -1,11 +1,12 @@
 'use strict';
-const models = require('../models');
+
 const Department = require('../models').Department;
 module.exports = (sequelize, DataTypes) =>
 {
     const Device = sequelize.define('Device', {
         // attributes
         Name: DataTypes.STRING,
+        Manufacturer: DataTypes.STRING,
         Model: DataTypes.STRING,
         Serial: {
             type: DataTypes.STRING,
@@ -34,7 +35,6 @@ module.exports = (sequelize, DataTypes) =>
         raw: true,
         order: sequelize.literal('count DESC')
     }).then(re => {
-        console.log(re)
     });
     return Device;
 };

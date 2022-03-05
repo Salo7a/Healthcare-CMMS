@@ -10,7 +10,20 @@ const db = {};
 let sequelize;
 sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'cmms.sqlite'
+    storage: 'cmms.sqlite',
+    retry: {
+        match: [
+            /SQLITE_BUSY/,
+        ],
+        name: 'query',
+        max: 5
+    },
+    pool: {
+        maxactive: 1,
+        max: 5,
+        min: 0,
+        idle: 20000
+    }
 });
 
 fs

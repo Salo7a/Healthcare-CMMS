@@ -23,8 +23,8 @@ router.get('/', isAuth, function (req, res, next) {
                             raw: true,
                             order: sequelize.literal('count DESC')
                         }).then(DepDev => {
-                            console.log("DepDev");
-                            console.log(DepDev);
+                            // console.log("DepDev");
+                            // console.log(DepDev);
                             WorkOrder.findAll({
                                 include: [Department],
                                 where: {type: 'Repair'},
@@ -33,16 +33,14 @@ router.get('/', isAuth, function (req, res, next) {
                                 raw: true,
                                 order: sequelize.literal('count DESC')
                             }).then(DepAlert => {
-                                console.log("DepAlert");
-                                console.log(DepAlert);
                                 WorkOrder.findAll({
                                     where: {type: {[Op.ne]: 'Daily'}},
                                     attributes: ['Date', [sequelize.fn('count', sequelize.col('type')), 'count']],
                                     group: ['Date'],
                                     raw: true,
                                 }).then(DepTime => {
-                                    console.log("DepTime");
-                                    console.log(DepTime);
+                                    // console.log("DepTime");
+                                    // console.log(DepTime);
                                     res.render('index', {
                                         title: 'Home - Extra Cool CMMS',
                                         users, devices, departments, orders, DepDev, DepAlert, DepTime, inv
@@ -58,6 +56,7 @@ router.get('/', isAuth, function (req, res, next) {
 
 
 });
+
 
 router.get('/addtest', async function (req, res, next) {
     await User.findOrCreate({
@@ -92,4 +91,8 @@ router.get('/readtest', function (req, res, next) {
     req.flash("success", "Logged Devices Successfully");
     res.redirect("/");
 });
+router.get("/livetest", (req, res, next) => {
+    req.app.io.to("Head of Engineering").emit('alert', {text: "Test!!"});
+    res.send({msg: "ok"})
+})
 module.exports = router;

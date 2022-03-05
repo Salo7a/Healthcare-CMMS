@@ -95,26 +95,6 @@ module.exports = {
                 })
             });
         });
-        await fs.readFile(__dirname + "/partsData.csv", async (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            let parts;
-            parts = await neatCsv(data);
-            console.log(parts);
-            await parts.forEach( async part => {
-                await Parts.findOrCreate({
-                    where: {
-                        Type: part.type,
-                        Model: part.model,
-                        Quantity: part.quantity,
-                        Price: part.price,
-                        InstallationDate: part.installationDate,
-                        DeviceId: part.devID
-                    }
-                });
-            });
-        });
 
     },
     GenerateDates: function (req, res, next) {
@@ -303,26 +283,50 @@ module.exports = {
     GenerateQueue: function (req, res, next) {
         next();
     },
+    GenerateParts: async function (req, res, next) {
+        await fs.readFile(__dirname + "/partsData.csv", async (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            let parts;
+            parts = await neatCsv(data);
+            console.log(parts);
+            await parts.forEach(async part => {
+                await Parts.findOrCreate({
+                    where: {
+                        Type: part.type,
+                        Model: part.model,
+                        Quantity: part.quantity,
+                        Price: part.price,
+                        InstallationDate: part.installationDate,
+                        DeviceId: part.devID
+                    }
+                });
+            });
+        });
+    },
     GenerateNotifications: function (req, res, next) {
         console.log("Generate Notifications");
-        Notification.findAll({where:{
-            Date: {[Op.ne]: new Date()}
-            }}).then(noti=>{
-                console.log(noti);
-                noti.forEach(notif=>{
-                        notif.destroy();
-                        notif.save();
-                })
+        Notification.findAll({
+            where: {
+                Date: {[Op.ne]: new Date()}
+            }
+        }).then(noti => {
+            console.log(noti);
+            noti.forEach(notif => {
+                notif.destroy();
+                notif.save();
+            })
         })
         WorkOrder.findAll({
             where: {
                 Date: new Date()
             }
-        }).then( orders => {
-                console.log(orders);
-                orders.forEach(async order => {
-                    if (order.type === "PPM") {
-                        await Notification.findOne({
+        }).then(orders => {
+            console.log(orders);
+            orders.forEach(async order => {
+                if (order.type === "PPM") {
+                    await Notification.findOne({
                             where: {
                                 Type: "PPM",
                                 Date: new Date(),

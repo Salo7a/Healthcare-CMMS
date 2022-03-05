@@ -5,13 +5,10 @@
             <% if (user.isAdmin) { %>
                 <div class="table-buttons">
                     <!-- Add New Department Button -->
-                    <a type="button" class="btn btn-outline-primary" href="/departments/add">
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#NewDepModal">
                         <i class="fas fa-plus"></i> Add
-                    </a>
-                    <!-- Delete All The Department Button -->
-                    <a type="button" class="btn btn-danger" href="/departments/deleteAll">
-                        <i class="fas fa-trash"></i> Erase All
-                    </a>
+                    </button>
                 </div>
             <% } %>
             <!-- Check length of departments list -->
@@ -34,28 +31,29 @@
 
                     <!-- Table Rows -->
                     <tbody>
-                        <% for(var i=0; i<departments.length; i++) {%>
-                            <tr>
-                                <% if (user.isAdmin) { %>
+                    <% for(var i = 0; i < departments.length; i++) { %>
+                        <tr role="row" id="row-<%= departments[i].id %>">
+                            <% if (user.isAdmin) { %>
+                                <td><%= departments[i].id %></td>
+                                <td><%= departments[i].Name %></td>
+                                <td>
+                                    <form action="/departments/delete" method="post" class="Delete">
+                                        <input type="text" name="departmentID" value="<%= departments[i].id %>" hidden>
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            <% } else { %>
+                                <% if (user.DepartmentId === departments[i].id) { %>
                                     <td><%= departments[i].id %></td>
                                     <td><%= departments[i].Name %></td>
-                                    <td><form action="/departments/delete" method="post">
-                                            <input type="text" name="departmentID" value="<%= departments[i].id%>" hidden>
-                                            <button type="submit" class="btn btn-block btn-danger">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                <% } else { %>
-                                    <% if (user.DepartmentId === departments[i].id) { %>
-                                        <td><%= departments[i].id %></td>
-                                        <td><%= departments[i].Name %></td>
-                                    <% } %>
                                 <% } %>
-                            </tr>
-                        <% } %>
+                            <% } %>
+                        </tr>
+                    <% } %>
                     </tbody>
-                                <!-- /Table Rows -->
+                    <!-- /Table Rows -->
                 </table>
 
             <% }else{ %>
@@ -66,15 +64,30 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="NewDepModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add a New Department</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="post" action="/departments/add" id="NewDep" class="AJAXForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control" name="name" required>
+                    </div>
+                </div>
 
-<script> $(function () {
-        $("#departmentsTable").DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    })</script> %>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

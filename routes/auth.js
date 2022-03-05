@@ -8,10 +8,16 @@ const Persons = require("../models").Indoor;
 const Notification = require("../models").Notification;
 const Parts = require("../models").Parts;
 
-const { NotAuth, isAuth } = require('../utils/filters');
-const { check, validationResult, body } = require('express-validator');
-const { GenerateDates, GenerateOrders, AddTestData, GenerateNotifications } = require('../utils/GenerateData');
-const { Op } = require('sequelize');
+const {NotAuth, isAuth} = require('../utils/filters');
+const {check, validationResult, body} = require('express-validator');
+const {
+    GenerateDates,
+    GenerateOrders,
+    AddTestData,
+    GenerateNotifications,
+    GenerateParts
+} = require('../utils/GenerateData');
+const {Op} = require('sequelize');
 const Chance = require('chance');
 // const loadCSVData = require('../utils/loadCSV');
 const fs = require('fs');
@@ -21,7 +27,7 @@ let chance = new Chance();
 
 function issueToken(user, done) {
     let chance = new Chance();
-    let token = chance.word({ length: 60 });
+    let token = chance.word({length: 60});
     user.update({
         RememberHash: token
     }).then(result => {
@@ -42,6 +48,17 @@ router.get('/test', async function (req, res, next) {
         await GenerateDates();
         await GenerateOrders();
         await GenerateNotifications();
+        req.flash("success", "Data Generated Successfully");
+    } catch (e) {
+        req.flash("error", "An error occurred while generating data");
+        console.log(e);
+    }
+
+    res.redirect('/auth/login');
+});
+router.get('/parts', async function (req, res, next) {
+    try {
+        await GenerateParts();
         req.flash("success", "Data Generated Successfully");
     } catch (e) {
         req.flash("error", "An error occurred while generating data");

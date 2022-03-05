@@ -7,9 +7,10 @@ module.exports = (sequelize, DataTypes) =>
         Type: DataTypes.STRING,
         Date: DataTypes.DATEONLY
     });
-    
+
     Notification.associate = function (models) {
         // associations can be defined here
+        Notification.belongsTo(models.User);
         Notification.belongsTo(models.Department);
         Notification.belongsTo(models.Device);
         Notification.belongsTo(models.WorkOrder);

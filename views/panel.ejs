@@ -38,15 +38,16 @@
     <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="/plugins/chart.js/Chart.min.js"></script>
-
+    <script type="text/javascript" src="/javascripts/jquery.ajaxSubmit.min.js"></script>
+    <script type="text/javascript" src="/javascripts/socket.io.min.js"></script>
 </head>
 <body data-barba="wrapper" class="hold-transition sidebar-mini">
 
-<!--<div class=" js-preloader preloader-wrapper">-->
-<!--    <div class="preloader">-->
-<!--        <div class="cp-spinner cp-balls"></div>-->
-<!--    </div>-->
-<!--</div>-->
+<div class=" js-preloader preloader-wrapper">
+    <div class="preloader">
+        <div class="cp-spinner cp-balls"></div>
+    </div>
+</div>
 
 <div class="wrapper">
 
@@ -103,6 +104,10 @@
 
     <script>
         $('.js-preloader').preloadinator();
+        let id = <%= user.id %>;
+        let pos = '<%= user.Title %>'
     </script>
+    <script src="/javascripts/notifications.js"></script>
+    <script src="/javascripts/main.js"></script>
 </body>
 </html>

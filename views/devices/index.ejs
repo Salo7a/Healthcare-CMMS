@@ -4,11 +4,11 @@
         <div class="card-body">
             <% if (user.isAdmin) { %>
                 <div style="margin-bottom: 10px;" class="table-buttons">
-                    <!-- Add New Department Button -->
                     <!-- Add New Device Button -->
-                    <a type="button" class="btn btn-block btn-primary" href="/devices/add">
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#NewDevModal">
                         <i class="fas fa-plus"></i> Add
-                    </a>
+                    </button>
 
                     <!-- Delete All The Devices Button -->
                     <!--                    <a type="button" class="btn btn-block btn-danger" href="/devices/deleteAll">Erase Database</a>-->
@@ -16,107 +16,161 @@
             <% } %>
             <!--            Enter Your Content Here-->
             <div class="col-md-12">
-                <!-- Check length of devices list -->
-                <!-- In case we found devices -->
-                <% if (devices.length > 0) { %>
-                    <!-- Devices Table -->
-                    <table id="devicesTable" class="table table-bordered table-striped">
-                        <!-- Headers -->
-                        <thead>
-                        <tr>
-                            <th data-priority="1">Name</th>
-                            <th data-priority="2">Model</th>
-                            <th data-priority="3"> Serial</th>
-                            <th>Import Date</th>
-                            <th>Installation Date</th>
-                            <th>Scrapping Date</th>
-                            <th>Supplying Company</th>
-                            <th>Department</th>
-                            <th>PPM Interval</th>
-                            <% if (user.isAdmin) { %>
-                                <th>Delete</th>
-                            <% } %>
-                            <th data-priority="4">Alert</th>
-                        </tr>
-                        </thead>
-                        <!-- /Headers -->
+                <!-- Devices Table -->
+                <table id="devicesTable" class="table table-bordered table-striped">
+                    <!-- Headers -->
+                    <thead>
+                    <tr>
+                        <th data-priority="1">Name</th>
+                        <th>Manufacturer</th>
+                        <th data-priority="2">Model</th>
+                        <th data-priority="3">Serial</th>
+                        <th>Import Date</th>
+                        <th>Installation Date</th>
+                        <th>Scrapping Date</th>
+                        <th>Supplying Company</th>
+                        <th>Department</th>
+                        <th>PPM Interval</th>
+                        <% if (user.isAdmin) { %>
+                            <th>Delete</th>
+                        <% } %>
+                        <th data-priority="4">Alert</th>
+                    </tr>
+                    </thead>
+                    <!-- /Headers -->
 
-                        <!-- Table Rows -->
-                        <tbody>
+                    <!-- Table Rows -->
+                    <tbody>
+                    <!-- Check length of devices list -->
+                    <!-- In case we found devices -->
+                    <% if (devices.length > 0) { %>
                         <% for (var i = 0; i < devices.length; i++) { %>
-                            <% if (user.isAdmin) { %>
-                            <tr>
-
-                                    <td><%= devices[i].Name %></td>
-                                    <td><%= devices[i].Model %></td>
-                                    <td><%= devices[i].Serial %></td>
-                                    <td><%= devices[i].ImportDate %></td>
-                                    <td><%= devices[i].InstallationDate %></td>
-                                    <td><%= devices[i].ScrappingDate %></td>
-                                    <td><%= devices[i].SupplyingCompany %></td>
-                                    <td><%= devices[i].Department.Name %></td>
-                                    <td><%= devices[i].PPMInterval %></td>
+                            <tr role="row" id="#row-<%= devices[i].id %>">
+                                <td><%= devices[i].Name %></td>
+                                <td><%= devices[i].Manufacturer %></td>
+                                <td><%= devices[i].Model %></td>
+                                <td><%= devices[i].Serial %></td>
+                                <td><%= devices[i].ImportDate %></td>
+                                <td><%= devices[i].InstallationDate %></td>
+                                <td><%= devices[i].ScrappingDate %></td>
+                                <td><%= devices[i].SupplyingCompany %></td>
+                                <td>
+                                    <% if (devices[i].Department){ %><%= devices[i].Department.Name %>
+                                    <% } %>
+                                </td>
+                                <td><%= devices[i].PPMInterval %></td>
+                                <% if (user.isAdmin) { %>
                                     <td>
-                                        <form action="/devices/delete" method="post">
+                                        <form action="/devices/delete" method="post" class="Delete">
                                             <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
-                                            <button type="submit" class="btn btn-block btn-danger">
+                                            <button type="submit" class="btn btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
                                     </td>
-                                    <td>
-                                        <form action="/devices/alert" method="post">
-                                            <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
-                                            <button type="submit" class="btn btn-block btn-warning">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                            </tr>
-                                <% } else if(user.DepartmentId === devices[i].DepartmentId){ %>
-                            <tr>
-                                        <% console.log('Technician ', user.Name) %>
-                                        <td><%= devices[i].Name %></td>
-                                        <td><%= devices[i].Model %></td>
-                                        <td><%= devices[i].Serial %></td>
-                                        <td><%= devices[i].ImportDate %></td>
-                                        <td><%= devices[i].InstallationDate %></td>
-                                        <td><%= devices[i].ScrappingDate %></td>
-                                        <td><%= devices[i].SupplyingCompany %></td>
-                                        <td><%= devices[i].Department.Name %></td>
-                                        <td><%= devices[i].PPMInterval %></td>
-                                        <td>
-                                            <form action="/devices/alert" method="post">
-                                                <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
-                                                <button type="submit" class="btn btn-block btn-warning">
-                                                    <i class="fas fa-exclamation-triangle"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                <% } %>
+                                <td>
+                                    <form action="/devices/alert" method="post">
+                                        <input type="text" name="deviceID" value="<%= devices[i].id %>" hidden>
+                                        <button type="submit" class="btn btn-warning">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
 
-                                <% } %>
-                        <% } %>
-                        </tbody>
-                        <!-- /Table Rows -->
-                    </table>
-                <% } else { %>
-                    <h1>No Devices Found</h1>
-                <% } %>
+                    <% }} %>
+                    </tbody>
+                    <!-- /Table Rows -->
+                </table>
+
             </div>
             <!--            Enter Your Content Here-->
         </div>
     </div>
 </div>
+<div class="modal fade" id="NewDevModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add a New Device</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" action="/devices/add" method="post" id="NewDev" class="AJAXForm">
+                <div class="modal-body">
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter name" required>
+                    </div>
 
-<script> $(function () {
-        $("#devicesTable").DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    })</script>
+                    <!-- Manufactuer Number -->
+                    <div class="form-group">
+                        <label for="manufacturer">Manufacturer</label>
+                        <input type="text" class="form-control" name="manufacturer" placeholder="Manufacturer" required>
+                    </div>
+
+                    <!-- Model Number -->
+                    <div class="form-group">
+                        <label for="modelNumber">Model</label>
+                        <input type="text" class="form-control" name="model" placeholder="Model Number" required>
+                    </div>
+
+                    <!-- Serial Number -->
+                    <div class="form-group">
+                        <label for="serialNumber">Serial</label>
+                        <input type="text" class="form-control" name="serial" placeholder="Serial Number" required>
+                    </div>
+
+                    <!-- Import Date -->
+                    <div class="form-group">
+                        <label for="installationDate">Import Date</label>
+                        <input type="date" class="form-control" name="installationDate" placeholder="Installation Date"
+                               required>
+                    </div>
+
+                    <!-- Installation Date -->
+                    <div class="form-group">
+                        <label for="installationDate">Installation Date</label>
+                        <input type="date" class="form-control" name="installationDate" placeholder="Installation Date"
+                               required>
+                    </div>
+
+                    <!-- Supplying Company -->
+                    <div class="form-group">
+                        <label for="supplier">Supplier</label>
+                        <input type="text" class="form-control" name="supplier" placeholder="Supplier" required>
+                    </div>
+
+                    <!-- PPM Interval -->
+                    <div class="form-group">
+                        <label for="ppmInterval">PPM Interval</label>
+                        <input type="text" class="form-control" name="ppmInterval" placeholder="PPM Interval" required>
+                    </div>
+
+                    <!-- Department -->
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select class="custom-select form-control" name="department" id="department"
+                                required>
+                            <option class="hidden" selected disabled value="">Select The Department</option>
+                            <% departments.forEach(dep=>{ %>
+                                <option value="<%= dep.id %>"><%= dep.Name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

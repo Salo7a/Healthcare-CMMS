@@ -7,13 +7,15 @@ const Notification = require('../models').Notification;
 const models = require('../models');
 
 // GET Route Handler for main devices page
-router.get('/', isAuth, (req, res, next) => {
+router.get('/', isAuth, async (req, res, next) => {
+    let departments = await Department.findAll()
     // Get all the devices from database
-    Device.findAll({include :[ Department ]})
+    Device.findAll({include: [Department]})
         .then(Devices => {
             res.render('devices/index', {
                 title: 'Devices List',
-                devices: Devices
+                devices: Devices,
+                departments: departments
             });
         })
         .catch((error) => {
@@ -23,43 +25,46 @@ router.get('/', isAuth, (req, res, next) => {
 });
 
 // GET Route Handler for adding a new Device
-router.get('/add', isAdmin, (req, res) => {
+router.get('/add', isAdmin, async (req, res, next) => {
+    let departments = await Department.findAll()
     res.render('devices/add', {
-        title: 'Add a new device'
+        title: 'Add a new device',
+        departments: departments
     });
 });
 
 // POST Route Handler for adding a new Device
-router.post('/add', isAdmin, (req, res) => {
+router.post('/add', isAdmin, async (req, res, next) => {
     // Create the new Device
     const newDevice = {
         Name: req.body.name,
+        Manufacturer: req.body.manufacturer,
         Model: req.body.model,
         Serial: req.body.serial,
         ImportDate: DataTypes.STRING,
         InstallationDate: req.body.installationDate,
-        SupplyingCompany: DataTypes.STRING,
+        SupplyingCompany: req.body.supplier,
         PPMInterval: req.body.ppmInterval
     };
     Device.create(newDevice).then(result => {
         req.flash("success", "Added Device Successfully");
-        res.redirect("/devices");
+        res.send({msg: "Added Device Successfully", id: result.id,});
     });
 
 });
 
 // POST Route Handler for Deleting a Device
-router.post('/delete', isAdmin, (req, res) => {
+router.post('/delete', isAdmin, (req, res, next) => {
     Device.destroy({
         where: {
             id: req.body.deviceID
         }
     });
-    res.redirect("/devices");
+    res.send({msg: "Device Deleted Successfully", id: req.body.deviceID});
 });
 
 // POST Route Handler for Deleting All the Devices
-router.get('/deleteAll', isAdmin, (req, res) => {
+router.get('/deleteAll', isAdmin, (req, res, next) => {
     Device.destroy({
         where: {}
     })
@@ -70,10 +75,10 @@ router.get('/deleteAll', isAdmin, (req, res) => {
 });
 
 // POST Route Handler for alerting a Device
-router.post('/alert', isAuth, (req, res) => {
+router.post('/alert', isAuth, (req, res, next) => {
     Device.findOne({
         where: {id: req.body.deviceID},
-        include: [ Department ]
+        include: [Department]
     })
         .then((device) => {
             req.flash("success", "Alert reported");
@@ -84,6 +89,10 @@ router.post('/alert', isAuth, (req, res) => {
             };
             Notification.create(newNotification)
                 .then(() => {
+                    req.app.io.to("Head of Engineering").emit('alert', {
+                        text: `A Problem Has Been Reported For
+                    ${device.Name} #${device.id} in ${device.Department.Name} Department By ${req.user.Name}`
+                    });
                     res.redirect("/devices");
                 });
         });

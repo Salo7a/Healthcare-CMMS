@@ -79,7 +79,6 @@ router.post('/order', isAuth, (req, res) =>{
 });
 
 router.post('/add', isAuth, (req, res) => {
-    console.log(req.body.type);
     if (req.body.type === 'Daily') {
         workOrders.findOne({
             where:{
@@ -93,7 +92,6 @@ router.post('/add', isAuth, (req, res) => {
             let target = ["removed", "cracks", "broken", "damage", "spare", "broken_cable", "damage_cable",
                 "spare_cable", "other"];
             let keys = Object.keys(req.body);
-            console.log("ASdasd", daily);
 
             keys.forEach(key => {
                 if (target.includes(key)) {
@@ -109,14 +107,18 @@ router.post('/add', isAuth, (req, res) => {
             order.UserId = req.user.id;
             order.State = 'Done';
             order.save();
+            req.app.io.to("Head of Engineering").emit('alert', {
+                text: `A New ${req.body.type} Work Order Has been issued
+                    in ${req.body.Department} Department By ${req.user.Name}`
+            });
             req.flash("success", "Added New Work Order Successfully");
 
             notification.findOne({
                 where: {
                     type: "Daily",
-                    DepartmentId : req.user.DepartmentId
+                    DepartmentId: req.user.DepartmentId
                 }
-            }).then(result =>{
+            }).then(result => {
                 result.destroy();
             });
             res.redirect("/");
@@ -160,16 +162,19 @@ router.post('/add', isAuth, (req, res) => {
         };
         workOrders.create(newWork).then(z => {
             req.flash("success", "Added New Work Order Successfully");
+            req.app.io.to("Head of Engineering").emit('alert', {
+                text: `A New ${req.body.type} Work Order Has been issued
+                    in ${req.body.Department} Department By ${req.user.Name}`
+            });
             res.redirect("/");
-            console.log("asdasd");
 
             notification.findOne({
-                where:{
-                    type : req.body.type,
-                    DeviceId : req.body.deviceId,
-                    
-                }}).then(result => {
-                console.log("Found", result );
+                where: {
+                    type: req.body.type,
+                    DeviceId: req.body.deviceId,
+
+                }
+            }).then(result => {
                 result.destroy();
             });
 
@@ -187,6 +192,10 @@ router.post('/add', isAuth, (req, res) => {
         };
         workOrders.create(newWork).then(result => {
             req.flash("success", "Added New Work Order Successfully");
+            req.app.io.to("Head of Engineering").emit('alert', {
+                text: `A New ${req.body.type} Work Order Has been issued
+                    in ${req.body.Department} Department By ${req.user.Name}`
+            });
             res.redirect("/");
         });
     }

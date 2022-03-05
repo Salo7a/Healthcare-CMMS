@@ -8,19 +8,23 @@ const app = require('../app');
 const debug = require('debug')('extracoolcmms:server');
 const http = require('http');
 const models = require('../models');
-
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+let port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+let server = http.createServer(app);
+
+/**
+ * Initialize Socket.io
+ */
+app.io.attach(server)
 
 /**
  * Listen on provided port, on all network interfaces.
