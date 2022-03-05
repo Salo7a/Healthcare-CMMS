@@ -11,46 +11,58 @@
                     <!-- form start -->
                     <form role="form" action="/devices/add" method="post">
                         <div class="card-body">
-                            <!-- Name -->
+                            <<!-- Name -->
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter name">
+                                <input type="text" class="form-control" name="name" placeholder="Enter name" required>
+                            </div>
+
+                            <!-- Manufactuer Number -->
+                            <div class="form-group">
+                                <label for="manufacturer">Manufacturer</label>
+                                <input type="text" class="form-control" name="manufacturer" placeholder="Manufacturer"
+                                       required>
                             </div>
 
                             <!-- Model Number -->
                             <div class="form-group">
                                 <label for="modelNumber">Model</label>
-                                <input type="text" class="form-control" name="model" placeholder="Model Number">
+                                <input type="text" class="form-control" name="model" placeholder="Model Number"
+                                       required>
                             </div>
 
                             <!-- Serial Number -->
                             <div class="form-group">
                                 <label for="serialNumber">Serial</label>
-                                <input type="text" class="form-control" name="serial" placeholder="Serial Number">
+                                <input type="text" class="form-control" name="serial" placeholder="Serial Number"
+                                       required>
                             </div>
 
                             <!-- Import Date -->
                             <div class="form-group">
                                 <label for="installationDate">Import Date</label>
-                                <input type="date" class="form-control" name="installationDate" placeholder="Installation Date">
+                                <input type="date" class="form-control" name="installationDate"
+                                       placeholder="Installation Date" required>
                             </div>
 
                             <!-- Installation Date -->
                             <div class="form-group">
                                 <label for="installationDate">Installation Date</label>
-                                <input type="date" class="form-control" name="installationDate" placeholder="Installation Date">
+                                <input type="date" class="form-control" name="installationDate"
+                                       placeholder="Installation Date" required>
                             </div>
 
                             <!-- Supplying Company -->
                             <div class="form-group">
-                                <label for="department">Supplying Company</label>
-                                <input type="text" class="form-control" name="department" placeholder="Department">
+                                <label for="supplier">Supplier</label>
+                                <input type="text" class="form-control" name="supplier" placeholder="Supplier" required>
                             </div>
 
                             <!-- PPM Interval -->
                             <div class="form-group">
                                 <label for="ppmInterval">PPM Interval</label>
-                                <input type="text" class="form-control" name="ppmInterval" placeholder="PPM Interval">
+                                <input type="text" class="form-control" name="ppmInterval" placeholder="PPM Interval"
+                                       required>
                             </div>
 
                             <!-- Department -->
