@@ -19,7 +19,7 @@
     "dotenv": "^16.0.0",
     "ejs": "^3.1.7",
     "ejs-mate": "^3.0.0",
-    "express": "~4.17.2",
+    "express": "~4.17.3",
     "express-flash": "0.0.2",
     "express-messages": "^1.0.1",
     "express-session": "^1.17.2",
